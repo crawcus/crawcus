@@ -1691,6 +1691,13 @@ describe('writeEvent — HumanOversight pre-check (primitive #14, Q-CR8 LOCKED)'
     oversightRequirements: [requirement],
   });
 
+  // Rolling relative timestamps: conductedAt = 30d ago, scope = 60d..30d ago.
+  // Keeps this fixture inside the 90-day `maxGapDays` window forever, regardless
+  // of when the test runs. Hardcoded dates rot; the expired-gap test below
+  // overrides conductedAt to test the failure path explicitly.
+  const DAY_MS = 24 * 60 * 60 * 1000;
+  const isoDaysAgo = (n: number) => new Date(Date.now() - n * DAY_MS).toISOString();
+
   const makeOversight = (overrides: Partial<HumanOversight> = {}): HumanOversight => ({
     id: b<string, 'OversightId'>('ov_001') as HumanOversight['id'],
     tenantId: tenant.id as unknown as HumanOversight['tenantId'],
@@ -1703,13 +1710,11 @@ describe('writeEvent — HumanOversight pre-check (primitive #14, Q-CR8 LOCKED)'
     },
     scope: {
       kind: 'period',
-      from: b<string, 'Timestamp'>('2026-04-01T00:00:00.000Z') as HumanOversight['conductedAt'],
-      to: b<string, 'Timestamp'>('2026-05-01T00:00:00.000Z') as HumanOversight['conductedAt'],
+      from: b<string, 'Timestamp'>(isoDaysAgo(60)) as HumanOversight['conductedAt'],
+      to: b<string, 'Timestamp'>(isoDaysAgo(30)) as HumanOversight['conductedAt'],
     },
     mode: 'on-loop',
-    conductedAt: b<string, 'Timestamp'>(
-      '2026-05-01T00:00:00.000Z',
-    ) as HumanOversight['conductedAt'],
+    conductedAt: b<string, 'Timestamp'>(isoDaysAgo(30)) as HumanOversight['conductedAt'],
     outcome: 'signed-off',
     findings: [],
     regulation: AI_ACT_ART_14,
