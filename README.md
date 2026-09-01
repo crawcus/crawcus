@@ -45,7 +45,7 @@ Full details: [`docs/canon/architecture-primitives.md`](docs/canon/architecture-
 |---|---|
 | **Regulator or auditor** | Verifying a customer's receipt chain independently, without their cooperation and without trusting the vendor that produced it. Start with [`packages/verifier`](packages/verifier/) and the TCK. |
 | **Compliance lead** (CISO, GRC, DPO, model-risk officer) | Answering procurement questionnaires and regulator letters with *"here is the open spec our system emits; you can verify without us."* Anti-lock-in, anti-vendor-defendant. |
-| **Enterprise CTO or architect** | Evaluating whether a CRAWCUS-emitting product satisfies walk-away, forensic-replay, and cross-runtime-audit requirements. Read the spec + verify a real chain end-to-end. |
+| **Enterprise CTO or architect** | Evaluating whether a CRAWCUS-emitting product satisfies customer-verifiable receipt, forensic-replay, and independent-verifier requirements. Read the spec + verify a real chain end-to-end. |
 | **Engineer building a conformant runtime** | Producing receipts that pass the TCK and consuming receipts from any other conformant runtime. Start with [`packages/spec`](packages/spec/) + [`packages/tck`](packages/tck/). |
 | **Author of an adjacent open-source project** (federated learning, model serving, LLM observability, MLOps) | Adding a small reference client so users get per-decision signed receipts. See [`clients/flower/`](clients/flower/) as the pattern. |
 | **Standards-body reviewer** (LF AI & Data / JDF) | Assessing scope, governance trajectory, licensing, prior-art composition. Start with [`GOVERNANCE.md`](GOVERNANCE.md) + [`docs/spec/`](docs/spec/). |
