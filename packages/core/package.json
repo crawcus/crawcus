@@ -66,7 +66,7 @@
     "url": "https://github.com/tallyseal/spec.git",
     "directory": "packages/core"
   },
-  "homepage": "https://tallyseal.org/spec",
+  "homepage": "https://tallyseal.org",
   "bugs": "https://github.com/tallyseal/spec/issues",
   "engines": {
     "node": ">=22.0.0"

@@ -41,7 +41,7 @@ Attribution suggestion for spec text:
 
     "CRAWCUS specification (Contract · Receipt · Attestation · Warrant),
      authored by Paul Wander and CRAWCUS contributors, published at
-     https://tallyseal.org/spec under CC-BY-4.0."
+     https://tallyseal.org under CC-BY-4.0."
 
 Code in this repository (all files under `packages/`, `clients/`, `mkdocs.yml`,
 and build tooling) is licensed separately under the Apache License 2.0 — see

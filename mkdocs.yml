@@ -1,5 +1,5 @@
 site_name: CRAWCUS
-site_url: https://tallyseal.org/spec
+site_url: https://tallyseal.org
 site_description: An open specification for cryptographic audit receipts covering both application transactions and AI-inference decisions under one canonical shape.
 site_author: Paul Wander + CRAWCUS contributors
 

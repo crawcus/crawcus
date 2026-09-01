@@ -3,7 +3,7 @@
 **Contract · Receipt · Attestation · Warrant** — an open specification for cryptographic audit receipts covering both application transactions and AI-inference decisions under one canonical shape.
 
 > **Read the spec:** [`docs/spec/crawcus-format.md`](docs/spec/crawcus-format.md) (wire format) · [`docs/spec/crawcus-contracts.md`](docs/spec/crawcus-contracts.md) (Contract primitive) · [`docs/canon/architecture-primitives.md`](docs/canon/architecture-primitives.md) (all primitives)
-> **Rendered site:** [tallyseal.org/spec](https://tallyseal.org/spec) (once DNS + GitHub Pages land)
+> **Rendered site:** [tallyseal.org](https://tallyseal.org)
 
 ---
 
@@ -62,7 +62,7 @@ crawcus/
 │   ├── canon/                          architectural decisions (CC-BY-4.0)
 │   │   ├── architecture-primitives.md  all Core + Extended primitives
 │   └── engineering/                    quality gates (CC-BY-4.0)
-├── packages/                           REFERENCE IMPLEMENTATIONS (Apache-2.0 or MIT per LICENSE)
+├── packages/                           REFERENCE IMPLEMENTATIONS (Apache-2.0)
 │   ├── spec/          @crawcus/spec         types + evaluators + canonical JSON
 │   ├── core/          @crawcus/core         runtime + ports + PII tokenisation
 │   ├── verifier/      @crawcus/verifier     UI-agnostic chain verifier (sync core)

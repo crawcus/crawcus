@@ -2,7 +2,7 @@
 
 Per-node cryptographic audit receipts for [Flower](https://flower.ai) federated-learning clients.
 
-Every `fit()` call emits a signed, hash-chained [CRAWCUS](https://tallyseal.org/spec) receipt to a local JSONL log. Regulators, auditors, or data subjects verify the chain with any conformant CRAWCUS verifier — no dependency on the framework author, the coordinator, or any single vendor.
+Every `fit()` call emits a signed, hash-chained [CRAWCUS](https://tallyseal.org) receipt to a local JSONL log. Regulators, auditors, or data subjects verify the chain with any conformant CRAWCUS verifier — no dependency on the framework author, the coordinator, or any single vendor.
 
 ## Why
 
@@ -50,7 +50,7 @@ Every training round appends one receipt to `receipts.jsonl`:
 
 ## Verify a chain
 
-Any conformant CRAWCUS verifier accepts this JSONL. See the [CRAWCUS TCK](https://tallyseal.org/spec) for the reference verifier and conformance fixtures.
+Any conformant CRAWCUS verifier accepts this JSONL. See the [CRAWCUS TCK](https://tallyseal.org) for the reference verifier and conformance fixtures.
 
 Basic sanity check in Python:
 

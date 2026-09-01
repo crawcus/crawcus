@@ -1,6 +1,6 @@
 # Contributing to crawcus-flower
 
-`crawcus-flower` is a reference client for the [CRAWCUS](https://tallyseal.org/spec) open specification. Contributions welcome.
+`crawcus-flower` is a reference client for the [CRAWCUS](https://tallyseal.org) open specification. Contributions welcome.
 
 ## Where to open issues + PRs
 
