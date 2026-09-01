@@ -1,0 +1,66 @@
+{
+  "name": "@crawcus/regulations-ferpa",
+  "version": "0.3.4",
+  "private": true,
+  "description": "FERPA module for CRAWCUS — typed Contract factories for §99.31 disclosure consent, parental-access flows, K-12 audit-bundle templates, and §99.7 annual-notice disclosure-template fillers. Quarterly-pinned versions.",
+  "keywords": [
+    "ferpa",
+    "education",
+    "k12",
+    "edtech",
+    "compliance",
+    "consent",
+    "student-data",
+    "parental-rights",
+    "crawcus",
+    "regulation",
+    "us",
+    "typescript"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./disclosure-templates": {
+      "types": "./dist/disclosure-templates/index.d.ts",
+      "import": "./dist/disclosure-templates/index.js",
+      "require": "./dist/disclosure-templates/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "features",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@crawcus/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@crawcus/tck": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tallyseal/crawcus.git",
+    "directory": "packages/regulations-ferpa"
+  },
+  "homepage": "https://tallyseal.org/spec",
+  "bugs": "https://github.com/tallyseal/crawcus/issues",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

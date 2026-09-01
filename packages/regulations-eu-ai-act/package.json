@@ -1,0 +1,70 @@
+{
+  "name": "@crawcus/regulations-eu-ai-act",
+  "version": "0.2.4",
+  "private": true,
+  "description": "EU AI Act module for CRAWCUS — typed Contract factories for Article 14 oversight, Article 50 transparency obligations, Article 12 logging, Annex III risk classifications, and Article 50 disclosure-template fillers. Composes with other CRAWCUS regulation modules.",
+  "keywords": [
+    "eu-ai-act",
+    "ai-act",
+    "article-14",
+    "article-50",
+    "article-12",
+    "annex-iii",
+    "transparency",
+    "deepfake",
+    "synthetic-content",
+    "high-risk-ai",
+    "human-oversight",
+    "compliance",
+    "crawcus",
+    "regulation",
+    "eu",
+    "typescript"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./disclosure-templates": {
+      "types": "./dist/disclosure-templates/index.d.ts",
+      "import": "./dist/disclosure-templates/index.js",
+      "require": "./dist/disclosure-templates/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "features",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@crawcus/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@crawcus/tck": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tallyseal/crawcus.git",
+    "directory": "packages/regulations-eu-ai-act"
+  },
+  "homepage": "https://tallyseal.org/spec",
+  "bugs": "https://github.com/tallyseal/crawcus/issues",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

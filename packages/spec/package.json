@@ -1,0 +1,61 @@
+{
+  "name": "@crawcus/spec",
+  "version": "0.12.0",
+  "private": true,
+  "description": "CRAWCUS open-standard reference content — wire-format types, schemas, pure evaluators (Contract algorithm, hash-chain, canonical-JSON, readiness predicate). Vendor-neutral; brand-neutral. Y1 H2 target: spin out to github.com/crawcus/spec under the @crawcus npm scope.",
+  "keywords": [
+    "crawcus",
+    "compliance",
+    "compliance-as-code",
+    "audit-trail",
+    "hash-chain",
+    "rfc-8785",
+    "canonical-json",
+    "contract",
+    "specification",
+    "standard",
+    "typescript"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.7.0",
+    "@noble/hashes": "^1.6.1",
+    "canonicalize": "^2.0.0",
+    "neverthrow": "^8.1.1",
+    "tiny-invariant": "^1.3.3",
+    "uuidv7": "^1.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tallyseal/crawcus.git",
+    "directory": "packages/spec"
+  },
+  "homepage": "https://tallyseal.org/spec",
+  "bugs": "https://github.com/tallyseal/crawcus/issues",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

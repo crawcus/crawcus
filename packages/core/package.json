@@ -1,0 +1,73 @@
+{
+  "name": "@crawcus/core",
+  "version": "0.15.0",
+  "private": true,
+  "description": "Compliance-grade primitives for any backend — Contract · Receipt · Attestation · Warrant. Reference runtime for the CRAWCUS open standard.",
+  "keywords": [
+    "compliance",
+    "compliance-as-code",
+    "audit-log",
+    "audit-trail",
+    "tamper-evident",
+    "hash-chain",
+    "event-sourcing",
+    "evidence",
+    "attestation",
+    "crawcus",
+    "regulation",
+    "provenance",
+    "typescript",
+    "auditor"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.7.0",
+    "@noble/hashes": "^1.6.1",
+    "@crawcus/spec": "workspace:*",
+    "canonicalize": "^2.0.0",
+    "neverthrow": "^8.1.1",
+    "tiny-invariant": "^1.3.3",
+    "uuidv7": "^1.0.2"
+  },
+  "peerDependencies": {
+    "@opentelemetry/api": "^1.9.0"
+  },
+  "peerDependenciesMeta": {
+    "@opentelemetry/api": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tallyseal/crawcus.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://tallyseal.org/spec",
+  "bugs": "https://github.com/tallyseal/crawcus/issues",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

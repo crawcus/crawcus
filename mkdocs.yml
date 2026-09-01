@@ -1,0 +1,72 @@
+site_name: CRAWCUS
+site_url: https://tallyseal.org/spec
+site_description: An open specification for cryptographic audit receipts covering both application transactions and AI-inference decisions under one canonical shape.
+site_author: Paul Wander + CRAWCUS contributors
+
+repo_url: https://github.com/tallyseal/crawcus
+repo_name: tallyseal/crawcus
+edit_uri: edit/main/docs/
+
+copyright: >
+  Copyright &copy; 2026 Paul Wander + CRAWCUS contributors.
+  Specification text licensed under CC-BY-4.0. Code licensed under Apache-2.0 or MIT (see per-package LICENSE).
+
+theme:
+  name: material
+  logo: ../branding/crawcus-seal-compact.svg
+  favicon: ../branding/crawcus-seal-compact.svg
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
+    - search.suggest
+    - search.highlight
+    - toc.follow
+
+nav:
+  - Overview: index.md
+  - Specification:
+    - Format: spec/crawcus-format.md
+    - Contracts: spec/crawcus-contracts.md
+  - Canon:
+    - Architecture primitives: canon/architecture-primitives.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      permalink_title: Permalink to this section
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+
+plugins:
+  - search

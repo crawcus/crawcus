@@ -1,0 +1,67 @@
+{
+  "name": "@crawcus/regulations-gdpr",
+  "version": "0.3.4",
+  "private": true,
+  "description": "GDPR module for CRAWCUS — typed Contract factories for Article 6, Article 8, Article 22, DSAR endpoints, and disclosure-template fillers for Articles 13 + 22. Quarterly-pinned regulator versions.",
+  "keywords": [
+    "gdpr",
+    "compliance",
+    "consent",
+    "dsar",
+    "data-protection",
+    "privacy",
+    "article-8",
+    "article-22",
+    "automated-decisions",
+    "crawcus",
+    "regulation",
+    "eu",
+    "typescript"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./disclosure-templates": {
+      "types": "./dist/disclosure-templates/index.d.ts",
+      "import": "./dist/disclosure-templates/index.js",
+      "require": "./dist/disclosure-templates/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "features",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@crawcus/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@crawcus/tck": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tallyseal/crawcus.git",
+    "directory": "packages/regulations-gdpr"
+  },
+  "homepage": "https://tallyseal.org/spec",
+  "bugs": "https://github.com/tallyseal/crawcus/issues",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

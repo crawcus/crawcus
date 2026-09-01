@@ -1,0 +1,59 @@
+{
+  "name": "@crawcus/verifier",
+  "version": "0.3.1",
+  "private": true,
+  "description": "CRAWCUS audit-bundle verifier — offline, deterministic, third-party-runnable. Re-checks DSSE envelope + JCS hash equivalence + hash-chain integrity + Contract pre/inv/post predicates against an embedded predicate-source-text payload. Library surface used by `crawcus-verify` CLI + Anthropic-cloud verify endpoint + Tallyseal lighthouse app.",
+  "keywords": [
+    "crawcus",
+    "verifier",
+    "audit-bundle",
+    "dsse",
+    "hash-chain",
+    "chain-of-custody",
+    "compliance",
+    "compliance-as-code",
+    "rfc-8785",
+    "canonical-json",
+    "typescript"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.7.0",
+    "@noble/hashes": "^1.6.1",
+    "@crawcus/spec": "workspace:*",
+    "canonicalize": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tallyseal/crawcus.git",
+    "directory": "packages/verifier"
+  },
+  "homepage": "https://tallyseal.org/spec",
+  "bugs": "https://github.com/tallyseal/crawcus/issues",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

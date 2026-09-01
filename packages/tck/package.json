@@ -1,0 +1,61 @@
+{
+  "name": "@crawcus/tck",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Conformance Test Kit for CrawcusSpec — Gherkin fixtures and coverage ratchet. Any runtime (TS, Go, Rust, Python) must pass the TCK to claim spec compliance.",
+  "keywords": [
+    "conformance",
+    "test-kit",
+    "tck",
+    "gherkin",
+    "crawcus",
+    "crawcusspec",
+    "compliance",
+    "standard",
+    "specification",
+    "typescript"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./fixtures": {
+      "types": "./dist/fixtures/index.d.ts",
+      "import": "./dist/fixtures/index.js",
+      "require": "./dist/fixtures/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "fixtures",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@crawcus/spec": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tallyseal/crawcus.git",
+    "directory": "packages/tck"
+  },
+  "homepage": "https://tallyseal.org/spec",
+  "bugs": "https://github.com/tallyseal/crawcus/issues",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
