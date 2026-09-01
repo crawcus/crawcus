@@ -1,0 +1,90 @@
+name: Specification clarification
+description: The spec text is unclear, ambiguous, contradictory, or missing information — but appears correct as written (not a security issue).
+title: "spec-clarification: "
+labels: [spec, clarification, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template when the CRAWCUS spec text leaves you unsure how
+        a compliant implementation should behave — either because two
+        sections seem to contradict, or a normative requirement is silent
+        on an edge case, or a term is used without being defined.
+
+        **STOP — could the ambiguity change security properties?** If two
+        plausible readings of the same clause would give different
+        integrity / confidentiality / non-repudiation guarantees (for
+        example: "must a receipt bind the consent hash?"), that is a
+        security-relevant ambiguity — please follow [SECURITY.md](https://github.com/tallyseal/crawcus/blob/main/SECURITY.md)
+        for coordinated private disclosure to paul@tallyseal.org rather
+        than filing here.
+
+        For everything else — wording, edge cases, missing definitions,
+        contradictions with no security angle — please continue.
+
+  - type: input
+    id: section
+    attributes:
+      label: Which spec section?
+      description: Give the file path, section anchor, and line number if you can. Cite every location if the confusion spans several places.
+      placeholder: "e.g. docs/spec/crawcus-format.md §4.2 lines 118–124, and docs/canon/architecture-primitives.md — Consent primitive"
+    validations:
+      required: true
+
+  - type: textarea
+    id: unclear
+    attributes:
+      label: What is unclear, ambiguous, or contradictory?
+      description: Quote the exact text, then describe why it doesn't uniquely determine implementation behaviour.
+      placeholder: |
+        e.g. §4.2 says the receipt "MUST include the consent identifier"
+        but §5.1 example receipts omit it. Should implementations reject
+        receipts without a consent identifier, or is §5.1 canonical?
+    validations:
+      required: true
+
+  - type: textarea
+    id: interpretations
+    attributes:
+      label: What interpretations are possible?
+      description: List at least two — that's what makes it a clarification issue rather than a feature request. Number them so we can reference them in discussion.
+      placeholder: |
+        1. §4.2 is normative — verifiers MUST reject receipts without a
+           consent identifier; §5.1 examples are buggy and need updating.
+        2. §5.1 examples are canonical — the consent identifier is optional
+           when the receipt is standalone; §4.2 "MUST include" applies only
+           when a consent record is being bound.
+        3. Both hold conditionally on a hidden tier distinction — Core-1.0
+           requires it, Extended-1.0 does not (or vice versa).
+    validations:
+      required: true
+
+  - type: textarea
+    id: best-guess
+    attributes:
+      label: Your best guess at the intended meaning
+      description: Optional but very helpful — tell us which interpretation you'd bet on and why. This is often what the eventual clarification will affirm or refute.
+
+  - type: dropdown
+    id: tier-impact
+    attributes:
+      label: Conformance-tier impact
+      description: Which conformance tier(s) would a clarification affect?
+      options:
+        - "Core-1.0 only"
+        - "Extended-1.0 only"
+        - "Both tiers"
+        - "Neither — non-normative text (examples, glossary, motivation)"
+        - "Unsure"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight
+      options:
+        - label: I have searched existing issues and Discussions for a duplicate.
+          required: true
+        - label: I have confirmed this is a clarification, not a security-relevant ambiguity (if unsure, I have followed SECURITY.md instead).
+          required: true

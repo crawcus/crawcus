@@ -1,0 +1,34 @@
+# CRAWCUS issue-template configuration.
+#
+# Blank issues are disabled so every report lands in a template that surfaces
+# the information triagers need. If none of the templates fit, please open a
+# GitHub Discussion first — a maintainer will help you shape it into an issue
+# or an ADR-style spec-change proposal.
+
+blank_issues_enabled: false
+
+contact_links:
+  - name: Security vulnerability (private disclosure)
+    url: https://github.com/tallyseal/crawcus/blob/main/SECURITY.md
+    about: >-
+      Do NOT open a public issue for security bugs. Email paul@tallyseal.org
+      or follow SECURITY.md for the coordinated-disclosure process. This
+      covers vulnerabilities in any @crawcus/* package, crawcus-flower, the
+      TCK, or the reference verifier.
+
+  - name: Question, discussion, or design chat
+    url: https://github.com/tallyseal/crawcus/discussions
+    about: >-
+      Not sure whether something is a bug, a spec question, or a feature
+      request? Start in Discussions. Good candidates: "how do I model X with
+      the Extended primitives?", "is behaviour Y intentional?", integration
+      war stories, RFC-style brainstorms before a formal proposal.
+
+  - name: Spec change proposal (ADR-shaped)
+    url: https://github.com/tallyseal/crawcus/discussions/categories/spec-proposals
+    about: >-
+      Changes to Core-1.0, Extended-1.0, or any normative spec text go
+      through an ADR-shaped Discussion FIRST — see CONTRIBUTING.md
+      "Spec-change proposal" for the required sections (context, decision,
+      alternatives, conformance impact, TCK impact). Only after the
+      Discussion reaches consensus is a PR opened against the spec.

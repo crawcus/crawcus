@@ -1,0 +1,101 @@
+name: Feature request (implementation)
+description: A new capability, port, adapter, regulations coverage, or reference-implementation improvement. NOT a spec change (open a Discussion for spec changes per CONTRIBUTING.md).
+title: "feature: "
+labels: [enhancement, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is for **implementation-scope** work — a new option
+        on an existing API, a Python or Go port of an existing verifier
+        capability, an additional regulations pack, better error messages,
+        performance improvements, tooling ergonomics, and so on.
+
+        **Spec-level changes belong in a Discussion, not an issue.** If
+        your request would change Core-1.0, Extended-1.0, add a new
+        primitive, or alter any normative requirement, please open an
+        ADR-shaped [Spec Proposal Discussion](https://github.com/tallyseal/crawcus/discussions/categories/spec-proposals)
+        first — see CONTRIBUTING.md §"Spec-change proposal" for the
+        required structure. A maintainer will help you shape it and, once
+        rough consensus is reached, an implementation PR follows.
+
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which package would this land in?
+      description: Pick the package that would own the change. Choose "new package" if this is genuinely a fresh port or adapter.
+      options:
+        - "@crawcus/spec"
+        - "@crawcus/core"
+        - "@crawcus/verifier"
+        - "@crawcus/tck"
+        - "@crawcus/regulations-gdpr"
+        - "@crawcus/regulations-ferpa"
+        - "@crawcus/regulations-eu-ai-act"
+        - "crawcus-flower (Python)"
+        - "new package (port / adapter / new regulations coverage)"
+        - "tooling / build / CI"
+        - "docs"
+        - "other / unsure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Motivation before mechanism. Describe the user, the situation, and the pain — not the fix. If you can, cite a real workflow that's blocked today.
+      placeholder: |
+        e.g. As an integrator writing a FERPA-scoped consent flow in
+        Python, I currently have to shell out to the Node verifier from
+        my Django app to validate incoming receipts. This adds a Node
+        runtime dependency to production and roughly 40ms of latency per
+        verification. A native Python verifier would let the whole flow
+        live in-process.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What's your proposed approach?
+      description: Sketch the shape of the change — API surface, module layout, TCK-fixture strategy. Not a full design doc; enough for a maintainer to say "yes, roughly that direction".
+      placeholder: |
+        e.g. Add crawcus-flower as a first-class verifier port sharing
+        the TCK fixtures. Package layout: crawcus_flower.verify.verify()
+        mirroring the TS signature. Reuse tck/fixtures/ verbatim via
+        submodule or PyPI-published fixture-only package. CI matrix
+        adds Python 3.11 + 3.12 against the same golden set as TS.
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you look at, and why did you rule it out? "Do nothing" is a valid alternative if you've thought about it.
+      placeholder: |
+        e.g. (1) Keep shelling out — rejected, adds Node to prod. (2) Use
+        an existing JOSE library and hand-roll verification — rejected,
+        drifts from the TCK. (3) WASM-compile the TS verifier — considered,
+        but Python-side ergonomics are poor and startup cost is high.
+
+  - type: dropdown
+    id: contribution
+    attributes:
+      label: Are you willing to implement this?
+      description: No pressure either way — knowing the answer helps triage. First-time contributors are very welcome; pick "with mentorship" and a maintainer will pair.
+      options:
+        - "Yes — I'll open a PR"
+        - "Yes, with mentorship — I need a maintainer to pair or review closely"
+        - "No — requesting a maintainer to implement"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight
+      options:
+        - label: I have searched existing issues and Discussions for a duplicate or overlapping request.
+          required: true
+        - label: I have confirmed this is implementation-scope, not spec-scope (if spec-scope, I have opened a Discussion instead).
+          required: true

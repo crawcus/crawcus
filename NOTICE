@@ -1,0 +1,46 @@
+CRAWCUS — Contract · Receipt · Attestation · Warrant
+
+Copyright 2026 Paul Wander + CRAWCUS contributors.
+
+Licensed as follows:
+
+- **Code** (reference implementations, verifier, TCK, build tooling — all files
+  under `packages/`, `clients/`, `mkdocs.yml`, and CI configuration) —
+  Apache License 2.0, per the top-level `LICENSE`. Per-package `LICENSE` files
+  may declare MIT or another compatible license; the per-package file governs.
+- **Specification text** (all files under `docs/spec/`, `docs/canon/`,
+  `docs/engineering/`, plus `docs/index.md` and prose sections of package
+  READMEs that describe spec semantics) — Creative Commons Attribution 4.0
+  International (CC-BY-4.0), per `LICENSE-SPEC`.
+
+Trademarks: "CRAWCUS" is not a registered trademark; the name is descriptive
+of the open specification and may be used by any party to refer to
+implementations of this specification. "Tallyseal" is a trading name of
+Wanderco Ltd and is used here only to describe provenance of this initial
+release. Nothing in this NOTICE grants any trademark rights.
+
+Governance: CRAWCUS is authored openly under the governance model described in
+`GOVERNANCE.md`. Pre-Linux-Foundation-donation, decisions are made by the
+maintainers listed in `MAINTAINERS.md`. See `docs/internal/adr/0052` (in the
+originating repository) for the standards-body track.
+
+Third-party components: reference implementations depend on the following
+open-source components — each retains its own license and copyright, listed
+here for attribution:
+
+- `@noble/curves` (MIT) — https://github.com/paulmillr/noble-curves
+- `@noble/hashes` (MIT) — https://github.com/paulmillr/noble-hashes
+- `canonicalize` (Apache-2.0) — https://github.com/erdtman/canonicalize
+- `neverthrow` (MIT) — https://github.com/supermacro/neverthrow
+- `tiny-invariant` (MIT) — https://github.com/alexreardon/tiny-invariant
+- `uuidv7` (MIT) — https://github.com/LiosK/uuidv7
+- `jcs` (Python, RFC 8785 JCS) (Apache-2.0) — https://pypi.org/project/jcs/
+- `flwr` (Apache-2.0) — https://flower.ai
+
+Contact:
+
+- Specification questions, contributor onboarding, general enquiries:
+  paul@tallyseal.org
+- Security disclosures: see `SECURITY.md`
+- Contributions: see `CONTRIBUTING.md`
+- Governance / maintainers: see `GOVERNANCE.md` / `MAINTAINERS.md`

@@ -1,0 +1,116 @@
+name: Bug report
+description: A reference implementation, verifier, TCK fixture, or regulations-package factory produces incorrect behaviour.
+title: "bug: "
+labels: [bug, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to file a bug report against CRAWCUS.
+
+        **STOP — is this a security issue?** If the bug allows a party to
+        forge, replay, strip, or bypass a CRAWCUS receipt, seal, consent
+        record, or any other integrity/authorisation guarantee, please do
+        NOT file it here. Follow [SECURITY.md](https://github.com/tallyseal/crawcus/blob/main/SECURITY.md)
+        for coordinated private disclosure to paul@tallyseal.org.
+
+        For everything else — incorrect output, crashes, spec-behaviour
+        mismatches, TCK-fixture regressions, port bugs — please continue.
+
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which package is affected?
+      description: Pick the package where the bug first manifests. If it spans multiple, pick the lowest-level one and mention the others in "what actually happened".
+      options:
+        - "@crawcus/spec"
+        - "@crawcus/core"
+        - "@crawcus/verifier"
+        - "@crawcus/tck"
+        - "@crawcus/regulations-gdpr"
+        - "@crawcus/regulations-ferpa"
+        - "@crawcus/regulations-eu-ai-act"
+        - "crawcus-flower (Python)"
+        - "docs"
+        - "other / unsure"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Package version(s) affected
+      description: Exact version(s) from your lockfile. If reproduced from `main`, give the commit SHA.
+      placeholder: "e.g. @crawcus/verifier@0.3.2, or main @ a1b2c3d"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+      description: Describe the behaviour you expected, and cite the spec section or API contract you're relying on if applicable.
+      placeholder: |
+        e.g. Verifying a well-formed Core-1.0 receipt against the reference
+        fixture at tck/fixtures/core/consent/well-formed-01.json should
+        return { valid: true, tier: "Core-1.0" } per docs/spec/crawcus-format.md §4.2.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened?
+      description: Describe the observed behaviour. Include exact error messages verbatim.
+      placeholder: |
+        e.g. Verifier throws `TypeError: Cannot read property 'sig' of undefined`
+        at verifier/src/verify.ts:87, instead of returning a structured
+        VerificationResult.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimum reproduction
+      description: A minimal code snippet, TCK fixture reference, or step list a maintainer can run in under 5 minutes. If the repro requires anything beyond a fresh clone + `pnpm install`, spell it out.
+      render: text
+      placeholder: |
+        ```ts
+        import { verify } from '@crawcus/verifier';
+        import fixture from '@crawcus/tck/fixtures/core/consent/well-formed-01.json';
+        const result = await verify(fixture, { tier: 'Core-1.0' });
+        console.log(result);
+        ```
+        Expected: { valid: true, tier: 'Core-1.0' }
+        Actual:   TypeError as above.
+    validations:
+      required: true
+
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime version
+      description: Node version for TypeScript packages, or Python version for crawcus-flower. Include OS if the bug looks platform-sensitive.
+      placeholder: "e.g. Node 20.11.0 on macOS 14.3, or Python 3.12.1 on Ubuntu 22.04"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs, stack trace, or verifier output
+      description: Paste the full stack trace, verifier report, or debug log. Trim only genuinely irrelevant lines — over-trimming loses signal.
+      render: shell
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight
+      options:
+        - label: I have searched existing issues and Discussions for a duplicate.
+          required: true
+        - label: I have read the spec section relevant to this bug (or noted that no such section exists).
+          required: true
+        - label: I have reproduced this against the latest published version of the affected package (or against `main` — SHA provided above).
+          required: true
