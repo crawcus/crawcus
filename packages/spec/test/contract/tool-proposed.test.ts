@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // TKT-V6-ITEM-15 — 'tool_proposed' Contract checkpoint
 //
 // Tests the spec-level surface only: evaluator dispatch + context

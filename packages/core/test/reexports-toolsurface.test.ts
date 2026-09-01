@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect } from 'vitest';
 
 // Runtime value re-exports under test — imported from core

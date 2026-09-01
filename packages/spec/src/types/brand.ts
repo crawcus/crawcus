@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Nominal-type brand helper. Zero runtime cost; pure type-level discipline.
  *

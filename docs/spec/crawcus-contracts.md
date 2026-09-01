@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 Paul Wander + CRAWCUS contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # CRAWCUS v0.2 — First-class Contracts (SCQS design memo)
 
 | Field | Value |

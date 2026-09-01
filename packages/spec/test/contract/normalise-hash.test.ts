@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect } from 'vitest';
 import { normalisePredicateSource } from '../../src/contract/normalise.js';
 import { hashPredicate, hashPredicateSource } from '../../src/contract/hash.js';

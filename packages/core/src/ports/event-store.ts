@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Event, IntentId, Tenant, HashChainProof } from '@crawcus/spec';
 import type { TxContext } from './tx-context.js';
 

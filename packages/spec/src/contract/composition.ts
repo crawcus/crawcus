@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Contract, ContractCtx, ToolProposedCtx } from './types.js';
 import type { CrawcusSpec } from '../types/intent.js';
 import { hashPredicate } from './hash.js';

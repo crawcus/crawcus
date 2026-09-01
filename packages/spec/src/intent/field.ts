@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { FieldBaseType, FieldMetadata, FieldSpec } from '../types/field.js';
 import type { LocalisedText } from '../types/locale.js';
 import type { ProjectionName } from '../types/ids.js';

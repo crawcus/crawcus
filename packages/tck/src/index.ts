@@ -1,4 +1,9 @@
-export const TALLYSEAL_CRAWCUS_TCK_VERSION = '0.1.0' as const;
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+export const CRAWCUS_TCK_VERSION = '0.1.0' as const;
 
 export {
   checkScenarioCoverage,

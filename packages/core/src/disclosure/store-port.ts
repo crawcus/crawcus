@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Disclosure, DisclosureId, DisclosureRequirementId } from '@crawcus/spec';
 import type { SubjectId, TenantId } from '@crawcus/spec';
 

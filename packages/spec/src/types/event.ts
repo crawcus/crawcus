@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Brand } from './brand.js';
 import type { ConsentEventId, ContentHash, EventId, IntentId, SubjectId, TenantId } from './ids.js';
 import type { LawfulBasis, SpecialCategoryBasis } from './compliance.js';

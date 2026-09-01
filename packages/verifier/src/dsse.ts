@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * DSSE (Dead Simple Signing Envelope) parsing + Pre-Authentication
  * Encoding (PAE) + ed25519 signature verification.

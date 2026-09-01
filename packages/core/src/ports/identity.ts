@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { SubjectId } from '@crawcus/spec';
 import type { Actor, Tenant } from '@crawcus/spec';
 

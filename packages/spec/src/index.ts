@@ -1,8 +1,13 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // CRAWCUS open-standard reference content — public barrel.
 //
-// Tallyseal runtime (`/core`) imports from this barrel.
-// At Y1 H2 spin-out, this package becomes `@crawcus/spec` with the
-// same public surface — the scope rename is mechanical.
+// Downstream implementations (including the sibling `@crawcus/core`
+// reference runtime) import from this barrel. The surface is
+// vendor-neutral and brand-neutral by design.
 
 // ============ Branded type helpers + IFC-lite ============
 

@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Unit tests for `countersignResult` — TKT-VERIFIER-1b spec §5a row 2.
  *

@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { canonicalJSON } from '../event/canonical-json.js';
 import type { Warrant } from './types.js';
 

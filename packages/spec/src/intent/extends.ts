@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { CrawcusSpec, IntentClassification } from '../types/intent.js';
 import type { FieldSpec } from '../types/field.js';
 import type { Contract } from '../contract/types.js';

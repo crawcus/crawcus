@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Discriminated result type for TCK fixtures. Used by every fixture
  * `runX` function — pass or fail-with-diagnostic. Stable shape across

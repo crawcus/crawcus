@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { ProjectionName, Purpose, Region, RegulationVersion } from './ids.js';
 import type { ISO8601Duration } from './duration.js';
 

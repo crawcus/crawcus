@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Contract, ContractCtx, ContractViolationPayload, ToolProposedCtx } from './types.js';
 import type { EventId, IntentId } from '../types/ids.js';
 import { hashPredicate } from './hash.js';

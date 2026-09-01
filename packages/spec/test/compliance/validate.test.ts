@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect } from 'vitest';
 import { validateManifest } from '../../src/compliance/validate.js';
 import { defineCompliance } from '../../src/compliance/define-compliance.js';

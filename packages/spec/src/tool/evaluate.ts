@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { ToolName } from '../types/ids.js';
 import { validateJsonSchemaShape } from '../types/json.js';
 import {

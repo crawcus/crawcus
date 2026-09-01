@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Tool-use primitive — vendor-neutral types for AI-emitted tool calls.
  *

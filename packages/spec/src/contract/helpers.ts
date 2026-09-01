@@ -1,16 +1,21 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Contract, ContractCtx, RegulationCitation } from './types.js';
 import type { LocalisedText } from '../types/locale.js';
 
 /**
  * Factory helper for constructing a Contract with sane defaults.
- * Regulation modules (`@tallyseal/regulations/*`) export typed
+ * Regulation modules (`@crawcus/regulations-*`) export typed
  * wrappers around this — see the example below.
  *
  * Customers rarely call this directly; they call the regulation-
  * module factories (Lego-shaped composition).
  *
  * @example
- * // In @tallyseal/regulations/gdpr/art8.ts:
+ * // In @crawcus/regulations-gdpr/src/art8.ts:
  * export function minorConsent(opts: {
  *   ageField: string;
  *   consentField: string;

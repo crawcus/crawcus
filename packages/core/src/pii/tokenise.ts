@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { PIIPort } from '../ports/pii.js';
 import type { TenantCtx } from '@crawcus/spec';
 import type { Tainted, Untainted } from '@crawcus/spec';

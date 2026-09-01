@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 export { GDPR_VERSION } from './version.js';
 export { minorConsent, type MinorConsentOptions } from './art8.js';
 export {

@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 Paul Wander + CRAWCUS contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # CRAWCUS format — the canonical contract
 
 > **CRAWCUS is the open standard format for AI Application Compliance

@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 export { EU_AI_ACT_VERSION } from './version.js';
 export { humanOversight } from './art14.js';
 export {

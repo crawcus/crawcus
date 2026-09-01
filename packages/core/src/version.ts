@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Bumped 0.0.0 → 0.0.1 (commit 4a — type surface + ports + hash chain).
  * Bumped 0.0.1 → 0.0.2 (commit 4b — defineCrawcusSpec + field builder +

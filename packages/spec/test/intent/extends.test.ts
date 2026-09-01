@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect } from 'vitest';
 import { composeIntent, IntentCompositionError } from '../../src/intent/extends.js';
 import { field } from '../../src/intent/field.js';

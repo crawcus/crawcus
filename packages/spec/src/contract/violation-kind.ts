@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * ContractViolationKind — the canonical taxonomy of failure modes a
  * CRAWCUS verifier surfaces when re-checking a signed audit bundle.

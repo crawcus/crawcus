@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect } from 'vitest';
 import { tokenisePayload, assertNoRawPII } from '../../src/pii/tokenise.js';
 import { unsafeAssertUntainted } from '../../src/event/write-event.js';

@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Projector, ProjectorBaseCtx } from '@crawcus/spec';
 import type { AIPort } from '../ports/ai.js';
 import type { PIIPort } from '../ports/pii.js';

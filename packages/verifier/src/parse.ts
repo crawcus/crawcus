@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Top-level `parseSignedBundle` — takes raw envelope bytes, returns
  * a `ParsedBundle` containing the DSSE envelope, the decoded

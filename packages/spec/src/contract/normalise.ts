@@ -1,5 +1,10 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
- * Tallyseal canonical predicate-source normaliser.
+ * CRAWCUS canonical predicate-source normaliser.
  *
  * Per `02-product/crawcus-format.md` v0.2 §"Predicate
  * canonicalisation": the normaliser is part of the spec, NOT a
@@ -45,7 +50,7 @@
  *   - No type annotations
  *   - Use single quotes
  *
- * Helpers from `@tallyseal/regulations/*` are authored against this
+ * Helpers from `@crawcus/regulations-*` are authored against this
  * constraint, so adopters who compose via factories don't worry about it.
  */
 

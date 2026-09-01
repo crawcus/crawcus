@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // Version
 export { CRAWCUS_CORE_VERSION } from './version.js';
 

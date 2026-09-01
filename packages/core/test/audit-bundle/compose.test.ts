@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect } from 'vitest';
 import {
   AUDIT_BUNDLE_VERSION,
@@ -60,7 +65,7 @@ const tenant: Tenant = {
 
 const compliance: ComplianceManifest = defineCompliance({
   regulations: ['gdpr@2025-Q1' as RegulationVersion],
-  dpoContact: 'dpo@tallyseal.app',
+  dpoContact: 'dpo@crawcus.example',
   fields: {
     'Recipe.title': { pii: 'none' },
     'Recipe.notes': { pii: 'personal', retention: 'P7Y' as ISO8601Duration },

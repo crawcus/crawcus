@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect } from 'vitest';
 import { dispatchReducer } from '../../src/reducer/dispatcher.js';
 import { assertReducerDeterminism } from '../../src/reducer/determinism.js';

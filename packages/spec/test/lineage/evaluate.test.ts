@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect } from 'vitest';
 import { checkProvOIntegrity, evaluateLineage } from '../../src/lineage/evaluate.js';
 import { PROV_JSONLD_CONTEXT_URL } from '../../src/lineage/types.js';

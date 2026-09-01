@@ -12,7 +12,7 @@ Primary CRAWCUS repository: **https://github.com/tallyseal/crawcus**
 
 - **Receipt shape or spec-level changes** — discuss on the CRAWCUS main issue tracker first. Client-only PRs that diverge from the spec will be rejected.
 - **Flower-specific improvements** — new hook points, thread-safe wrappers, remote sinks, additional example FL apps — welcome.
-- **New reference clients for other FL / MLOps / LLM-observability frameworks** — welcome as separate packages under `clients/<framework>/`. See `docs/internal/gtm/flower-collab-plan-v1-INT.md` (in the main repo, when public) for the fit test.
+- **New reference clients for other FL / MLOps / LLM-observability frameworks** — welcome as separate packages under `clients/<framework>/`. Open a discussion on the main CRAWCUS issue tracker to sanity-check fit before drafting.
 
 ## Development
 

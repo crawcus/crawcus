@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { IssuerId } from '../types/ids.js';
 import type { IssuerKind, Warrant } from './types.js';
 

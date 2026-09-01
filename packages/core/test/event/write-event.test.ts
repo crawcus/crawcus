@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ed25519 } from '@noble/curves/ed25519';
 import { writeEvent, unsafeAssertUntainted } from '../../src/event/write-event.js';

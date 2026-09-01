@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { computeJsonHash } from '../event/hash-chain.js';
 import type { DisclosureContent } from './types.js';
 import type { Brand } from '../types/brand.js';

@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { defineContract, type Contract, type DisclosureDeliveredPayload } from '@crawcus/core';
 import { EU_AI_ACT_VERSION } from './version.js';
 

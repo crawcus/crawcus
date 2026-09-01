@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // Tool-use primitive — vendor-neutral AI-tool-call types.
 //
 // See ./types.ts for the full contract; this barrel re-exports the

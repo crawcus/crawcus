@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { IntentId, IntentKey, ProjectionName, TenantId } from './ids.js';
 import type { Locale } from './locale.js';
 import type { FieldSpec } from './field.js';

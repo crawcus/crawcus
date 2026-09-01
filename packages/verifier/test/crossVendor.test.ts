@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Cross-vendor DSSE envelope round-trip — spec §6c (THE motion-4 anchor).
  *

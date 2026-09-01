@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 Paul Wander + CRAWCUS contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Architecture primitives — the 14 cores
 
 > **Extended 2026-05-21** from 7 → 14 primitives. The original 7 cores

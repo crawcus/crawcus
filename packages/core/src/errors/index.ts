@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Typed error classes for the Tallyseal runtime. Each error names a
  * specific contract-violation class; consumers can pattern-match.

@@ -15,12 +15,12 @@ This package contains the vendor-neutral, brand-neutral spec layer:
 
 ## What's NOT in this package
 
-This is the **spec layer**. Tallyseal-specific implementation choices — ports / adapters, the `writeEvent` orchestrator, the `TallysealConfig` shape, PII tokenisation strategy, typed-error catalog, reducer dispatcher, audit-bundle composer — live in [`@crawcus/core`](../core), which depends on this package.
+This is the **spec layer**. Runtime implementation choices — ports / adapters, the `writeEvent` orchestrator, config shape, PII tokenisation strategy, typed-error catalog, reducer dispatcher, audit-bundle composer — live in [`@crawcus/core`](../core), which depends on this package.
 
 ## Boundaries
 
 - **Brand-neutral**: no `Tallyseal` identifier or string appears in source (enforced by `tallyseal/no-brand-leak` ESLint rule).
-- **Self-contained**: imports only `@noble/hashes`, `canonicalize`, `neverthrow`, `uuidv7`, `valibot`, `tiny-invariant`. No internal imports from `@tallyseal/*` (enforced structurally by the package boundary — TypeScript compiler refuses).
+- **Self-contained**: imports only `@noble/hashes`, `canonicalize`, `neverthrow`, `uuidv7`, `valibot`, `tiny-invariant`. No internal imports from `@crawcus/*` siblings (enforced structurally by the package boundary — TypeScript compiler refuses).
 - **Y10 marker**: any conformant CRAWCUS runtime implementation can be built on this package alone, plus its own runtime choices. The spec is portable to non-TypeScript implementations (Go / Rust target Y1 H2).
 
 ## Incoming primitives (action-board Sprint 1-5)

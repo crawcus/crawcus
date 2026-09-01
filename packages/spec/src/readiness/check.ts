@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Event } from '../types/event.js';
 import type { Intent } from '../types/intent.js';
 import type { CrawcusSpec } from '../types/intent.js';

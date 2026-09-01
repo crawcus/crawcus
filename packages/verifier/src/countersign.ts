@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Auditor countersign — wrap a `VerifyResult` in a separate DSSE
  * envelope signed by an auditor's ed25519 keypair.

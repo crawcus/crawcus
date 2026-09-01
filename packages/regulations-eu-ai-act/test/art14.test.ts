@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect } from 'vitest';
 import { humanOversight } from '../src/art14.js';
 import { evaluateContracts, defineCrawcusSpec, field } from '@crawcus/core';

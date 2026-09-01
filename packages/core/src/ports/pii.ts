@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Token } from '@crawcus/spec';
 import type { AccessCtx, TenantCtx } from '@crawcus/spec';
 

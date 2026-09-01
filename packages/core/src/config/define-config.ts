@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { TallysealConfig, ProjectionAdapter } from './types.js';
 import type { CrawcusSpec } from '@crawcus/spec';
 

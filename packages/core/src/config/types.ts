@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { ComplianceManifest } from '@crawcus/spec';
 import type { Event } from '@crawcus/spec';
 import type { IntentId, IntentKey } from '@crawcus/spec';

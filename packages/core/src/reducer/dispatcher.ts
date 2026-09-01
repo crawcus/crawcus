@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Event } from '@crawcus/spec';
 import type { IntentKey } from '@crawcus/spec';
 import type { ProjectionAdapter, ReducerCtx } from '../config/types.js';

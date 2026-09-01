@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { describe, it, expect } from 'vitest';
 import { resolveTrustedPublicKey, type IssuerTrust } from '../../src/warrant/issuer-trust.js';
 import type { Warrant } from '../../src/warrant/types.js';

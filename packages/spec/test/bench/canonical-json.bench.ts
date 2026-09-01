@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { bench, describe } from 'vitest';
 import { canonicalJSON, normaliseForCanonical } from '../../src/event/canonical-json.js';
 

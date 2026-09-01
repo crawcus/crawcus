@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { ComplianceManifest, FieldCompliance } from '../types/compliance.js';
 import type { FieldSpec } from '../types/field.js';
 import type { CrawcusSpec } from '../types/intent.js';
@@ -22,8 +27,8 @@ import { validateComposition } from '../contract/composition.js';
  *   ✅ predicate-size-limit (Q-S — 4 KB per predicate)
  *
  * Deferred to later commits (need infrastructure not yet built):
- *   ❌ retention-shorter-than-regulation-minimum (needs @tallyseal/regulations)
- *   ❌ regulation-version-retired (needs @tallyseal/regulations)
+ *   ❌ retention-shorter-than-regulation-minimum (needs @crawcus/regulations-*)
+ *   ❌ regulation-version-retired (needs @crawcus/regulations-*)
  *   ❌ sub-processor-dpa-unreachable (needs file-system port)
  */
 

@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import type { Event, EventKind } from '../types/event.js';
 import type { Purpose } from '../types/ids.js';
 

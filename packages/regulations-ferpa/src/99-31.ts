@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import { defineContract, type Contract } from '@crawcus/core';
 import { FERPA_VERSION } from './version.js';
 

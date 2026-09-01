@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Paul Wander
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * Test-fixture builder — produces a signed CRAWCUS audit bundle from
  * a small set of inputs. Used by every test file in this package.
