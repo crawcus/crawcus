@@ -11,7 +11,7 @@ body:
         **STOP — is this a security issue?** If the bug allows a party to
         forge, replay, strip, or bypass a CRAWCUS receipt, seal, consent
         record, or any other integrity/authorisation guarantee, please do
-        NOT file it here. Follow [SECURITY.md](https://github.com/tallyseal/crawcus/blob/main/SECURITY.md)
+        NOT file it here. Follow [SECURITY.md](https://github.com/tallyseal/spec/blob/main/SECURITY.md)
         for coordinated private disclosure to paul@tallyseal.org.
 
         For everything else — incorrect output, crashes, spec-behaviour

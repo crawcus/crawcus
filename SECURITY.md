@@ -36,7 +36,7 @@ reply. Once the project has a published key it will be listed here with its
 fingerprint.
 
 **GitHub Security Advisories.** Private-reporting via GitHub Security Advisories
-will be enabled once `github.com/tallyseal/crawcus` goes live. When it does,
+will be enabled once `github.com/tallyseal/spec` goes live. When it does,
 reporters may use either channel — email or a GHSA draft — interchangeably.
 
 ## Scope: what we treat as a vulnerability
@@ -105,7 +105,7 @@ still worth raising; where a better channel exists it is named.
   operator (GitHub, npm, PyPI, the email provider) rather than to CRAWCUS.
 - Missing best-practice guidance, hardening ideas, or "you could also check X"
   suggestions. These are welcome as public GitHub Issues or Discussions on
-  `github.com/tallyseal/crawcus` once the repository is live.
+  `github.com/tallyseal/spec` once the repository is live.
 - Findings against third-party mirrors, forks, or repackaged distributions that
   the project does not control. Report to whoever published the mirror.
 
@@ -237,7 +237,7 @@ handled differently.
 - If the spec is ambiguous but both plausible interpretations preserve the same
   security properties (for example, two equally safe ways to encode an
   optional field), open a **public GitHub Discussion** on
-  `github.com/tallyseal/crawcus` once the repository is live. This is the
+  `github.com/tallyseal/spec` once the repository is live. This is the
   correct channel because sunlight is the whole point of an open spec.
 - If the ambiguity **is** the vulnerability — that is, one plausible reading
   is safe and another is not, or two conformant implementations could disagree

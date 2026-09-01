@@ -7,10 +7,10 @@
   "homepage": "https://tallyseal.org/spec",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tallyseal/crawcus"
+    "url": "https://github.com/tallyseal/spec"
   },
   "bugs": {
-    "url": "https://github.com/tallyseal/crawcus/issues"
+    "url": "https://github.com/tallyseal/spec/issues"
   },
   "workspaces": [
     "packages/*"

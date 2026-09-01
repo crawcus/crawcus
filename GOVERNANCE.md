@@ -102,7 +102,7 @@ is donation to the Linux Foundation. Specifics of the intended end-state:
     package maintainer role during transition.
   - An **LF-provided neutral home**: the git repository, issue tracker,
     Discussions, mailing list, and release infrastructure move under LF
-    administration, retaining the `github.com/tallyseal/crawcus` URL only if
+    administration, retaining the `github.com/tallyseal/spec` URL only if
     LF permits; otherwise migrating to an LF-owned path with a permanent
     redirect.
 - **Contribution mechanism:** the Developer Certificate of Origin (DCO)

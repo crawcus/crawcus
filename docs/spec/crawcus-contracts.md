@@ -344,7 +344,7 @@ locked recommendation.**
 | `@tallyseal/regulations/gdpr` etc. | Ship reusable Contract factories per regulation article — `gdpr.art8.minorConsent`, `gdpr.art22.automatedDecisionExplanation`, `euAiAct.art14.humanOversight`, etc. |
 | `@tallyseal/spec-*` sector packs | Use regulation-module Contract factories + add sector-specific Contracts; `extends`-monotonic composition |
 | Audit-bundle layer | Renders Contract spec + violation log per Intent; contracts become a first-class section in the bundle |
-| `@tallyseal/crawcus-tck` | Conformance tests include Contract semantics: monotonic composition, severity escalation, predicate hash stability |
+| `@crawcus/tck` | Conformance tests include Contract semantics: monotonic composition, severity escalation, predicate hash stability |
 | HF integration H-1 | HF's first CrawcusSpec adopts at least one Contract (e.g., FERPA minor-consent) — proves the surface in production-shape code |
 | Insurance MGA (Y2 territory) | Premium pricing function takes per-tenant Contract-violation rate as primary signal |
 | Federation protocol (Y2-3) | Cross-org event exchange schema carries the sender's Contract spec; receiver verifies inputs against its own policy |
@@ -549,7 +549,7 @@ with `contract/` module included in 4b.
 - Specific Contract content for any individual regulation (e.g., the exact predicate for GDPR Art. 22 explanation) — owned by `@tallyseal/regulations/<reg>` modules; each module decided per-publish-cycle
 - The runtime evaluator implementation details (lazy materialisation strategy, caching policy) — engineering choice at commit 4b
 - The audit-bundle layer's predicate-source normalisation rules — owned by the audit-bundle package (deferred)
-- Whether `@tallyseal/crawcus-tck` ships an out-of-the-box Contract conformance harness — decided at TCK scaffold time
+- Whether `@crawcus/tck` ships an out-of-the-box Contract conformance harness — decided at TCK scaffold time
 - The W3C/IEEE submission package's exact framing of Contracts (W3C Community Group note vs IEEE Standards Association formal draft) — decided at C4 standards-timing memo
 - Insurance MGA pricing-function specifics — decided when MGA design memo lands (Y2 territory per `09-operating/decision-log.md` DEFERRED)
 - Federation protocol shape (signed cross-org Event format) — decided at federation memo (Y2-3 territory)
@@ -672,9 +672,9 @@ pre.disclosureHasOpportunityToBeRead({
 
 ### Spec/runtime placement
 
-- **Type definitions** ship in `@tallyseal/crawcus-spec` (the EventKind taxonomy is part of the open standard).
-- **Runtime EventKind union extension** in `internal-package` (re-exports `DisclosureSignal` from `crawcus-spec`).
-- **TCK fixture** in `@tallyseal/crawcus-tck` covering positive case + SIGNAL-not-gate lint rejection.
+- **Type definitions** ship in `@crawcus/spec` (the EventKind taxonomy is part of the open standard).
+- **Runtime EventKind union extension** in `@crawcus/core` (re-exports `DisclosureSignal` from `@crawcus/spec`).
+- **TCK fixture** in `@crawcus/tck` covering positive case + SIGNAL-not-gate lint rejection.
 - **Adapter helper** in `@tallyseal/react-assistant-ui`: `TallysealBanner` gains `onReadSignal` callback wiring IntersectionObserver to emit `DisclosureSignal{signalType: 'read'}` events.
 
 Source: HF feedback 2026-06-02 item 5; lighthouse SURFACE-FIRST verdict 2026-06-02; Q-CR9 LOCKED option (b) discriminator pattern 2026-06-02.

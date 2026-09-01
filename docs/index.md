@@ -49,7 +49,7 @@ Implementers declare their conformance tier in package metadata. Full details: [
 
 ## Reference implementations
 
-The specification ships alongside reference implementations that adopters can point at, extend, or replace with their own conformant runtimes. Reference implementations are one demonstration of correctness — never "the" reference. Anything passing the [`@crawcus/tck`](https://github.com/tallyseal/crawcus/tree/main/packages/tck) fixture set at the appropriate conformance tier is by definition CRAWCUS-conformant.
+The specification ships alongside reference implementations that adopters can point at, extend, or replace with their own conformant runtimes. Reference implementations are one demonstration of correctness — never "the" reference. Anything passing the [`@crawcus/tck`](https://github.com/tallyseal/spec/tree/main/packages/tck) fixture set at the appropriate conformance tier is by definition CRAWCUS-conformant.
 
 ### TypeScript packages (npm)
 
@@ -76,9 +76,9 @@ The specification ships alongside reference implementations that adopters can po
 | **Regulator or auditor** | [Wire format](spec/crawcus-format.md) → verify a real chain end-to-end using the reference verifier |
 | **Compliance lead** (CISO, GRC, DPO, model-risk officer) | the `@crawcus/regulations-*` package for your applicable regime |
 | **Enterprise CTO or architect** | [Wire format](spec/crawcus-format.md) → [Architecture primitives](canon/architecture-primitives.md) → walk-away / forensic-replay evaluation against the reference implementations |
-| **Engineer building a conformant runtime** | [Wire format](spec/crawcus-format.md) → [Contract primitive](spec/crawcus-contracts.md) → clone the [TCK](https://github.com/tallyseal/crawcus/tree/main/packages/tck) fixtures, run against your implementation |
-| **Author of an adjacent open-source project** (federated learning, model serving, LLM observability, MLOps) | Look at [`clients/flower/`](https://github.com/tallyseal/crawcus/tree/main/clients/flower) as the pattern — a small client that emits per-node receipts. The same pattern generalises to any framework that surfaces a per-decision or per-call boundary. |
-| **Standards-body reviewer** (LF AI & Data / JDF) | [Governance](https://github.com/tallyseal/crawcus/blob/main/GOVERNANCE.md) → [Wire format](spec/crawcus-format.md) → [Architecture primitives](canon/architecture-primitives.md) |
+| **Engineer building a conformant runtime** | [Wire format](spec/crawcus-format.md) → [Contract primitive](spec/crawcus-contracts.md) → clone the [TCK](https://github.com/tallyseal/spec/tree/main/packages/tck) fixtures, run against your implementation |
+| **Author of an adjacent open-source project** (federated learning, model serving, LLM observability, MLOps) | Look at [`clients/flower/`](https://github.com/tallyseal/spec/tree/main/clients/flower) as the pattern — a small client that emits per-node receipts. The same pattern generalises to any framework that surfaces a per-decision or per-call boundary. |
+| **Standards-body reviewer** (LF AI & Data / JDF) | [Governance](https://github.com/tallyseal/spec/blob/main/GOVERNANCE.md) → [Wire format](spec/crawcus-format.md) → [Architecture primitives](canon/architecture-primitives.md) |
 
 ## Standards CRAWCUS builds on
 
@@ -96,12 +96,12 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 
 ## Governance + licensing
 
-- **Governance:** authored under the model described in [GOVERNANCE.md](https://github.com/tallyseal/crawcus/blob/main/GOVERNANCE.md). Pre-donation phase (2026-09-01–): single maintainer with public Discussion-based decision-making. Post-donation: LF AI & Data / JDF governance.
+- **Governance:** authored under the model described in [GOVERNANCE.md](https://github.com/tallyseal/spec/blob/main/GOVERNANCE.md). Pre-donation phase (2026-09-01–): single maintainer with public Discussion-based decision-making. Post-donation: LF AI & Data / JDF governance.
 - **Standards-body track:** Linux Foundation submission in flight. Rationale: 6–12 month realistic timeline, industry-neutral governance from day one, alignment with peer projects (C2PA, in-toto, Sigstore) in the receipt / supply-chain-signing space.
-- **Code licence:** [Apache-2.0](https://github.com/tallyseal/crawcus/blob/main/LICENSE) (with per-package `LICENSE` files that may declare MIT).
-- **Specification licence:** [CC-BY-4.0](https://github.com/tallyseal/crawcus/blob/main/LICENSE-SPEC).
+- **Code licence:** [Apache-2.0](https://github.com/tallyseal/spec/blob/main/LICENSE) (with per-package `LICENSE` files that may declare MIT).
+- **Specification licence:** [CC-BY-4.0](https://github.com/tallyseal/spec/blob/main/LICENSE-SPEC).
 - **Contribution mechanism:** DCO sign-off ([`git commit -s`](https://developercertificate.org)); no CLA required.
-- **Security disclosures:** [SECURITY.md](https://github.com/tallyseal/crawcus/blob/main/SECURITY.md) — private disclosure to `paul@tallyseal.org` (subject prefix `[CRAWCUS SECURITY]`) or GitHub Security Advisories.
+- **Security disclosures:** [SECURITY.md](https://github.com/tallyseal/spec/blob/main/SECURITY.md) — private disclosure to `paul@tallyseal.org` (subject prefix `[CRAWCUS SECURITY]`) or GitHub Security Advisories.
 
 ## Openness — what we claim, what we do not
 
@@ -124,18 +124,18 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 
 Every `@crawcus/*` npm package and `crawcus-*` PyPI package is published via [Trusted Publishers](https://docs.pypi.org/trusted-publishers/) (OIDC — no long-lived API tokens) with [Sigstore attestations](https://docs.sigstore.dev) bound to the specific source commit + GitHub Actions workflow run. Publishing an audit-integrity library without cryptographic supply-chain proof would be self-parodying.
 
-Each release includes the exact `sigstore verify` command in its release notes. See [SECURITY.md](https://github.com/tallyseal/crawcus/blob/main/SECURITY.md) §"Supply-chain integrity guarantees" for the full commitment.
+Each release includes the exact `sigstore verify` command in its release notes. See [SECURITY.md](https://github.com/tallyseal/spec/blob/main/SECURITY.md) §"Supply-chain integrity guarantees" for the full commitment.
 
 ## Get involved
 
 - **Read the spec** — start with [Format](spec/crawcus-format.md), then [Contracts](spec/crawcus-contracts.md)
-- **Verify a real chain** — clone [tallyseal/crawcus](https://github.com/tallyseal/crawcus), `pnpm install`, run `packages/verifier` against a sample chain
+- **Verify a real chain** — clone [tallyseal/spec](https://github.com/tallyseal/spec), `pnpm install`, run `packages/verifier` against a sample chain
 - **Try the Python reference client** — `pip install crawcus-flower` and emit receipts from a Flower federated-learning run
-- **Report an issue** — [GitHub Issues](https://github.com/tallyseal/crawcus/issues) (bugs / spec clarifications / feature requests) — see the templates for what belongs in each
-- **Discuss** — [GitHub Discussions](https://github.com/tallyseal/crawcus/discussions) (spec-change proposals, general questions)
-- **Contribute** — see [CONTRIBUTING.md](https://github.com/tallyseal/crawcus/blob/main/CONTRIBUTING.md) for the three contribution tracks (spec change / implementation change / documentation) and DCO sign-off requirement
+- **Report an issue** — [GitHub Issues](https://github.com/tallyseal/spec/issues) (bugs / spec clarifications / feature requests) — see the templates for what belongs in each
+- **Discuss** — [GitHub Discussions](https://github.com/tallyseal/spec/discussions) (spec-change proposals, general questions)
+- **Contribute** — see [CONTRIBUTING.md](https://github.com/tallyseal/spec/blob/main/CONTRIBUTING.md) for the three contribution tracks (spec change / implementation change / documentation) and DCO sign-off requirement
 - **Contact** — `paul@tallyseal.org` for spec-level enquiries; SECURITY.md for security disclosures
 
 ---
 
-*Specification and reference implementations originally authored by Paul Wander as part of the Tallyseal project. The specification is on a path to Linux Foundation stewardship — see [GOVERNANCE.md](https://github.com/tallyseal/crawcus/blob/main/GOVERNANCE.md).*
+*Specification and reference implementations originally authored by Paul Wander as part of the Tallyseal project. The specification is on a path to Linux Foundation stewardship — see [GOVERNANCE.md](https://github.com/tallyseal/spec/blob/main/GOVERNANCE.md).*

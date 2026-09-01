@@ -91,7 +91,7 @@ for line in open("receipts.jsonl"):
 # once published:
 sigstore verify identity \
   --bundle crawcus_flower-<version>.whl.sigstore \
-  --cert-identity https://github.com/tallyseal/crawcus/.github/workflows/publish.yml@refs/tags/v<version> \
+  --cert-identity https://github.com/tallyseal/spec/.github/workflows/publish.yml@refs/tags/v<version> \
   --cert-oidc-issuer https://token.actions.githubusercontent.com \
   crawcus_flower-<version>.whl
 ```
@@ -109,7 +109,7 @@ Banked (fire on named user need):
 
 ## Contributing
 
-CRAWCUS is an open spec. Contributions to this reference client are welcome via the [tallyseal/crawcus](https://github.com/tallyseal/crawcus) repository.
+CRAWCUS is an open spec. Contributions to this reference client are welcome via the [tallyseal/spec](https://github.com/tallyseal/spec) repository.
 
 ## License
 

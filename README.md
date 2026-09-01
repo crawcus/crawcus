@@ -132,7 +132,7 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 
 CRAWCUS is authored openly under the governance model in [`GOVERNANCE.md`](GOVERNANCE.md). During the current pre-donation phase the project has a single maintainer (Paul Wander); the model transitions to a multi-maintainer / TSC structure at Linux Foundation donation.
 
-The intended donation target is the **Linux Foundation AI & Data** foundation, submitted via the **Joint Development Foundation (JDF)** — the same track [C2PA](https://c2pa.org), [in-toto](https://in-toto.io), and [Sigstore](https://www.sigstore.dev) took. Progress is public in the [GitHub Discussions](https://github.com/tallyseal/crawcus/discussions) (once the repository goes live).
+The intended donation target is the **Linux Foundation AI & Data** foundation, submitted via the **Joint Development Foundation (JDF)** — the same track [C2PA](https://c2pa.org), [in-toto](https://in-toto.io), and [Sigstore](https://www.sigstore.dev) took. Progress is public in the [GitHub Discussions](https://github.com/tallyseal/spec/discussions) (once the repository goes live).
 
 Rationale for LF over W3C / IEEE / ISO: 6–12 month realistic timeline to a recognised standard, industry-neutral governance from day one, no PAR ceremony blocking spec publication, alignment with existing peer projects in the receipt / supply-chain-signing space.
 

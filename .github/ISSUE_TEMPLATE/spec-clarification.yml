@@ -15,7 +15,7 @@ body:
         plausible readings of the same clause would give different
         integrity / confidentiality / non-repudiation guarantees (for
         example: "must a receipt bind the consent hash?"), that is a
-        security-relevant ambiguity — please follow [SECURITY.md](https://github.com/tallyseal/crawcus/blob/main/SECURITY.md)
+        security-relevant ambiguity — please follow [SECURITY.md](https://github.com/tallyseal/spec/blob/main/SECURITY.md)
         for coordinated private disclosure to paul@tallyseal.org rather
         than filing here.
 

@@ -4,7 +4,7 @@
 
 ## Where to open issues + PRs
 
-Primary CRAWCUS repository: **https://github.com/tallyseal/crawcus**
+Primary CRAWCUS repository: **https://github.com/tallyseal/spec**
 
 `crawcus-flower` lives at `clients/flower/` within that repository. Open issues and PRs there.
 

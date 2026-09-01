@@ -3,8 +3,8 @@ site_url: https://tallyseal.org/spec
 site_description: An open specification for cryptographic audit receipts covering both application transactions and AI-inference decisions under one canonical shape.
 site_author: Paul Wander + CRAWCUS contributors
 
-repo_url: https://github.com/tallyseal/crawcus
-repo_name: tallyseal/crawcus
+repo_url: https://github.com/tallyseal/spec
+repo_name: tallyseal/spec
 edit_uri: edit/main/docs/
 
 copyright: >

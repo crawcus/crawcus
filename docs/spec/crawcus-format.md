@@ -613,7 +613,7 @@ test if:
 3. Computing SHA-256 over the serialisation
 
 produces a `contentHash` byte-identical to the TS reference
-implementation's output. `@tallyseal/crawcus-tck` ships the
+implementation's output. `@crawcus/tck` ships the
 fixture suite for this test.
 
 ### Implications for predicates

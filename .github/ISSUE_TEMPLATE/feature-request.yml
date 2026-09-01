@@ -14,7 +14,7 @@ body:
         **Spec-level changes belong in a Discussion, not an issue.** If
         your request would change Core-1.0, Extended-1.0, add a new
         primitive, or alter any normative requirement, please open an
-        ADR-shaped [Spec Proposal Discussion](https://github.com/tallyseal/crawcus/discussions/categories/spec-proposals)
+        ADR-shaped [Spec Proposal Discussion](https://github.com/tallyseal/spec/discussions/categories/spec-proposals)
         first — see CONTRIBUTING.md §"Spec-change proposal" for the
         required structure. A maintainer will help you shape it and, once
         rough consensus is reached, an implementation PR follows.
