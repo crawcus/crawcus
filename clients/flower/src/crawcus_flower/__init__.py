@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """crawcus-flower — CRAWCUS audit receipts for Flower federated-learning clients.
 
-Spec: https://tallyseal.org
+Spec: https://crawcus.org/
 """
 from .chain import ReceiptStore
 from .client import CrawcusClient
