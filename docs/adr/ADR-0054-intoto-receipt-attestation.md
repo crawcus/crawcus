@@ -21,7 +21,9 @@ Emit a receipt as an in-toto [Statement v1](https://github.com/in-toto/attestati
 |---|---|
 | DSSE `payloadType` | `application/vnd.in-toto+json` |
 | Statement `_type` | `https://in-toto.io/Statement/v1` |
-| `predicateType` | `https://tallyseal.org/ns/crawcus/in-toto/receipt/v1` |
+| `predicateType` | `https://crawcus.org/ns/in-toto/receipt/v1` |
+
+The predicate type is `https://crawcus.org/ns/in-toto/receipt/v1`. `crawcus.org` and `crawcus.dev` are owned for the standard, and the identifier uses `crawcus.org` so the type is not under `tallyseal.org`. It is a name, not a URL the verifier fetches. This repository's site configuration and CNAME are unchanged.
 
 The statement bytes are RFC 8785 canonical JSON. The DSSE signature is over those exact bytes. A verifier that re-canonicalises before checking the signature will fail closed if the bytes differ, and the prototype rejects a payload that is not already canonical.
 
@@ -55,12 +57,12 @@ The prototype signs with Ed25519 and puts the public key in `keyid`, which is wh
 - A CRAWCUS receipt can travel in the same DSSE envelope in-toto already verifies, with a predicate type that is specific to this project.
 - The published attestation in Merkle mode does not contain the payload. Erasure of the side store does not require collecting issued attestations, because those attestations never held the opening material. An attestation issued in hash-chain mode, or any copy that included the payload, is a separate copy and is not shredded by deleting the log's key.
 - Two chain modes share one predicate type, distinguished by `chainMode`, so a verifier can reject an unknown mode instead of guessing.
-- The predicate URI is under `tallyseal.org` because that is the site this repository publishes. It is an identifier. It is not a document that has to be fetched at verify time.
+- The predicate URI is `https://crawcus.org/ns/in-toto/receipt/v1`. `crawcus.dev` is not part of the identifier. Site configuration still uses `tallyseal.org` until a separate cutover.
 
 ## Open questions
 
-1. Confirm the predicate URI before any statement is treated as stable. A move to a foundation-owned host later would be a new `predicateType`, not a silent edit, because verifiers compare the string.
-2. Whether to register the predicate in the in-toto predicate index, and only after the URI is stable.
+1. The predicate type is `https://crawcus.org/ns/in-toto/receipt/v1`. A later change of that string is a new predicate type, because verifiers compare it exactly.
+2. Whether to register that predicate in the in-toto predicate index.
 3. Whether hash-chain mode should remain in this predicate or move to a separate type once Merkle mode is the default.
 4. The statement does not carry a checkpoint signature. A verifier that only has the attestation trusts the root inside it as far as the DSSE signer. Binding the predicate root to a signed checkpoint is an extra input, and ADR-0053's offline check is that input. Should a conformant receipt be required to bundle the checkpoint note?
 5. Signer trust for the DSSE key is deliberately not decided here.

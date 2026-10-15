@@ -21,7 +21,7 @@ import { encodeBase64 } from '../tlog/checkpoint.js';
 export const IN_TOTO_STATEMENT_TYPE = 'https://in-toto.io/Statement/v1';
 export const IN_TOTO_PAYLOAD_TYPE = 'application/vnd.in-toto+json';
 export const CRAWCUS_RECEIPT_PREDICATE_TYPE =
-  'https://tallyseal.org/ns/crawcus/in-toto/receipt/v1';
+  'https://crawcus.org/ns/in-toto/receipt/v1';
 
 export type ReceiptChainMode = 'hash-chain' | 'merkle-tlog';
 

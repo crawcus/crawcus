@@ -260,7 +260,7 @@ describe('rekor anchor and in-toto statement', () => {
       rootHash,
     });
     expect(statement._type).toBe('https://in-toto.io/Statement/v1');
-    expect(statement.predicateType).toBe('https://tallyseal.org/ns/crawcus/in-toto/receipt/v1');
+    expect(statement.predicateType).toBe('https://crawcus.org/ns/in-toto/receipt/v1');
     expect(statement.subject[0]?.digest.sha256).toBe(bytesToHex(sha256(entry)));
     expect(statement.subject[0]?.digest.sha256).not.toBe(bytesToHex(sha256(payload)));
     const parsed = parseReceiptStatement(JSON.parse(new TextDecoder().decode(statementBytes(statement))));

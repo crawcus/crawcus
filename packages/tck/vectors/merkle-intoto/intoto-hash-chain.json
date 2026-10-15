@@ -13,7 +13,7 @@
           }
         }
       ],
-      "predicateType": "https://tallyseal.org/ns/crawcus/in-toto/receipt/v1",
+      "predicateType": "https://crawcus.org/ns/in-toto/receipt/v1",
       "predicate": {
         "v": 1,
         "chainMode": "hash-chain",
