@@ -75,11 +75,18 @@ export interface VerifyOptions {
    */
   readonly trustPolicy?: unknown;
   /**
-   * Dev/CI smoke hatch. When true, an untrusted signer does not change
-   * the top-level verdict, but `trust.decision` stays `untrusted`.
+   * TEST-ONLY hatch. NEVER set this in production or in any service
+   * that accepts third-party bundles.
+   *
+   * When true, an untrusted signer does not change the top-level
+   * verdict to `untrusted-signer` — the verdict can still be `pass`
+   * while `trust.decision` stays `untrusted`. Callers MUST read
+   * `trust.decision`, not just `verdict`.
+   *
    * Key-compromise revocation and a malformed policy still fail.
+   * Prefer supplying a real `trustPolicy` that pins TEST keys.
    */
-  readonly allowUntrustedSigner?: boolean;
+  readonly allowUntrustedSignerForTestsOnly?: boolean;
 }
 
 /**
@@ -138,7 +145,7 @@ export interface BundleCite {
  *                                malformed policy and key-compromise
  *                                revocation)
  *   - `untrusted-signer`         if the signer is untrusted and
- *                                `allowUntrustedSigner` is not set
+ *                                `allowUntrustedSignerForTestsOnly` is not set
  *   - `historical-unverifiable`  if a historical check fired and the
  *                                signer is trusted
  *   - `pass`                     otherwise

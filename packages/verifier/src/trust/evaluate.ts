@@ -266,11 +266,14 @@ export function signerIdentity(
   signingTime: string | undefined,
   signingTimeSource: SigningTimeSource,
 ): SignerIdentity {
+  const selfAsserted =
+    signingTimeSource !== 'rekor-integrated-time' && signingTimeSource !== 'none';
   return {
     keyFingerprint: bytesToHex(sha256(publicKey)),
     publicKey: bytesToHex(publicKey),
     ...(signingTime !== undefined ? { signingTime } : {}),
     signingTimeSource,
+    ...(selfAsserted ? { signingTimeSelfAsserted: true } : {}),
   };
 }
 

@@ -113,11 +113,11 @@ describe('verifyBundle signer trust', () => {
     trustFollowsSignature(result);
   });
 
-  it('T5 allowUntrustedSigner without a policy', () => {
+  it('T5 allowUntrustedSignerForTestsOnly without a policy', () => {
     const fixture = buildSignedBundleWithKey(testSeed(1));
     const result = verifyBundle({
       bundle: fixture.bundleBytes,
-      options: { verifiedAt: VERIFIED_AT, allowUntrustedSigner: true },
+      options: { verifiedAt: VERIFIED_AT, allowUntrustedSignerForTestsOnly: true },
     });
     expect(result.verdict).toBe('pass');
     expect(result.trust.decision).toBe('untrusted');

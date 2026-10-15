@@ -61,7 +61,7 @@ export interface TrustPolicy {
   readonly description?: string;
   /**
    * Recorded for forward compatibility. This version still fails closed
-   * unless the caller passes `allowUntrustedSigner`.
+   * unless the caller passes `allowUntrustedSignerForTestsOnly`.
    */
   readonly requireTrustedSigner?: boolean;
   readonly anchors: readonly TrustAnchor[];
@@ -100,6 +100,16 @@ export interface SignerIdentity {
   readonly label?: string;
   readonly signingTime?: string;
   readonly signingTimeSource: SigningTimeSource;
+  /**
+   * True when `signingTimeSource` is not an independent transparency
+   * log (e.g. Rekor). Bundle event timestamps are signed by the key
+   * under evaluation, so a malicious signer can back-date. Validity
+   * windows and `superseded`/`retired` revocation are therefore not
+   * security boundaries against that signer; only `key-compromise`
+   * is. Callers must not treat a self-asserted time as proof of when
+   * the bundle was produced.
+   */
+  readonly signingTimeSelfAsserted?: boolean;
 }
 
 export interface TrustResult {
