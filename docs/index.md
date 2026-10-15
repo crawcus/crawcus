@@ -9,6 +9,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 The specification is authored openly, dual-licensed ([CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) for spec text, [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) for code), and on a [Linux Foundation AI & Data](https://lfaidata.foundation/) submission path via the [Joint Development Foundation](https://www.jointdevelopment.org/). Any party — systems integrator, adjacent vendor, individual developer, regulator — can implement a conformant runtime or verifier.
 
+
+CRAWCUS defines the payload semantics and regulation mapping for cryptographic audit receipts. Envelope-level transparency is the domain of IETF SCITT ([RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html)). That covers registration of Signed Statements with a Transparency Service and COSE Receipts. SCITT treats the payload as opaque, and CRAWCUS is designed to be carried as a SCITT payload. The profile is a draft and has not been tested against any Transparency Service: see [CRAWCUS and SCITT](scitt.md).
+
 ---
 
 ## Why this exists
@@ -45,7 +48,8 @@ Implementers declare their conformance tier in package metadata. Full details: [
 |---|---|
 | [Format](spec/crawcus-format.md) | Wire format canonical serialization (RFC 8785 JCS + SHA-256), hash-chain construction, envelope structure, projection binding, wire-format stability guarantees. GDPR crypto-shred / tombstone erasure is not specified yet — see the [TODO stub](spec/crawcus-format.md#gdpr-erasure). |
 | [Contracts](spec/crawcus-contracts.md) | Contract primitive design — checkpoints (`define` / `propose` / `apply` / `commit`), predicate evaluation semantics, rollback rules, composition rules |
-| [Architecture primitives](canon/architecture-primitives.md) | Canonical documentation of all primitives — Core (4) and Extended (5 additional) tiers, with the shape, semantics, and conformance test surface of each |
+| [Architecture primitives](canon/architecture-primitives.md) |
+| **SCITT implementer or WG participant** | [CRAWCUS and SCITT](scitt.md) → [SCITT payload profile (draft)](spec/crawcus-scitt-profile.md) → [ADR-0055 build plan](adr/ADR-0055-scitt-fit.md) | Canonical documentation of all primitives — Core (4) and Extended (5 additional) tiers, with the shape, semantics, and conformance test surface of each |
 
 ## Reference implementations
 
@@ -91,6 +95,7 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 | Timestamps | [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) (subset of ISO 8601) |
 | Optional signature envelope | [DSSE](https://github.com/secure-systems-lab/dsse) |
 | Optional supply-chain signing | [Sigstore](https://www.sigstore.dev) |
+| Optional transparency envelope | [SCITT](https://datatracker.ietf.org/wg/scitt/about/): [RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html). Payload profile [in draft](spec/crawcus-scitt-profile.md) |
 | Erasable-immutable log pattern | GDPR crypto-shred + tombstone — [not yet specified](spec/crawcus-format.md#gdpr-erasure) |
 | Actor-attribution conventions | [OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749), mTLS, SAML — no CRAWCUS-specific extension |
 
@@ -119,6 +124,7 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 - Multi-vendor implementation ecosystem — the reference implementations here are the initial implementations. Third-party conformant implementations are actively encouraged.
 - LF / JDF adoption — submission planned, not yet submitted.
 - Widespread production deployment — early adopters welcome.
+- Interop with SCITT Transparency Services. The payload profile is a draft; registration against Transparency Service implementations is planned and not yet tested.
 
 ## Verifying releases (planned)
 

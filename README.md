@@ -5,6 +5,9 @@
 > **Read the spec:** [`docs/spec/crawcus-format.md`](docs/spec/crawcus-format.md) (wire format) · [`docs/spec/crawcus-contracts.md`](docs/spec/crawcus-contracts.md) (Contract primitive) · [`docs/canon/architecture-primitives.md`](docs/canon/architecture-primitives.md) (all primitives)
 > **Rendered site:** [crawcus.org](https://crawcus.org/)
 
+
+> **SCITT:** CRAWCUS is the statement-payload and regulation-mapping layer. IETF SCITT ([RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html)) is the transparency envelope. The profile is a draft and has not been tested against any Transparency Service: see [docs/scitt.md](docs/scitt.md) and [the profile](docs/spec/crawcus-scitt-profile.md).
+
 ---
 
 ## Why this exists
@@ -59,6 +62,9 @@ crawcus/
 │   ├── spec/                           SPECIFICATION TEXT (CC-BY-4.0)
 │   │   ├── crawcus-format.md           wire format canonical serialization
 │   │   ├── crawcus-contracts.md        Contract primitive deep-dive
+│   │   ├── crawcus-scitt-profile.md    SCITT payload profile (draft)
+│   ├── scitt.md                        CRAWCUS ↔ SCITT layering
+│   ├── adr/                            decision records (ADR-0055 SCITT fit)
 │   ├── canon/                          architectural decisions (CC-BY-4.0)
 │   │   ├── architecture-primitives.md  all Core + Extended primitives
 │   └── engineering/                    quality gates (CC-BY-4.0)
@@ -67,6 +73,7 @@ crawcus/
 │   ├── core/          @crawcus/core         runtime + ports + PII tokenisation
 │   ├── verifier/      @crawcus/verifier     UI-agnostic chain verifier (sync core)
 │   ├── tck/           @crawcus/tck          Test Compatibility Kit fixtures
+│   ├── scitt/         @crawcus/scitt        SCITT Signed Statements (experimental)
 │   ├── regulations-gdpr/          @crawcus/regulations-gdpr
 │   ├── regulations-ferpa/         @crawcus/regulations-ferpa
 │   └── regulations-eu-ai-act/     @crawcus/regulations-eu-ai-act
@@ -125,6 +132,7 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 | Timestamps | [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) (subset of ISO 8601) |
 | Optional signature envelope | [DSSE](https://github.com/secure-systems-lab/dsse) |
 | Optional supply-chain signing | [Sigstore](https://www.sigstore.dev) |
+| Optional transparency envelope | [SCITT](https://datatracker.ietf.org/wg/scitt/about/) ([RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html)). CRAWCUS payload profile [in draft](docs/spec/crawcus-scitt-profile.md) |
 | Erasable-immutable log pattern | GDPR crypto-shred + tombstone — not yet specified ([TODO stub](docs/spec/crawcus-format.md#gdpr-erasure)) |
 | Actor-attribution conventions | [OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749), mTLS, SAML — no CRAWCUS-specific extension |
 
@@ -152,6 +160,7 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 - Multi-vendor implementation ecosystem — the reference implementations in this repository are the initial implementations. Third-party conformant implementations are actively encouraged.
 - LF / JDF adoption — submission planned, not yet submitted.
 - Widespread production deployment — early adopters welcome.
+- Interop with SCITT Transparency Services. The payload profile is a draft and has not been tested.
 
 Where we describe CRAWCUS externally we use plain language matching the current state, not aspirational marketing. See [`CONTRIBUTING.md`](CONTRIBUTING.md) §"Language + claims" for the discipline maintainers apply.
 
