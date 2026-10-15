@@ -1,5 +1,18 @@
 # @crawcus/verifier
 
+## Unreleased
+
+### Proposed
+
+- `verifyOfflineLog` checks a signed checkpoint, an inclusion proof,
+  an optional consistency proof, and an optional Rekor anchor without
+  contacting a network.
+- `sealReceipt` / `verifySealedReceipt` wrap an in-toto Statement v1
+  in the existing DSSE envelope. `verifyBundle` is unchanged and
+  still checks the hash chain.
+- Not a release. Package version stays 0.3.1. Signer trust is not
+  decided by these functions.
+
 ## 0.3.1
 
 ### Patch Changes

@@ -35,4 +35,9 @@ export {
   EXPECTED_CONTENT_HASHES,
   type HashChainContractStore,
   type HashChainContractEnv,
+  MERKLE_INTOTO_KEY_LABEL,
+  MERKLE_INTOTO_VECTORS,
+  buildMerkleIntotoVectors,
+  runMerkleIntotoVectors,
+  type MerkleIntotoVector,
 } from './fixtures/index.js';

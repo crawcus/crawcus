@@ -1,0 +1,15 @@
+{
+  "name": "commitment",
+  "description": "Keyed commitment. A naked payload hash is a different value.",
+  "keyLabel": "TEST ONLY",
+  "body": {
+    "shredKey": "5445535400000000000000000000000000000000000000000000000000000001",
+    "nonce": "01010101010101010101010101010101",
+    "payload": "VEVTVCBPTkxZIHBheWxvYWQg4oCUIG5vdCBwZXJzb25hbCBkYXRh",
+    "commitment": "yw0Y5WD/bDhCWlIAgEyie5St0oVICczJDfHUco0ugiY=",
+    "otherNonceCommitment": "u8Tkc1bh6AaLmzNrgrH+mMjO9a05KEXTdwQfYEvrK1s=",
+    "nakedPayloadHash": "a3e06281e1ef0574df9a75e41da381a4a3acf93f170dc9f87fcea4abaadd68cd",
+    "logEntry": "AcsNGOVg/2w4QlpSAIBMonuUrdKFSAnMyQ3x1HKNLoIm"
+  },
+  "expectedOk": true
+}

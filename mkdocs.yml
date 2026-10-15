@@ -48,6 +48,10 @@ nav:
     - Contracts: spec/crawcus-contracts.md
   - Canon:
     - Architecture primitives: canon/architecture-primitives.md
+  - Decisions:
+    - Index: adr/README.md
+    - ADR-0053 Merkle log: adr/ADR-0053-merkle-transparency-log.md
+    - ADR-0054 in-toto receipt: adr/ADR-0054-intoto-receipt-attestation.md
 
 markdown_extensions:
   - admonition

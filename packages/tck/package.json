@@ -35,6 +35,7 @@
   "files": [
     "dist",
     "fixtures",
+    "vectors",
     "README.md"
   ],
   "scripts": {

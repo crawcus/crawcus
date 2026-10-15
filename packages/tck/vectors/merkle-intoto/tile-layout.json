@@ -1,0 +1,39 @@
+{
+  "name": "tile-layout",
+  "description": "Published tlog-tiles widths, including the 70000-leaf example.",
+  "keyLabel": "TEST ONLY",
+  "body": {
+    "layouts": {
+      "256": [
+        {
+          "level": 0,
+          "fullTiles": 1,
+          "partialWidth": 0
+        },
+        {
+          "level": 1,
+          "fullTiles": 0,
+          "partialWidth": 1
+        }
+      ],
+      "70000": [
+        {
+          "level": 0,
+          "fullTiles": 273,
+          "partialWidth": 112
+        },
+        {
+          "level": 1,
+          "fullTiles": 1,
+          "partialWidth": 17
+        },
+        {
+          "level": 2,
+          "fullTiles": 0,
+          "partialWidth": 1
+        }
+      ]
+    }
+  },
+  "expectedOk": true
+}

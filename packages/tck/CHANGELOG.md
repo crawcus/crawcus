@@ -1,5 +1,14 @@
 # @crawcus/tck
 
+## Unreleased
+
+### Proposed
+
+- Merkle-log and in-toto receipt vectors under
+  `vectors/merkle-intoto/`. Keys are TEST ONLY. The hash-chain
+  compatibility vector uses the existing golden chain. Package
+  version stays 0.3.0.
+
 ## 0.3.0
 
 ### Minor Changes
