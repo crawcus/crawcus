@@ -1,5 +1,35 @@
 # @crawcus/verifier
 
+## 0.4.0
+
+### Breaking
+
+- `verifyBundle` no longer returns `pass` for a signature that merely
+  matches the public key embedded in the DSSE envelope. Callers must
+  pass `options.trustPolicy` pinning the ed25519 keys they trust.
+  With no policy the verdict is `untrusted-signer`
+  (`signer.untrusted.no-policy`). A malformed policy is `fail`
+  (`policy.malformed`). See `MIGRATION.md`. The Foundry engine, and
+  any other consumer, has to supply a policy before honestly signed
+  receipts verify again.
+- `VerifyResult.trust` is now always present.
+- `VerifyVerdict` includes `untrusted-signer`.
+- `VERIFIER_VERSION` is `0.4.0`, matching `package.json`. It had been
+  stuck at `0.2.0`.
+
+### Added
+
+- Pinned ed25519 trust anchors with optional validity windows,
+  payload-type allowlists, and a revocation list
+  (`key-compromise`, `superseded`, `retired`).
+- `parseTrustPolicy`, `evaluateSignerTrust`, and the trust types.
+- The policy fingerprint is sha256 of the canonical policy.
+- The schema reserves a later TUF-style rotation document and
+  sigstore identity anchors. Those anchors are parsed and are not a
+  `pass` in this version. See `docs/spec/crawcus-trust-policy.md`.
+- PDF reports include a signer-trust section. Countersigned results
+  include the `trust` object.
+
 ## 0.3.1
 
 ### Patch Changes

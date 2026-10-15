@@ -61,9 +61,22 @@ function makeResult(overrides: Partial<VerifyResult> = {}): VerifyResult {
     },
     verifiedAt: '2026-06-03T12:00:00.000Z',
     verifierIdentity: {
-      version: '0.2.0',
+      version: '0.4.0',
       publicKeyFingerprint: 'wave1-unsigned-no-verifier-output-signature',
       buildSha: 'devbuild',
+    },
+    trust: {
+      decision: 'trusted',
+      reason: 'signer.trusted.pinned-key',
+      policyId: 'test-only',
+      policyFingerprint: 'ab'.repeat(32),
+      signer: {
+        keyFingerprint: 'cd'.repeat(32),
+        publicKey: 'ef'.repeat(32),
+        anchorId: 'test-signer',
+        label: 'TEST ONLY',
+        signingTimeSource: 'bundle-latest-event-ts',
+      },
     },
     ...overrides,
   };
@@ -114,7 +127,7 @@ describe('renderPdf', () => {
   it('embeds verifier identity block (version + buildSha)', () => {
     const bytes = renderPdf(makeResult());
     const text = decode(bytes);
-    expect(text).toContain('crawcus-verify 0.2.0');
+    expect(text).toContain('crawcus-verify 0.4.0');
     expect(text).toContain('Build SHA:');
     expect(text).toContain('devbuild');
   });
@@ -133,7 +146,7 @@ describe('renderPdf', () => {
   it('embeds the footer with verifier version + generated timestamp', () => {
     const bytes = renderPdf(makeResult());
     const text = decode(bytes);
-    expect(text).toContain('crawcus-verify 0.2.0');
+    expect(text).toContain('crawcus-verify 0.4.0');
     expect(text).toContain('2026-06-03T12:00:00.000Z');
   });
 

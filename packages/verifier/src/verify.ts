@@ -9,19 +9,24 @@
  * Aggregates the 8 Wave-1 checks (spec §5) into a single
  * `VerifyResult` with verdict aggregation:
  *
- *   - `pass`                     iff every check passes
- *   - `historical-unverifiable`  iff Check 7 fires AND all others pass
- *   - `fail`                     otherwise (any check produced a
- *                                non-historical-unverifiable fail)
+ *   - `fail`                     if any check failed
+ *   - `untrusted-signer`         if the signer is not authorised and
+ *                                `allowUntrustedSigner` is not set
+ *   - `historical-unverifiable`  if that check fired and the signer
+ *                                is trusted
+ *   - `pass`                     otherwise
  *
  * Pure; no I/O. The CLI layer handles file reads, format selection,
  * and exit-code mapping.
  */
 
-import { isCrawcusPayloadType, KNOWN_CRAWCUS_SUBTYPES, verifyDsseSignature } from './dsse.js';
+import { isCrawcusPayloadType, KNOWN_CRAWCUS_SUBTYPES, verifyAllDsseSignatures } from './dsse.js';
 import { parseSignedBundle } from './parse.js';
 import { verifyEventChain, verifyJcsHashEquivalence } from './hash-chain.js';
 import { checkEmbeddedPredicates, lintSignalAsGate, reevaluateContracts } from './contracts.js';
+import { clipDetail, selectSignerTrust } from './trust/evaluate.js';
+import { parseTrustPolicy } from './trust/parse-policy.js';
+import type { TrustResult } from './trust/types.js';
 import type {
   BundleMetadata,
   ParsedAuditBundle,
@@ -68,6 +73,7 @@ export function verifyBundle(input: VerifyInput): VerifyResult {
       verifiedAt,
       verifierIdentity,
       bundleMetadata: emptyMetadata(),
+      trust: { decision: 'not-evaluated', reason: 'trust.not-evaluated' },
       check: {
         id: 'dsse.envelope.shape',
         label: 'DSSE envelope shape',
@@ -86,23 +92,84 @@ export function verifyBundle(input: VerifyInput): VerifyResult {
   const shapeCheck = checkEnvelopeShape(parsed, opts.requireCrawcusPayloadType);
   checks.push(shapeCheck);
   if (shapeCheck.verdict === 'fail') {
-    return aggregateAndReturn(checks, metadata, verifiedAt, verifierIdentity);
+    return aggregateAndReturn(
+      checks,
+      metadata,
+      verifiedAt,
+      verifierIdentity,
+      { decision: 'not-evaluated', reason: 'trust.not-evaluated' },
+      opts.allowUntrustedSigner === true,
+    );
   }
 
-  // ===== Check 2: DSSE signature =====
-  const sigResult = verifyDsseSignature(parsed.envelope, parsed.payloadBytes);
+  // ===== Check 2: DSSE signature (integrity only) =====
+  const sigResult = verifyAllDsseSignatures(parsed.envelope, parsed.payloadBytes);
   checks.push({
     id: 'dsse.signature',
     label: 'DSSE ed25519 signature',
     verdict: sigResult.verdict,
     ...(sigResult.violationKind !== undefined ? { violationKind: sigResult.violationKind } : {}),
-    detail: sigResult.detail,
+    detail: clipDetail(sigResult.detail),
     cite: [{ kind: 'envelope-field', value: 'signatures[0]' }],
   });
+
+  const signingTime = metadata.latestEventTs.length > 0 ? metadata.latestEventTs : undefined;
+  const signingTimeSource = signingTime !== undefined ? 'bundle-latest-event-ts' : 'none';
+  const policyInput = input.options?.trustPolicy;
+  const parsedPolicy =
+    policyInput === undefined ? null : parseTrustPolicy(policyInput);
+  const trustEval = selectSignerTrust({
+    verified: sigResult.verified,
+    payloadType: parsed.envelope.payloadType,
+    signingTime,
+    signingTimeSource,
+    policy: parsedPolicy?.kind === 'ok' ? parsedPolicy.policy : undefined,
+    ...(parsedPolicy?.kind === 'ok' ? { policyFingerprint: parsedPolicy.fingerprint } : {}),
+    ...(parsedPolicy?.kind === 'fail' ? { policyDetail: parsedPolicy.detail } : {}),
+    policyMalformed: parsedPolicy?.kind === 'fail',
+  });
+  // Signature failure still records the trust row, then short-circuits.
+  // A malformed policy or an untrusted signer does not short-circuit:
+  // later integrity checks still run.
+  const trustCheckVerdict =
+    sigResult.verdict === 'fail' ? ('skipped' as const) : trustEval.checkVerdict;
+  const trust: TrustResult =
+    sigResult.verdict === 'fail'
+      ? { decision: 'not-evaluated', reason: 'signature.invalid' }
+      : trustEval.trust;
+  checks.push({
+    id: 'dsse.signer-trust',
+    label: 'Signer trust policy',
+    verdict: trustCheckVerdict,
+    ...(sigResult.verdict !== 'fail' && trustEval.violationKind !== undefined
+      ? { violationKind: trustEval.violationKind }
+      : {}),
+    detail:
+      sigResult.verdict === 'fail'
+        ? 'signer trust not evaluated because the signature did not verify'
+        : trustEval.detail,
+    cite: [
+      {
+        kind: 'envelope-field',
+        value: `signatures[${String(trustEval.signatureIndex)}]`,
+      },
+    ],
+  });
+  const reportedMetadata: BundleMetadata = {
+    ...metadata,
+    signerKeyId: trustEval.selectedKeyId.length > 0 ? trustEval.selectedKeyId : metadata.signerKeyId,
+  };
   if (sigResult.verdict === 'fail') {
-    // Spec §12(c) policy: signature failure short-circuits — auditor
-    // sees the signature failure before any payload-level disagreements.
-    return aggregateAndReturn(checks, metadata, verifiedAt, verifierIdentity);
+    // Signature failure short-circuits — the auditor sees it before
+    // any payload-level disagreements.
+    return aggregateAndReturn(
+      checks,
+      reportedMetadata,
+      verifiedAt,
+      verifierIdentity,
+      trust,
+      opts.allowUntrustedSigner === true,
+    );
   }
 
   // ===== Check 3: JCS canonicalisation hash equivalence =====
@@ -175,7 +242,14 @@ export function verifyBundle(input: VerifyInput): VerifyResult {
     });
   }
 
-  return aggregateAndReturn(checks, metadata, verifiedAt, verifierIdentity);
+  return aggregateAndReturn(
+    checks,
+    reportedMetadata,
+    verifiedAt,
+    verifierIdentity,
+    trust,
+    opts.allowUntrustedSigner === true,
+  );
 }
 
 // ============ Aggregation + helpers ============
@@ -219,15 +293,24 @@ function aggregateAndReturn(
   bundleMetadata: BundleMetadata,
   verifiedAt: string,
   verifierIdentity: VerifyResult['verifierIdentity'],
+  trust: TrustResult,
+  allowUntrustedSigner: boolean,
 ): VerifyResult {
-  const verdict = aggregateVerdict(checks);
-  return { verdict, checks, bundleMetadata, verifiedAt, verifierIdentity };
+  const verdict = aggregateVerdict(checks, trust, allowUntrustedSigner);
+  return { verdict, checks, bundleMetadata, verifiedAt, verifierIdentity, trust };
 }
 
-function aggregateVerdict(checks: readonly VerifyCheck[]): VerifyVerdict {
-  let sawHistoricalUnverifiable = false;
+function aggregateVerdict(
+  checks: readonly VerifyCheck[],
+  trust: TrustResult,
+  allowUntrustedSigner: boolean,
+): VerifyVerdict {
   for (const c of checks) {
     if (c.verdict === 'fail') return 'fail';
+  }
+  if (trust.decision === 'untrusted' && !allowUntrustedSigner) return 'untrusted-signer';
+  let sawHistoricalUnverifiable = false;
+  for (const c of checks) {
     if (c.verdict === 'historical-unverifiable') sawHistoricalUnverifiable = true;
   }
   return sawHistoricalUnverifiable ? 'historical-unverifiable' : 'pass';
@@ -237,6 +320,7 @@ function failEarly(args: {
   readonly verifiedAt: string;
   readonly verifierIdentity: VerifyResult['verifierIdentity'];
   readonly bundleMetadata: BundleMetadata;
+  readonly trust: TrustResult;
   readonly check: VerifyCheck;
 }): VerifyResult {
   return {
@@ -245,6 +329,7 @@ function failEarly(args: {
     bundleMetadata: args.bundleMetadata,
     verifiedAt: args.verifiedAt,
     verifierIdentity: args.verifierIdentity,
+    trust: args.trust,
   };
 }
 

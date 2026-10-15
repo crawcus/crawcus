@@ -20,7 +20,7 @@ When a regulator, auditor, or plaintiff asks *"prove this record has not been al
 - *"Here are our SIEM logs."* Unsigned and mutable by anyone with SIEM admin.
 - *"We put hashes on a blockchain."* GDPR-incompatible at enterprise write throughput.
 
-CRAWCUS makes a fourth answer possible: **replay the receipt chain against any conformant verifier and check its integrity cryptographically.** Hash-chain integrity is verifiable today; verifying *who signed* a chain (signer trust) is still in progress — see [crawcus#1](https://github.com/tallyseal/crawcus/issues/1).
+CRAWCUS makes a fourth answer possible: **replay the receipt chain against any conformant verifier and check its integrity cryptographically.** Hash-chain integrity is verifiable today. Pinned-key signer trust is specified in the [trust policy](spec/crawcus-trust-policy.md): a conformant verifier reports `pass` only when the signature verifies against a caller-supplied policy, not against a public key carried in the envelope. Sigstore identity matching is still open — see [crawcus#1](https://github.com/tallyseal/crawcus/issues/1).
 
 ## What CRAWCUS is
 
@@ -44,6 +44,7 @@ Implementers declare their conformance tier in package metadata. Full details: [
 | Document | What it covers |
 |---|---|
 | [Format](spec/crawcus-format.md) | Wire format canonical serialization (RFC 8785 JCS + SHA-256), hash-chain construction, envelope structure, projection binding, wire-format stability guarantees. GDPR crypto-shred / tombstone erasure is not specified yet — see the [TODO stub](spec/crawcus-format.md#gdpr-erasure). |
+| [Trust policy](spec/crawcus-trust-policy.md) | Out-of-band pinned ed25519 keys, validity windows, and revocation. A verifier fails closed when no policy is supplied. |
 | [Contracts](spec/crawcus-contracts.md) | Contract primitive design — checkpoints (`define` / `propose` / `apply` / `commit`), predicate evaluation semantics, rollback rules, composition rules |
 | [Architecture primitives](canon/architecture-primitives.md) | Canonical documentation of all primitives — Core (4) and Extended (5 additional) tiers, with the shape, semantics, and conformance test surface of each |
 
@@ -112,7 +113,7 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 - The spec is published and free to implement (CC-BY-4.0).
 - Reference implementations are shipped as open source (Apache-2.0).
 - Every runtime — including the reference implementations — is measured against the same TCK fixture set.
-- Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — [crawcus#1](https://github.com/tallyseal/crawcus/issues/1)).
+- Anyone can verify a chain's hash-chain integrity, and — given the issuer's published trust policy — the pinned signer, independently of any vendor. Sigstore keyless matching is still open ([crawcus#1](https://github.com/tallyseal/crawcus/issues/1)).
 
 **What is not yet true:**
 

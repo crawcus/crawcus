@@ -45,6 +45,7 @@ nav:
   - Overview: index.md
   - Specification:
     - Format: spec/crawcus-format.md
+    - Trust policy: spec/crawcus-trust-policy.md
     - Contracts: spec/crawcus-contracts.md
   - Canon:
     - Architecture primitives: canon/architecture-primitives.md

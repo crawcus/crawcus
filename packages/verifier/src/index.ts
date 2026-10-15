@@ -62,6 +62,21 @@ export {
 
 export { VERIFIER_VERSION } from './version.js';
 
+export { parseTrustPolicy, fingerprintTrustPolicy } from './trust/parse-policy.js';
+export { evaluateSignerTrust, selectSignerTrust } from './trust/evaluate.js';
+export type {
+  Ed25519PinnedAnchor,
+  RevokedKey,
+  SignerIdentity,
+  SigningTimeSource,
+  SigstoreIdentityAnchor,
+  TrustAnchor,
+  TrustDecision,
+  TrustPolicy,
+  TrustReasonCode,
+  TrustResult,
+} from './trust/types.js';
+
 // ===== Wave-1b additions (TKT-VERIFIER-1b) =====
 
 /** Auditor countersign — wrap a `VerifyResult` in a separate DSSE envelope. */

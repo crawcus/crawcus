@@ -51,9 +51,20 @@ function makeResult(verdict: VerifyResult['verdict'] = 'pass'): VerifyResult {
     },
     verifiedAt: '2026-06-03T12:00:00.000Z',
     verifierIdentity: {
-      version: '0.2.0',
+      version: '0.4.0',
       publicKeyFingerprint: 'wave1-unsigned',
       buildSha: 'devbuild',
+    },
+    trust: {
+      decision: 'trusted',
+      reason: 'signer.trusted.pinned-key',
+      policyId: 'test-only',
+      policyFingerprint: 'ab'.repeat(32),
+      signer: {
+        keyFingerprint: 'cd'.repeat(32),
+        publicKey: 'ef'.repeat(32),
+        signingTimeSource: 'none',
+      },
     },
   };
 }

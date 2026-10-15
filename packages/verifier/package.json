@@ -1,6 +1,6 @@
 {
   "name": "@crawcus/verifier",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "private": true,
   "description": "CRAWCUS audit-bundle verifier — offline, deterministic, third-party-runnable. Re-checks DSSE envelope + JCS hash equivalence + hash-chain integrity + Contract pre/inv/post predicates against an embedded predicate-source-text payload. Library surface used by `crawcus-verify` CLI + Anthropic-cloud verify endpoint + Tallyseal lighthouse app.",
   "keywords": [
