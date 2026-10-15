@@ -7,8 +7,8 @@ CRAWCUS audit-bundle verifier — library surface.
 - **Third-party-runnable.** Any auditor can run this against any
   CRAWCUS-conformant audit bundle without contacting Tallyseal.
 
-This package is the library half of the verifier. The CLI binary
-lives at [`crawcus-verify`](../verifier-cli/README.md).
+This package is the library half of the verifier. A `crawcus-verify`
+CLI is planned and is not in this repository yet.
 
 ## Install
 

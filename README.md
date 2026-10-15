@@ -125,7 +125,7 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 | Timestamps | [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) (subset of ISO 8601) |
 | Optional signature envelope | [DSSE](https://github.com/secure-systems-lab/dsse) |
 | Optional supply-chain signing | [Sigstore](https://www.sigstore.dev) |
-| Erasable-immutable log pattern | GDPR crypto-shred + tombstone (see [`docs/spec/crawcus-format.md`](docs/spec/crawcus-format.md) §GDPR erasure) |
+| Erasable-immutable log pattern | GDPR crypto-shred + tombstone — not yet specified ([TODO stub](docs/spec/crawcus-format.md#gdpr-erasure)) |
 | Actor-attribution conventions | [OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749), mTLS, SAML — no CRAWCUS-specific extension |
 
 ## Governance + standards-body path

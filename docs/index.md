@@ -43,7 +43,7 @@ Implementers declare their conformance tier in package metadata. Full details: [
 
 | Document | What it covers |
 |---|---|
-| [Format](spec/crawcus-format.md) | Wire format canonical serialization (RFC 8785 JCS + SHA-256), hash-chain construction, envelope structure, GDPR erasure via crypto-shred + tombstone, projection binding, wire-format stability guarantees |
+| [Format](spec/crawcus-format.md) | Wire format canonical serialization (RFC 8785 JCS + SHA-256), hash-chain construction, envelope structure, projection binding, wire-format stability guarantees. GDPR crypto-shred / tombstone erasure is not specified yet — see the [TODO stub](spec/crawcus-format.md#gdpr-erasure). |
 | [Contracts](spec/crawcus-contracts.md) | Contract primitive design — checkpoints (`define` / `propose` / `apply` / `commit`), predicate evaluation semantics, rollback rules, composition rules |
 | [Architecture primitives](canon/architecture-primitives.md) | Canonical documentation of all primitives — Core (4) and Extended (5 additional) tiers, with the shape, semantics, and conformance test surface of each |
 
@@ -91,7 +91,7 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 | Timestamps | [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) (subset of ISO 8601) |
 | Optional signature envelope | [DSSE](https://github.com/secure-systems-lab/dsse) |
 | Optional supply-chain signing | [Sigstore](https://www.sigstore.dev) |
-| Erasable-immutable log pattern | GDPR crypto-shred + tombstone — [Wire format §GDPR erasure](spec/crawcus-format.md) |
+| Erasable-immutable log pattern | GDPR crypto-shred + tombstone — [not yet specified](spec/crawcus-format.md#gdpr-erasure) |
 | Actor-attribution conventions | [OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749), mTLS, SAML — no CRAWCUS-specific extension |
 
 ## Governance + licensing

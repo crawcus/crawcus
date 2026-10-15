@@ -9,7 +9,7 @@ SPDX-License-Identifier: CC-BY-4.0
 > remain load-bearing; **Contract** and **Attestation** were added with
 > CRAWCUS v0.2 spec lock (2026-05-20–21); **Warrant**, **Disclosure**,
 > **Consent**, **Lineage**, **HumanOversight** committed by the
-> [primitives-audit memo 2026-05-21](../07-engineering/primitives-audit-2026-05-21.md)
+> primitives-audit memo 2026-05-21 (not published in this repository)
 > as the lighthouse-driven architectural surface for v0.1.0.
 
 ## The fractal claim
@@ -25,7 +25,7 @@ Something is a **first-class architectural primitive** if it meets all four test
 3. **Auditor-requestable** — regulator / DPO / underwriter can request it standalone, with its own audit story
 4. **Discrete lifecycle** — has its own lifecycle (created → exercised → expired / revoked)
 
-See the [primitives-audit memo](../07-engineering/primitives-audit-2026-05-21.md) for the explicit-exclusions list (Delegation, Override, Revocation, DSAR Response, Snapshot, External Signature, Eval Witness — all conscious exclusions with rationale).
+The primitives-audit memo is not published in this repository. It is the source named for the explicit-exclusions list (Delegation, Override, Revocation, DSAR Response, Snapshot, External Signature, Eval Witness).
 
 ## The 14 primitives
 
@@ -37,7 +37,7 @@ A conversational thread with a typed completion contract. Has a **CrawcusSpec** 
 
 ### 2. CrawcusSpec
 
-Declarative TypeScript / YAML data — list of fields with metadata. Pure data, not code. Build-time validated. The format is the **CRAWCUS open standard slated for W3C / IEEE submission within 12 months.** (Renamed from `IntentSpec` 2026-05-21 per B1.2; the canonical contract for `defineCrawcusSpec({...})` lives at [`02-product/crawcus-format.md`](../02-product/crawcus-format.md).)
+Declarative TypeScript / YAML data — list of fields with metadata. Pure data, not code. Build-time validated. The format is the **CRAWCUS open standard slated for W3C / IEEE submission within 12 months.** (Renamed from `IntentSpec` 2026-05-21 per B1.2; the canonical contract for `defineCrawcusSpec({...})` lives at [`crawcus-format.md`](../spec/crawcus-format.md).)
 
 ```ts
 defineCrawcusSpec({
@@ -120,7 +120,7 @@ defineCrawcusSpec({
 });
 ```
 
-See [`02-product/crawcus-contracts.md`](../02-product/crawcus-contracts.md) for the design memo.
+See [`crawcus-contracts.md`](../spec/crawcus-contracts.md) for the design memo.
 
 ### 9. Attestation (a.k.a. AuditBundle)
 
@@ -138,7 +138,7 @@ A verifiable, time-bounded, revocable, issuer-signed authorization that some aut
 
 **Commercial framing:** Warrant is the **marketplace anchor primitive**. Authorities issue Warrants for fees; lapse → Warrant expires → operations halt. Auto-incentivized renewal loop. Turns CRAWCUS from a runtime into a *protocol*.
 
-See [primitives-audit memo §#10](../07-engineering/primitives-audit-2026-05-21.md).
+The primitives-audit memo §#10 is not published in this repository.
 
 ### 11. Disclosure
 
@@ -148,11 +148,11 @@ A discrete, demonstrably-delivered notice from the system to a user / data subje
 
 **Lifecycle:** drafted → delivered → acknowledged → retracted. Discrete states.
 
-**Side-channel observation:** `DisclosureSignal` EventKind (Q-CR9 LOCKED 2026-06-02) captures weaker observational signals about a delivered Disclosure — `read` (scrolled past, IntersectionObserver-detected), `click` (link followed), `dwell` (view-time threshold), `replay` (re-opened) — discriminated by `signalType`. **SIGNAL-not-gate semantics**: signals are *evidence the data subject had an opportunity to perceive the notice*, not affirmative acknowledgments. ICO + recent German rulings make scroll-as-gate contested; scroll-as-signal is defensible. Signals never replace `acknowledged` in the lifecycle; they sit alongside `delivered` as supporting evidence. See [`02-product/crawcus-contracts.md` §"`pre.disclosure-has-opportunity-to-be-read`"](../02-product/crawcus-contracts.md).
+**Side-channel observation:** `DisclosureSignal` EventKind (Q-CR9 LOCKED 2026-06-02) captures weaker observational signals about a delivered Disclosure — `read` (scrolled past, IntersectionObserver-detected), `click` (link followed), `dwell` (view-time threshold), `replay` (re-opened) — discriminated by `signalType`. **SIGNAL-not-gate semantics**: signals are *evidence the data subject had an opportunity to perceive the notice*, not affirmative acknowledgments. ICO + recent German rulings make scroll-as-gate contested; scroll-as-signal is defensible. Signals never replace `acknowledged` in the lifecycle; they sit alongside `delivered` as supporting evidence. See [`crawcus-contracts.md`](../spec/crawcus-contracts.md) §"`pre.disclosure-has-opportunity-to-be-read`".
 
 **Anchors:** EU AI Act Art 50 (transparency to AI-interacting users), Art 13 (info on high-risk systems); FERPA §99.7 (annual parental/student notification); GDPR Art 13 / Art 14 (information at collection / from third party).
 
-See [primitives-audit memo §#11](../07-engineering/primitives-audit-2026-05-21.md).
+The primitives-audit memo §#11 is not published in this repository.
 
 ### 12. Consent
 
@@ -164,11 +164,11 @@ A data-subject-issued authorization for specific data processing purposes. **Leg
 
 **Anchors:** GDPR Art 7 + Art 8, FERPA §99.30, HIPAA 45 CFR 164.508.
 
-See [primitives-audit memo §#12](../07-engineering/primitives-audit-2026-05-21.md).
+The primitives-audit memo §#12 is not published in this repository.
 
 ### 13. Lineage
 
-The provenance graph for an AI-produced output — input data → model → prompt template → output. W3C PROV-O JSON-LD serialization per [Q-CR7](../09-operating/decision-log.md).
+The provenance graph for an AI-produced output — input data → model → prompt template → output. W3C PROV-O JSON-LD serialization per Q-CR7 (decision log not published in this repository).
 
 **Distinct from Event.causationId** (causationId = immediate cause-effect between events; Lineage = full input-data-graph back to source datasets, training data, model weights, prompt templates).
 
@@ -176,7 +176,7 @@ The provenance graph for an AI-produced output — input data → model → prom
 
 **Anchors:** EU AI Act Art 12 (record-keeping) + Annex IV §2(g) (datasets) + §2(h) (training data); W3C PROV-O.
 
-See [primitives-audit memo §#13](../07-engineering/primitives-audit-2026-05-21.md).
+The primitives-audit memo §#13 is not published in this repository.
 
 ### 14. HumanOversight
 
@@ -188,7 +188,7 @@ A record of supervisory review of AI system behavior by designated oversight per
 
 **Anchors:** EU AI Act Art 14 paragraphs 4 (oversight measures) + 5 (high-risk additional); ISO 42001 §9.1 (monitoring).
 
-See [primitives-audit memo §#14](../07-engineering/primitives-audit-2026-05-21.md).
+The primitives-audit memo §#14 is not published in this repository.
 
 ## Supporting primitives (also load-bearing)
 
@@ -216,8 +216,6 @@ The fractal quality is why no single primitive is patentable but the *pattern* i
 
 ## Reading order for newcomers
 
-1. Read [`identity.md`](./identity.md) — the why
-2. Read [`scope.md`](./scope.md) — the where
-3. Read this file — the how (14 primitives)
-4. Read [`compliance-by-design.md`](./compliance-by-design.md) — the day-1 commitments
-6. Read [`../07-engineering/primitives-audit-2026-05-21.md`](../07-engineering/primitives-audit-2026-05-21.md) — full lighthouse justification per primitive + conscious exclusions
+1. `identity.md`, `scope.md`, and `compliance-by-design.md` are not published in this repository.
+2. Read this file — the how (14 primitives)
+4. The primitives-audit memo (lighthouse justification and conscious exclusions) is not published in this repository.
