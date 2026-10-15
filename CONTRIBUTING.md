@@ -16,7 +16,7 @@ apply, and what commitments the project makes to you in return.
 Before you open an issue, please try one of the lower-friction channels:
 
 - **GitHub Discussions** (Q&A, ideas, spec-shaped proposals) —
-  `https://github.com/tallyseal/crawcus/discussions`. Start here if you are not
+  `https://github.com/crawcus/crawcus/discussions`. Start here if you are not
   sure whether your idea is a bug, a feature, or a spec change. Discussions do
   not require a reproduction and do not get triaged as issues.
 - **Spec-level enquiries** — `paul@tallyseal.org`. Use email if the question
@@ -121,7 +121,7 @@ Requirements:
 Setup:
 
 ```bash
-git clone git@github.com:tallyseal/crawcus.git
+git clone git@github.com:crawcus/crawcus.git
 cd spec
 pnpm install            # installs all workspaces
 pnpm build              # builds every package in dependency order
