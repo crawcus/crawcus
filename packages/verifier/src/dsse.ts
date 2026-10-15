@@ -13,11 +13,13 @@
  *   - Open-Q1 memo: `02-product/q-verifier-cli-oss-lock-open-q1-signed-bundle-wrapper-memo.md`
  *
  * The verifier is a pure function — no network, no key-fetching, no
- * filesystem. `verifyDsseSignature` checks integrity only: the
- * embedded `keyid` is an untrusted hint for which public key to try.
- * Whether that key is authorised is decided by `trust/evaluate.ts`
- * against a caller-supplied trust policy. A signature that verifies
- * against a key the policy does not name is not a pass.
+ * filesystem.
+ *
+ * `verifyDsseSignatureUntrusted` checks integrity only, against the
+ * public key carried in the envelope. It never decides trust and is
+ * NOT re-exported from the package entrypoint. The trust-checked
+ * public API is `verifyBundle`, which fails closed (`untrusted-signer`)
+ * without a caller-supplied trust policy.
  */
 
 import { ed25519 } from '@noble/curves/ed25519';
@@ -277,14 +279,20 @@ export interface DsseSignatureScan {
 }
 
 /**
- * Integrity check of the first signature against the public key carried
- * in its `keyid`. This does not decide signer trust.
+ * INTEGRITY ONLY. Verifies the first signature against the public key
+ * carried in its own `keyid`. It does not decide signer trust and it
+ * cannot return `untrusted-signer`: a `pass` here only means "this
+ * envelope was signed by the key it embeds".
+ *
+ * Do not use this to accept a bundle. The trust-checked API is
+ * `verifyBundle`. This primitive is internal; it is not re-exported
+ * from the package entrypoint.
  *
  * The check passes iff:
  *   1. The first signature's keyid decodes to a 32-byte ed25519 public key, AND
  *   2. ed25519.verify(sig, PAE(payloadType, decoded(payload)), pubkey) returns true.
  */
-export function verifyDsseSignature(
+export function verifyDsseSignatureUntrusted(
   envelope: DsseEnvelope,
   payloadBytes: Uint8Array,
 ): DsseVerifyResult {

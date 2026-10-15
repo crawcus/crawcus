@@ -48,9 +48,12 @@ export type {
 // ===== Lower-level functions for advanced callers =====
 // (The lighthouse app, Anthropic's cloud verify endpoint, etc.)
 export { parseSignedBundle } from './parse.js';
-export { verifyDsseSignature as verifyDsseEnvelope } from './dsse.js';
 export { verifyEventChain as verifyHashChain } from './hash-chain.js';
 export { reevaluateContracts } from './contracts.js';
+// `verifyDsseSignatureUntrusted` lives in `./dsse.js` but is NOT
+// re-exported. It is an integrity-only primitive: a pass means the
+// envelope was signed by the key it embeds, not that the key is
+// authorised. The trust-checked public API is `verifyBundle`.
 
 // ===== Constants =====
 export {
