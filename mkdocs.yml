@@ -46,8 +46,13 @@ nav:
   - Specification:
     - Format: spec/crawcus-format.md
     - Contracts: spec/crawcus-contracts.md
+    - SCITT payload profile (draft): spec/crawcus-scitt-profile.md
   - Canon:
     - Architecture primitives: canon/architecture-primitives.md
+  - CRAWCUS and SCITT: scitt.md
+  - Decisions:
+    - Index: adr/README.md
+    - ADR-0055 SCITT fit: adr/ADR-0055-scitt-fit.md
 
 markdown_extensions:
   - admonition

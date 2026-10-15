@@ -15,4 +15,8 @@ elsewhere.
 |---|---|---|
 | ADR-0052 | `GOVERNANCE.md` (Linux Foundation / JDF donation) | **TODO.** The record is not in this repository. The summary in GOVERNANCE.md §4 is the text available here. |
 
-No other ADR files are published in this repository.
+## Published
+
+| ID | Title | Status |
+|---|---|---|
+| [ADR-0055](ADR-0055-scitt-fit.md) | SCITT fit — build plan | Proposed |
