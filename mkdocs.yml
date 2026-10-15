@@ -68,5 +68,12 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
 
+validation:
+  links:
+    not_found: warn
+    anchors: warn
+    absolute_links: ignore
+    unrecognized_links: warn
+
 plugins:
   - search

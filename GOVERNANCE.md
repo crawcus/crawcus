@@ -56,11 +56,14 @@ practical terms:
   adopters, and observers are explicitly invited to comment. The maintainer
   decides after the comment window closes and records the decision — and the
   reasoning — either in the Discussion thread, in an ADR added under
-  `docs/adr/`, or in the merged PR description linking back to the Discussion.
+  `docs/adr/` (see [`docs/adr/README.md`](docs/adr/README.md)), or in the
+  merged PR description linking back to the Discussion.
 - **Transparency of decisions already made:** the design decisions that shaped
-  CRAWCUS-Core-1.0 and CRAWCUS-Extended-1.0 prior to public release are
-  documented in the Architecture Decision Records under `docs/adr/`. Any
-  post-release change to those decisions follows section 5.
+  CRAWCUS-Core-1.0 and CRAWCUS-Extended-1.0 prior to public release are not
+  published in this repository. [`docs/adr/README.md`](docs/adr/README.md) is a
+  stub index only. It names ADR-0052 because this document cites it, and it
+  does not restate a missing record. Any post-release change to those
+  decisions follows section 5.
 - **No private "steering":** there is no private forum, mailing list, Slack
   channel, or off-repo call where CRAWCUS technical decisions are taken. If
   such a channel is later created (for example, an LF-hosted TSC list
@@ -70,8 +73,9 @@ This phase is **time-bound and explicitly transitional**. It ends when either
 of the following occurs, whichever is first:
 
 1. Donation to the Linux Foundation (specifically to LF AI &amp; Data via the
-   Joint Development Foundation, per ADR-0052) completes and LF-standard
-   governance takes effect, or
+   Joint Development Foundation — the target summarised in section 4;
+   ADR-0052 is cited by name and is not in this repository) completes and
+   LF-standard governance takes effect, or
 2. Two additional maintainers have been added under section 7, and this
    document has been amended (per section 5, "Governance change") to reflect
    a multi-maintainer governance model.
@@ -83,8 +87,11 @@ Discussion.
 
 ## 4. Planned governance — post-LF-donation
 
-The project's declared destination, per ADR-0052 in the originating monorepo,
-is donation to the Linux Foundation. Specifics of the intended end-state:
+The project's declared destination is donation to the Linux Foundation.
+ADR-0052 is the name used for that decision in the originating monorepo; the
+record itself is not in this repository (see
+[`docs/adr/README.md`](docs/adr/README.md)). Specifics of the intended
+end-state:
 
 - **Target foundation:** Linux Foundation AI &amp; Data (LF AI &amp; Data).
 - **Legal / administrative vehicle:** the LF Joint Development Foundation
@@ -116,8 +123,10 @@ is donation to the Linux Foundation. Specifics of the intended end-state:
   preserves the right of any conformant implementation to describe itself as
   "CRAWCUS-conformant" (see section 10). **Pre-donation, no trademark claim
   is asserted** on the term "CRAWCUS."
-- **Rationale for LF over W3C, IEEE, or ISO:** recorded in ADR-0052 in the
-  originating monorepo. Summary: LF's project-hosting overhead is lower, its
+- **Rationale for LF over W3C, IEEE, or ISO:** the summary below is the text
+  in this repository. ADR-0052, which this section previously treated as the
+  record of that rationale, is not published here. Summary: LF's
+  project-hosting overhead is lower, its
   DCO-based contribution model matches the project's existing practice, its
   neutral-home guarantees are well-tested by CNCF and LF AI &amp; Data
   precedent, and its release cadence is compatible with the project's
@@ -193,7 +202,9 @@ bug in the TCK).
 4. If accepted, an implementation PR is opened. The PR description links to
    the Discussion. The PR includes: the spec text change under `docs/spec/`,
    the corresponding TCK fixture change, and a new ADR under `docs/adr/`
-   recording the decision as a permanent record.
+   (see [`docs/adr/README.md`](docs/adr/README.md)) recording the decision
+   as a permanent record. Do not backfill historical ADRs by reconstructing
+   them.
 5. Post-donation, "the maintainer decides" is replaced by the TSC-vote
    procedure defined in the LF-adopted charter.
 

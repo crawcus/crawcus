@@ -642,7 +642,7 @@ subset is normatively defined by the TCK.
 
 ### Wire-format stability — signed bundle (v0.2)
 
-> *Added per [Q-VERIFIER-CLI-OSS-LOCK Open Q-1 memo](./q-verifier-cli-oss-lock-open-q1-signed-bundle-wrapper-memo.md) (hypothesis-pending-lock 2026-06-03). Authoritative source for the signed-bundle envelope shape; this section is normative for any CRAWCUS-conformant verifier.*
+> *Added per the Q-VERIFIER-CLI-OSS-LOCK Open Q-1 memo (hypothesis-pending-lock 2026-06-03). That memo is not published in this repository. This section is the normative source for the signed-bundle envelope shape for any CRAWCUS-conformant verifier.*
 
 The unsigned canonical-JSON bundle (above) is the **payload**. To make audit bundles transportable, tamper-evident, and third-party-verifiable, CRAWCUS adopts the **[DSSE (Dead Simple Signing Envelope)](https://github.com/secure-systems-lab/dsse/blob/master/protocol.md)** specification — the same envelope used by [in-toto](https://in-toto.io/), [SLSA](https://github.com/slsa-framework/slsa-verifier), and [Sigstore cosign](https://docs.sigstore.dev/cosign/verifying/verify/) for chain-of-custody attestations.
 
@@ -721,6 +721,13 @@ The `application/vnd.crawcus.*+jsonl` family uses the `vnd.` prefix, which per [
 - **Async predicates** (v0.2 addition — see Contracts §)
 - **Wire-format hashes via non-RFC-8785 canonicalisers** (v0.2 addition)
 - **Sector-pack Contract removal or severity-lowering** (v0.2 addition)
+
+## GDPR erasure
+
+> **TODO.** A crypto-shred and tombstone mechanism for GDPR erasure is
+> not specified in this repository. This heading exists so documentation
+> that mentions the pattern has a real anchor. It is not normative, and
+> it does not define fields, algorithms, or verifier behaviour.
 
 ## Open questions deferred for v1.0
 
