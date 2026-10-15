@@ -56,11 +56,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tallyseal/spec.git",
+    "url": "https://github.com/tallyseal/crawcus.git",
     "directory": "packages/regulations-ferpa"
   },
   "homepage": "https://tallyseal.org",
-  "bugs": "https://github.com/tallyseal/spec/issues",
+  "bugs": "https://github.com/tallyseal/crawcus/issues",
   "engines": {
     "node": ">=22.0.0"
   }

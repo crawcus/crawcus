@@ -16,7 +16,7 @@ When a regulator, auditor, or plaintiff asks *"prove this record has not been al
 - *"Here are our SIEM logs."* Unsigned and mutable by anyone with SIEM admin.
 - *"We put hashes on a blockchain."* GDPR-incompatible at enterprise write throughput.
 
-CRAWCUS makes a fourth answer possible: **replay the receipt chain against any conformant verifier and prove integrity mathematically, not by trusting a vendor.**
+CRAWCUS makes a fourth answer possible: **replay the receipt chain against any conformant verifier and check its integrity cryptographically.** Hash-chain integrity is verifiable today; verifying *who signed* a chain (signer trust) is still in progress — see [crawcus#1](https://github.com/tallyseal/crawcus/issues/1).
 
 ## What CRAWCUS is
 
@@ -132,7 +132,7 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 
 CRAWCUS is authored openly under the governance model in [`GOVERNANCE.md`](GOVERNANCE.md). During the current pre-donation phase the project has a single maintainer (Paul Wander); the model transitions to a multi-maintainer / TSC structure at Linux Foundation donation.
 
-The intended donation target is the **Linux Foundation AI & Data** foundation, submitted via the **Joint Development Foundation (JDF)** — the same track [C2PA](https://c2pa.org), [in-toto](https://in-toto.io), and [Sigstore](https://www.sigstore.dev) took. Progress is public in the [GitHub Discussions](https://github.com/tallyseal/spec/discussions) (once the repository goes live).
+The intended donation target is the **Linux Foundation AI & Data** foundation, to be submitted via the **Joint Development Foundation (JDF)** — the same track [C2PA](https://c2pa.org), [in-toto](https://in-toto.io), and [Sigstore](https://www.sigstore.dev) took. Progress is public in the [GitHub Discussions](https://github.com/tallyseal/crawcus/discussions) (once the repository goes live).
 
 Rationale for LF over W3C / IEEE / ISO: 6–12 month realistic timeline to a recognised standard, industry-neutral governance from day one, no PAR ceremony blocking spec publication, alignment with existing peer projects in the receipt / supply-chain-signing space.
 
@@ -145,21 +145,21 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 - The spec is published and free to implement (CC-BY-4.0).
 - Reference implementations are shipped as open source (Apache-2.0).
 - Every runtime — including the reference implementations here — is measured against the same TCK fixture set.
-- Anyone can verify a chain independently of any vendor.
+- Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — [crawcus#1](https://github.com/tallyseal/crawcus/issues/1)).
 
 **What is not yet true:**
 
 - Multi-vendor implementation ecosystem — the reference implementations in this repository are the initial implementations. Third-party conformant implementations are actively encouraged.
-- LF / JDF adoption — submission in flight, not accepted.
+- LF / JDF adoption — submission planned, not yet submitted.
 - Widespread production deployment — early adopters welcome.
 
 Where we describe CRAWCUS externally we use plain language matching the current state, not aspirational marketing. See [`CONTRIBUTING.md`](CONTRIBUTING.md) §"Language + claims" for the discipline maintainers apply.
 
-## Verify this release
+## Verifying releases (planned)
 
-Every `@crawcus/*` npm package and `crawcus-*` PyPI package published from this repository is signed via [Trusted Publishers](https://docs.pypi.org/trusted-publishers/) (OIDC — no long-lived API tokens) with [Sigstore attestations](https://docs.sigstore.dev) bound to the specific source commit + GitHub Actions workflow run. Publishing an audit-integrity library without cryptographic supply-chain proof would be self-parodying.
+Publishing is **planned** to use [Trusted Publishers](https://docs.pypi.org/trusted-publishers/) (OIDC — no long-lived API tokens) with [Sigstore attestations](https://docs.sigstore.dev) bound to the specific source commit + GitHub Actions workflow run for every `@crawcus/*` npm package and `crawcus-*` PyPI package. This pipeline is not in place yet, so there are no attested releases to verify today. Publishing an audit-integrity library without cryptographic supply-chain proof would be self-parodying — which is why this lands before we call any release stable.
 
-Each release includes the exact `sigstore verify` command in its release notes. See [`SECURITY.md`](SECURITY.md) §"Supply-chain integrity guarantees" for the full commitment.
+Once it lands, each release will include the exact `sigstore verify` command in its release notes. See [`SECURITY.md`](SECURITY.md) §"Supply-chain integrity — what the project commits to" for the planned commitment.
 
 ## Contributing
 

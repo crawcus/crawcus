@@ -31,8 +31,8 @@ dev = ["pytest>=7", "ruff>=0.5"]
 
 [project.urls]
 Homepage = "https://tallyseal.org"
-Repository = "https://github.com/tallyseal/spec"
-Issues = "https://github.com/tallyseal/spec/issues"
+Repository = "https://github.com/tallyseal/crawcus"
+Issues = "https://github.com/tallyseal/crawcus/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/crawcus_flower"]
