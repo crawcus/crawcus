@@ -36,7 +36,7 @@ reply. Once the project has a published key it will be listed here with its
 fingerprint.
 
 **GitHub Security Advisories.** Private-reporting via GitHub Security Advisories
-will be enabled once `github.com/tallyseal/spec` goes live. When it does,
+will be enabled once `github.com/tallyseal/crawcus` goes live. When it does,
 reporters may use either channel — email or a GHSA draft — interchangeably.
 
 ## Scope: what we treat as a vulnerability
@@ -105,7 +105,7 @@ still worth raising; where a better channel exists it is named.
   operator (GitHub, npm, PyPI, the email provider) rather than to CRAWCUS.
 - Missing best-practice guidance, hardening ideas, or "you could also check X"
   suggestions. These are welcome as public GitHub Issues or Discussions on
-  `github.com/tallyseal/spec` once the repository is live.
+  `github.com/tallyseal/crawcus` once the repository is live.
 - Findings against third-party mirrors, forks, or repackaged distributions that
   the project does not control. Report to whoever published the mirror.
 
@@ -154,7 +154,11 @@ reporter and disclosed in the resulting advisory.
 
 ## Supply-chain integrity — what the project commits to
 
-Every package the project publishes is bound cryptographically to the source
+> **Status: planned.** The trusted-publishing and Sigstore pipeline described
+> below is not in place yet; no `@crawcus/*` or `crawcus-*` release has been
+> published with it. This section states the commitment it will meet.
+
+Every package the project publishes will be bound cryptographically to the source
 commit and CI workflow that produced it. A consumer never has to take the
 maintainer's word for what is inside a release.
 
@@ -237,7 +241,7 @@ handled differently.
 - If the spec is ambiguous but both plausible interpretations preserve the same
   security properties (for example, two equally safe ways to encode an
   optional field), open a **public GitHub Discussion** on
-  `github.com/tallyseal/spec` once the repository is live. This is the
+  `github.com/tallyseal/crawcus` once the repository is live. This is the
   correct channel because sunlight is the whole point of an open spec.
 - If the ambiguity **is** the vulnerability — that is, one plausible reading
   is safe and another is not, or two conformant implementations could disagree
