@@ -54,11 +54,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tallyseal/crawcus.git",
+    "url": "https://github.com/crawcus/crawcus.git",
     "directory": "packages/spec"
   },
-  "homepage": "https://tallyseal.org",
-  "bugs": "https://github.com/tallyseal/crawcus/issues",
+  "homepage": "https://crawcus.org",
+  "bugs": "https://github.com/crawcus/crawcus/issues",
   "engines": {
     "node": ">=22.0.0"
   }

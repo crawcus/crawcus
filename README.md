@@ -3,7 +3,7 @@
 **Contract · Receipt · Attestation · Warrant** — an open specification for cryptographic audit receipts covering both application transactions and AI-inference decisions under one canonical shape.
 
 > **Read the spec:** [`docs/spec/crawcus-format.md`](docs/spec/crawcus-format.md) (wire format) · [`docs/spec/crawcus-contracts.md`](docs/spec/crawcus-contracts.md) (Contract primitive) · [`docs/canon/architecture-primitives.md`](docs/canon/architecture-primitives.md) (all primitives)
-> **Rendered site:** [tallyseal.org](https://tallyseal.org)
+> **Rendered site:** [crawcus.org](https://crawcus.org/)
 
 ---
 
@@ -16,7 +16,7 @@ When a regulator, auditor, or plaintiff asks *"prove this record has not been al
 - *"Here are our SIEM logs."* Unsigned and mutable by anyone with SIEM admin.
 - *"We put hashes on a blockchain."* GDPR-incompatible at enterprise write throughput.
 
-CRAWCUS makes a fourth answer possible: **replay the receipt chain against any conformant verifier and check its integrity cryptographically.** Hash-chain integrity is verifiable today; verifying *who signed* a chain (signer trust) is still in progress — see [crawcus#1](https://github.com/tallyseal/crawcus/issues/1).
+CRAWCUS makes a fourth answer possible: **replay the receipt chain against any conformant verifier and check its integrity cryptographically.** Hash-chain integrity is verifiable today; verifying *who signed* a chain (signer trust) is still in progress — see [crawcus#1](https://github.com/crawcus/crawcus/issues/1).
 
 ## What CRAWCUS is
 
@@ -132,7 +132,7 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 
 CRAWCUS is authored openly under the governance model in [`GOVERNANCE.md`](GOVERNANCE.md). During the current pre-donation phase the project has a single maintainer (Paul Wander); the model transitions to a multi-maintainer / TSC structure at Linux Foundation donation.
 
-The intended donation target is the **Linux Foundation AI & Data** foundation, to be submitted via the **Joint Development Foundation (JDF)** — the same track [C2PA](https://c2pa.org), [in-toto](https://in-toto.io), and [Sigstore](https://www.sigstore.dev) took. Progress is public in the [GitHub Discussions](https://github.com/tallyseal/crawcus/discussions) (once the repository goes live).
+The intended donation target is the **Linux Foundation AI & Data** foundation, to be submitted via the **Joint Development Foundation (JDF)** — the same track [C2PA](https://c2pa.org), [in-toto](https://in-toto.io), and [Sigstore](https://www.sigstore.dev) took. Progress is public in the [GitHub Discussions](https://github.com/crawcus/crawcus/discussions) (once the repository goes live).
 
 Rationale for LF over W3C / IEEE / ISO: 6–12 month realistic timeline to a recognised standard, industry-neutral governance from day one, no PAR ceremony blocking spec publication, alignment with existing peer projects in the receipt / supply-chain-signing space.
 
@@ -145,7 +145,7 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 - The spec is published and free to implement (CC-BY-4.0).
 - Reference implementations are shipped as open source (Apache-2.0).
 - Every runtime — including the reference implementations here — is measured against the same TCK fixture set.
-- Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — [crawcus#1](https://github.com/tallyseal/crawcus/issues/1)).
+- Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — [crawcus#1](https://github.com/crawcus/crawcus/issues/1)).
 
 **What is not yet true:**
 

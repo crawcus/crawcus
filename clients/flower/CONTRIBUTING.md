@@ -1,10 +1,10 @@
 # Contributing to crawcus-flower
 
-`crawcus-flower` is a reference client for the [CRAWCUS](https://tallyseal.org) open specification. Contributions welcome.
+`crawcus-flower` is a reference client for the [CRAWCUS](https://crawcus.org/) open specification. Contributions welcome.
 
 ## Where to open issues + PRs
 
-Primary CRAWCUS repository: **https://github.com/tallyseal/crawcus**
+Primary CRAWCUS repository: **https://github.com/crawcus/crawcus**
 
 `crawcus-flower` lives at `clients/flower/` within that repository. Open issues and PRs there.
 

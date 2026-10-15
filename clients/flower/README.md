@@ -2,7 +2,7 @@
 
 Per-node cryptographic audit receipts for [Flower](https://flower.ai) federated-learning clients.
 
-Every `fit()` call emits a signed, hash-chained [CRAWCUS](https://tallyseal.org) receipt to a local JSONL log. Regulators, auditors, or data subjects verify the chain with any conformant CRAWCUS verifier — no dependency on the framework author, the coordinator, or any single vendor.
+Every `fit()` call emits a signed, hash-chained [CRAWCUS](https://crawcus.org/) receipt to a local JSONL log. Regulators, auditors, or data subjects verify the chain with any conformant CRAWCUS verifier — no dependency on the framework author, the coordinator, or any single vendor.
 
 ## Why
 
@@ -50,7 +50,7 @@ Every training round appends one receipt to `receipts.jsonl`:
 
 ## Verify a chain
 
-Any conformant CRAWCUS verifier accepts this JSONL. See the [CRAWCUS TCK](https://tallyseal.org) for the reference verifier and conformance fixtures.
+Any conformant CRAWCUS verifier accepts this JSONL. See the [CRAWCUS TCK](https://crawcus.org/) for the reference verifier and conformance fixtures.
 
 Basic sanity check in Python:
 
@@ -91,7 +91,7 @@ for line in open("receipts.jsonl"):
 # once published:
 sigstore verify identity \
   --bundle crawcus_flower-<version>.whl.sigstore \
-  --cert-identity https://github.com/tallyseal/crawcus/.github/workflows/publish.yml@refs/tags/v<version> \
+  --cert-identity https://github.com/crawcus/crawcus/.github/workflows/publish.yml@refs/tags/v<version> \
   --cert-oidc-issuer https://token.actions.githubusercontent.com \
   crawcus_flower-<version>.whl
 ```
@@ -109,7 +109,7 @@ Banked (fire on named user need):
 
 ## Contributing
 
-CRAWCUS is an open spec. Contributions to this reference client are welcome via the [tallyseal/crawcus](https://github.com/tallyseal/crawcus) repository.
+CRAWCUS is an open spec. Contributions to this reference client are welcome via the [crawcus/crawcus](https://github.com/crawcus/crawcus) repository.
 
 ## License
 
