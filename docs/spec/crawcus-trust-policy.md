@@ -42,7 +42,7 @@ not return `pass` for a signature whose public key is absent from it.
 
 `requireTrustedSigner` defaults to true when omitted. Setting it to
 false does not make this version return `pass` for an untrusted signer.
-The only library hatch is the explicit `allowUntrustedSigner` option,
+The only library hatch is the explicit TEST-ONLY `allowUntrustedSignerForTestsOnly` option (never set in production),
 and even then `trust.decision` stays `untrusted`.
 
 ### Parsing
@@ -108,7 +108,7 @@ Revocation wins over anchors.
 | `reason` | Effect |
 |---|---|
 | `key-compromise` | `fail` / `signer.untrusted.revoked` for every bundle signed by that key, including bundles whose signing time is before `revokedAt`. A compromised key can back-date. |
-| `superseded` or `retired` | `untrusted-signer` / `signer.untrusted.revoked` when the signing time is at or after `revokedAt`. An earlier signing time is still accepted. If that time is only the bundle's own timestamp, the check detail says the signing time is self-asserted. If no signing time is available, the reason is `signer.untrusted.signing-time-unknown`. |
+| `superseded` or `retired` | `untrusted-signer` / `signer.untrusted.revoked` when the signing time is at or after `revokedAt`. An earlier signing time is still accepted. If that time is only the bundle's own timestamp, the check detail says the signing time is self-asserted. If no signing time is available, the reason is `signer.untrusted.signing-time-unknown`. The library surfaces a self-asserted time as `trust.signer.signingTimeSelfAsserted: true`. |
 
 ### Rotation
 

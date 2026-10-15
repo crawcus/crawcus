@@ -35,7 +35,7 @@ if (result.verdict === 'pass') {
 ```
 
 `pass` requires a trust policy. See [MIGRATION.md](./MIGRATION.md).
-`allowUntrustedSigner: true` is only for local smoke tests.
+`allowUntrustedSignerForTestsOnly: true` is a TEST-ONLY hatch. Never set it in production; read `trust.decision`, not just `verdict`.
 
 ## What it checks (Wave-1)
 

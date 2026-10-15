@@ -45,12 +45,43 @@ The policy file format, validity windows, and the revocation list are
 specified in `docs/spec/crawcus-trust-policy.md`. Publish the policy
 and its fingerprint out of band. The library does not fetch it.
 
-## Local smoke tests
+## Local smoke tests (TEST ONLY)
 
-`allowUntrustedSigner: true` keeps a successful integrity result at
-`pass` when the signer is not in a policy. `trust.decision` is still
-`untrusted`. Do not set this in production. A key revoked for
-`key-compromise`, and a malformed policy, still return `fail`.
+`allowUntrustedSignerForTestsOnly: true` is a test hatch. It keeps a
+successful integrity result at `pass` when the signer is not in a
+policy, while `trust.decision` stays `untrusted`. Read
+`trust.decision`, not just `verdict`. Never set this option in
+production, in a service that accepts third-party bundles, or in any
+path that feeds an audit decision. Prefer pinning TEST keys in a real
+`trustPolicy`. A key revoked for `key-compromise`, and a malformed
+policy, still return `fail`.
+
+## Signing time is self-asserted for pinned keys
+
+Pinned-key validity windows (`notBefore` / `notAfter`) and
+`superseded` / `retired` revocation are evaluated against the
+bundle's latest event timestamp. That timestamp is signed by the key
+under evaluation, so a malicious signer can back-date. The check
+detail says so, and `trust.signer.signingTimeSelfAsserted` is `true`
+when the source is not an independent transparency log. Only
+`key-compromise` revocation rejects every bundle for that key,
+including back-dated ones. Do not claim that validity windows or
+rotation alone defeat a compromised or hostile signer.
+
+## `verifyDsseEnvelope` removed from the public surface
+
+0.3.x exported `verifyDsseEnvelope` as an alias of an integrity-only
+check against the public key embedded in the envelope. A `pass` from
+that function meant "the envelope was signed by the key it carries",
+not "the signer is authorised". That is the same footgun 0.4.0 closes
+for `verifyBundle`, so the export is gone.
+
+- Use `verifyBundle({ bundle, options: { trustPolicy } })` — the
+  trust-checked public API.
+- Callers that evaluate a policy themselves may import
+  `verifyDsseSignatureUntrusted` from the package source tree for
+  tests, but it is not part of the published public API and will not
+  be re-exported. Prefer `verifyBundle`.
 
 ## What did not change
 

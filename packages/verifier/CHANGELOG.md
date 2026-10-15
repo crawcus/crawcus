@@ -4,6 +4,15 @@
 
 ### Breaking
 
+- The integrity-only `verifyDsseEnvelope` export is removed. It verified
+  a signature against the public key embedded in the envelope and
+  returned `pass` with no trust check. Callers must use `verifyBundle`
+  with a `trustPolicy`. The integrity primitive is renamed
+  `verifyDsseSignatureUntrusted` and is not re-exported from the
+  package entrypoint.
+- `VerifyOptions.allowUntrustedSigner` is renamed
+  `allowUntrustedSignerForTestsOnly`. Same behaviour; louder name.
+  Production callers must not set it.
 - `verifyBundle` no longer returns `pass` for a signature that merely
   matches the public key embedded in the DSSE envelope. Callers must
   pass `options.trustPolicy` pinning the ed25519 keys they trust.
@@ -29,6 +38,15 @@
   `pass` in this version. See `docs/spec/crawcus-trust-policy.md`.
 - PDF reports include a signer-trust section. Countersigned results
   include the `trust` object.
+- `trust.signer.signingTimeSelfAsserted` is `true` when the signing
+  time is the bundle's own event timestamp. Validity windows and
+  `superseded` / `retired` revocation are not a security boundary
+  against a back-dating signer; only `key-compromise` is.
+
+### Fixed
+
+- The `dsse.signature` check cites the signature index that verified
+  instead of always `signatures[0]`.
 
 ## 0.3.1
 
