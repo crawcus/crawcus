@@ -1,0 +1,2731 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An open specification for cryptographic audit receipts covering both application transactions and AI-inference decisions under one canonical shape.">
+      
+      
+        <meta name="author" content="Paul Wander + CRAWCUS contributors">
+      
+      
+        <link rel="canonical" href="https://crawcus.org/spec/crawcus-format/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../crawcus-contracts/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../branding/crawcus-seal-compact.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Format - CRAWCUS</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#crawcus-format-the-canonical-contract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="CRAWCUS" class="md-header__button md-logo" aria-label="CRAWCUS" data-md-component="logo">
+      
+  <img src="../../../branding/crawcus-seal-compact.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CRAWCUS
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Format
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/tallyseal/crawcus" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tallyseal/crawcus
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Specification
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../canon/architecture-primitives/" class="md-tabs__link">
+          
+  
+  
+  Canon
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CRAWCUS" class="md-nav__button md-logo" aria-label="CRAWCUS" data-md-component="logo">
+      
+  <img src="../../../branding/crawcus-seal-compact.svg" alt="logo">
+
+    </a>
+    CRAWCUS
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/tallyseal/crawcus" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tallyseal/crawcus
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Specification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Format
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-a-crawcusspec-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What a CrawcusSpec is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#top-level-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Field types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#field-metadata-chainable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field metadata (chainable)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-metadata-that-must-match-the-compliance-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field metadata that must match the compliance manifest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#readiness-predicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Readiness predicate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inheritance-sector-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inheritance + sector packs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contracts-added-v02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contracts (added v0.2)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contracts (added v0.2)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-contracts-add-to-v01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Contracts add to v0.1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-level-shape_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level shape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contract-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract shape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-level-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field-level Contracts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contractctx-whats-materialised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ContractCtx — what's materialised
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sector-pack-composition-monotonic-explicit-derogations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sector-pack composition (monotonic + explicit derogations)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sector-pack composition (monotonic + explicit derogations)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicit-derogations-the-legitimate-weakening-escape-valve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicit derogations (the legitimate-weakening escape valve)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation-order-within-a-checkpoint-q-t-lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation order within a checkpoint (Q-T lock)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replay-semantics-for-warn-contract-violations-q-u-lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay semantics for 'warn' Contract violations (Q-U lock)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contractviolation-event" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ContractViolation event
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-bundle-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit-bundle output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defaults-from-regulations-ergonomic-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defaults from regulations + ergonomic discipline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioning-interaction-with-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning interaction with Contracts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wire-format-stability-added-v02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wire-format stability (added v0.2)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wire-format stability (added v0.2)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-a-wire-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a wire format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#predicate-canonicalisation-in-house-ts-ast-normaliser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predicate canonicalisation (in-house TS-AST normaliser)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hash-equivalence-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hash equivalence test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implications-for-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implications for predicates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-rules-out-additional-to-v01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this rules out (additional to v0.1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wire-format-stability-signed-bundle-v02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wire-format stability — signed bundle (v0.2)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wire-format stability — signed bundle (v0.2)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#envelope-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Envelope shape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#payload-type-family-open-enum-per-q-cr9-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Payload-type family (open enum per Q-CR9 discipline)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature-suite-v02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signature suite (v0.2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-vendor-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-vendor verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iana-media-type-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IANA media-type registration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-rules-out-additional-to-the-unsigned-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this rules out (additional to the unsigned format)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-rules-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this rules out
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdpr-erasure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GDPR erasure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions-deferred-for-v10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open questions deferred for v1.0
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crawcus-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contracts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Canon
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Canon
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../canon/architecture-primitives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture primitives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-a-crawcusspec-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What a CrawcusSpec is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#top-level-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level shape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Field types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#field-metadata-chainable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field metadata (chainable)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-metadata-that-must-match-the-compliance-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field metadata that must match the compliance manifest
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#readiness-predicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Readiness predicate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inheritance-sector-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inheritance + sector packs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contracts-added-v02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contracts (added v0.2)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contracts (added v0.2)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-contracts-add-to-v01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Contracts add to v0.1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-level-shape_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level shape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contract-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract shape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-level-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field-level Contracts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contractctx-whats-materialised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ContractCtx — what's materialised
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sector-pack-composition-monotonic-explicit-derogations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sector-pack composition (monotonic + explicit derogations)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sector-pack composition (monotonic + explicit derogations)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#explicit-derogations-the-legitimate-weakening-escape-valve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicit derogations (the legitimate-weakening escape valve)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluation-order-within-a-checkpoint-q-t-lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation order within a checkpoint (Q-T lock)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replay-semantics-for-warn-contract-violations-q-u-lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay semantics for 'warn' Contract violations (Q-U lock)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contractviolation-event" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ContractViolation event
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-bundle-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit-bundle output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defaults-from-regulations-ergonomic-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defaults from regulations + ergonomic discipline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versioning-interaction-with-contracts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning interaction with Contracts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wire-format-stability-added-v02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wire-format stability (added v0.2)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wire-format stability (added v0.2)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-a-wire-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a wire format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#predicate-canonicalisation-in-house-ts-ast-normaliser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predicate canonicalisation (in-house TS-AST normaliser)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hash-equivalence-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hash equivalence test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implications-for-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implications for predicates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-rules-out-additional-to-v01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this rules out (additional to v0.1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wire-format-stability-signed-bundle-v02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wire-format stability — signed bundle (v0.2)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wire-format stability — signed bundle (v0.2)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#envelope-shape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Envelope shape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#payload-type-family-open-enum-per-q-cr9-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Payload-type family (open enum per Q-CR9 discipline)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature-suite-v02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signature suite (v0.2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-vendor-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-vendor verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iana-media-type-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IANA media-type registration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-rules-out-additional-to-the-unsigned-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this rules out (additional to the unsigned format)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-rules-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this rules out
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdpr-erasure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GDPR erasure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions-deferred-for-v10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open questions deferred for v1.0
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/tallyseal/crawcus/edit/main/docs/spec/crawcus-format.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<!--
+SPDX-FileCopyrightText: 2026 Paul Wander + CRAWCUS contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+<h1 id="crawcus-format-the-canonical-contract">CRAWCUS format — the canonical contract<a class="headerlink" href="#crawcus-format-the-canonical-contract" title="Permalink to this section">&para;</a></h1>
+<blockquote>
+<p><strong>CRAWCUS is the open standard format for AI Application Compliance
+Infrastructure (AACI). A <code>CrawcusSpec</code> is one instance: a typed
+declaration of what a Witness Intent collects, how it's collected,
+and what completion means.</strong></p>
+<p>Slated for W3C Community Group / IEEE working group submission within
+12 months (per <code>00-canon/identity.md</code> and <code>09-operating/decision-log.md</code>).
+This document is the reference draft.</p>
+</blockquote>
+<h2 id="status">Status<a class="headerlink" href="#status" title="Permalink to this section">&para;</a></h2>
+<ul>
+<li><strong>Format version:</strong> 0.2 (pre-release; subject to non-breaking refinement
+  before v1.0). Bumped from 0.1 on 2026-05-20 to add first-class
+  Contracts and Wire-format-stability sections — see
+  <code>02-product/crawcus-contracts.md</code> (design memo) and <code>09-operating/
+  decision-log.md</code> for the rationale.</li>
+<li><strong>Stability:</strong> Internal / Codicil Zero (HF) only. Not yet a public
+  commitment.</li>
+<li><strong>Reference implementation:</strong> <code>packages/core/src/intent/</code> in this repo
+  (planned commit 4b per <code>07-engineering/core-v0.0.1-type-surface.md</code>).</li>
+<li><strong>Standards intent:</strong> open spec, MIT licensed, royalty-free; adopters
+  may build alternative implementations. Wire format normatively defined
+  in §"Wire-format stability" below; reference RFC 8785 (JSON
+  Canonicalization Scheme) for byte-identical re-serialisation across
+  TS / Go / Rust / Python implementations.</li>
+</ul>
+<h2 id="what-a-crawcusspec-is">What a CrawcusSpec is<a class="headerlink" href="#what-a-crawcusspec-is" title="Permalink to this section">&para;</a></h2>
+<p>A pure declarative TypeScript module that names a typed completion
+contract for a conversational flow. <strong>No control flow, no side effects,
+no imperative code.</strong> The runtime (Witness Core) interprets the spec to
+drive the graph evaluator, AI extractor, readiness gate, and reducer.</p>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">defineCrawcusSpec</span><span class="p">,</span><span class="w"> </span><span class="nx">field</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'internal-package'</span><span class="p">;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">defineCrawcusSpec</span><span class="p">({</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="s1">'CreateCourse'</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nx">projection</span><span class="o">:</span><span class="w"> </span><span class="s1">'Course'</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="nx">version</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nx">classification</span><span class="o">:</span><span class="w"> </span><span class="s1">'high-risk'</span><span class="p">,</span><span class="w">          </span><span class="c1">// EU AI Act Annex III §3 (education)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nx">fields</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="kt">field</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="p">.</span><span class="kt">string</span><span class="p">()</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="p">.</span><span class="nx">required</span><span class="p">()</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">      </span><span class="p">.</span><span class="nx">askHint</span><span class="p">({</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="nx">en</span><span class="o">:</span><span class="w"> </span><span class="s1">'What\'s the course called?'</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">        </span><span class="nx">de</span><span class="o">:</span><span class="w"> </span><span class="s1">'Wie heißt der Kurs?'</span><span class="p">,</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">      </span><span class="p">}),</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="nx">subject</span><span class="o">:</span><span class="w"> </span><span class="kt">field</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">      </span><span class="p">.</span><span class="kd">enum</span><span class="p">([</span><span class="s1">'math'</span><span class="p">,</span><span class="w"> </span><span class="s1">'english'</span><span class="p">,</span><span class="w"> </span><span class="s1">'science'</span><span class="p">,</span><span class="w"> </span><span class="s1">'history'</span><span class="p">])</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">      </span><span class="p">.</span><span class="nx">required</span><span class="p">()</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">      </span><span class="p">.</span><span class="nx">askHint</span><span class="p">({</span><span class="w"> </span><span class="nx">en</span><span class="o">:</span><span class="w"> </span><span class="s1">'Which subject?'</span><span class="w"> </span><span class="p">}),</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="nx">level</span><span class="o">:</span><span class="w"> </span><span class="kt">field</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">      </span><span class="p">.</span><span class="kt">string</span><span class="p">()</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">      </span><span class="p">.</span><span class="nx">required</span><span class="p">()</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">      </span><span class="p">.</span><span class="nx">askHint</span><span class="p">({</span><span class="w"> </span><span class="nx">en</span><span class="o">:</span><span class="w"> </span><span class="s1">'What level — beginner, intermediate, advanced?'</span><span class="w"> </span><span class="p">}),</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="nx">learnerAge</span><span class="o">:</span><span class="w"> </span><span class="kt">field</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">      </span><span class="p">.</span><span class="kt">number</span><span class="p">()</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">      </span><span class="p">.</span><span class="nx">optional</span><span class="p">()</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">      </span><span class="p">.</span><span class="nx">askHint</span><span class="p">({</span><span class="w"> </span><span class="nx">en</span><span class="o">:</span><span class="w"> </span><span class="s1">'How old is the learner?'</span><span class="w"> </span><span class="p">})</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">      </span><span class="p">.</span><span class="nx">dependsOn</span><span class="p">({</span><span class="w"> </span><span class="nx">when</span><span class="o">:</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">has</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">has</span><span class="p">(</span><span class="s1">'parentalConsentEventId'</span><span class="p">)</span><span class="w"> </span><span class="p">}),</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">  </span><span class="nx">readiness</span><span class="o">:</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">has</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">has</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="w"> </span><span class="s1">'subject'</span><span class="p">,</span><span class="w"> </span><span class="s1">'level'</span><span class="p">),</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="p">});</span>
+</span></code></pre></div>
+<h2 id="top-level-shape">Top-level shape<a class="headerlink" href="#top-level-shape" title="Permalink to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>key</code></td>
+<td><code>string</code> (PascalCase)</td>
+<td>Yes</td>
+<td>Globally unique within a customer manifest. Becomes the Intent's <code>kind</code>.</td>
+</tr>
+<tr>
+<td><code>projection</code></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td>The projection-table name the reducer writes to (e.g. <code>Course</code>, <code>Patient</code>, <code>Loan</code>). Must exist in customer schema.</td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td><code>integer ≥ 1</code></td>
+<td>Yes</td>
+<td>Semver-major analog. Breaking changes increment; migrations required.</td>
+</tr>
+<tr>
+<td><code>classification</code></td>
+<td><code>'standard' \| 'high-risk' \| 'prohibited'</code></td>
+<td>No (default <code>'standard'</code>)</td>
+<td>Drives which regulation modules apply (<code>@tallyseal/regulations</code>). <code>'high-risk'</code> triggers AI Act Art. 14 readiness-gate enforcement.</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td><code>Record&lt;string, FieldSpec&gt;</code></td>
+<td>Yes</td>
+<td>The structural contract — see <em>Field types</em> below.</td>
+</tr>
+<tr>
+<td><code>readiness</code></td>
+<td><code>(ctx: ReadinessCtx) =&gt; boolean</code></td>
+<td>Yes</td>
+<td>Pure predicate. Returns <code>true</code> iff the Intent is complete enough to write.</td>
+</tr>
+<tr>
+<td><code>customReducer</code></td>
+<td><code>(snapshot, ctx) =&gt; Promise&lt;ProjectionRef&gt;</code></td>
+<td>No</td>
+<td>Tier-2 escape hatch: invokes host service-layer function instead of direct projection write. See <code>02-product/integration-tiers.md</code>.</td>
+</tr>
+<tr>
+<td><code>i18nDefault</code></td>
+<td><code>Locale</code></td>
+<td>No (default <code>'en'</code>)</td>
+<td>Fallback locale when an <code>askHint</code> doesn't supply the requested locale.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td><code>string[]</code></td>
+<td>No</td>
+<td>Free-form labels for search, filtering, marketplace categorisation.</td>
+</tr>
+<tr>
+<td><code>extends</code></td>
+<td><code>IntentKey \| null</code></td>
+<td>No</td>
+<td>Optional inheritance for sector-pack overlays. Child overrides parent fields; readiness predicate composes.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="field-types">Field types<a class="headerlink" href="#field-types" title="Permalink to this section">&para;</a></h2>
+<p>Field metadata is <em>attached</em> to a base type via a chainable builder.
+The base types are deliberately small; richer shapes are composed.</p>
+<table>
+<thead>
+<tr>
+<th>Base</th>
+<th>Builder</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>string</code></td>
+<td><code>field.string()</code></td>
+<td>Free text</td>
+</tr>
+<tr>
+<td><code>number</code></td>
+<td><code>field.number()</code></td>
+<td>Numeric (integer or float; distinguished by <code>.integer()</code>)</td>
+</tr>
+<tr>
+<td><code>boolean</code></td>
+<td><code>field.boolean()</code></td>
+<td>Yes/no</td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td><code>field.date()</code></td>
+<td>Calendar dates (no time)</td>
+</tr>
+<tr>
+<td><code>datetime</code></td>
+<td><code>field.datetime()</code></td>
+<td>Point in time</td>
+</tr>
+<tr>
+<td><code>enum</code></td>
+<td><code>field.enum([...])</code></td>
+<td>Closed set of choices</td>
+</tr>
+<tr>
+<td><code>array</code></td>
+<td><code>field.array(of)</code></td>
+<td>Multi-value; <code>of</code> is itself a <code>FieldSpec</code></td>
+</tr>
+<tr>
+<td><code>object</code></td>
+<td><code>field.object({...})</code></td>
+<td>Nested struct; map of named subfields</td>
+</tr>
+<tr>
+<td><code>reference</code></td>
+<td><code>field.reference('OtherProjection')</code></td>
+<td>FK to another projection</td>
+</tr>
+<tr>
+<td><code>attachment</code></td>
+<td><code>field.attachment({ mime: [...] })</code></td>
+<td>File upload; triggers <code>SourceCaptured</code> event + Task</td>
+</tr>
+</tbody>
+</table>
+<h3 id="field-metadata-chainable">Field metadata (chainable)<a class="headerlink" href="#field-metadata-chainable" title="Permalink to this section">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.required()</code></td>
+<td>Field must be present at readiness; <code>required</code> is the default for any field unless <code>.optional()</code> called</td>
+</tr>
+<tr>
+<td><code>.optional()</code></td>
+<td>May be absent; readiness still evaluates true</td>
+</tr>
+<tr>
+<td><code>.askHint(string \| Record&lt;Locale, string&gt;)</code></td>
+<td>Per-locale prompt text shown by AI extractor. <strong>Always a record</strong> for i18n; single string is sugar for <code>{ en: string }</code>.</td>
+</tr>
+<tr>
+<td><code>.refineHint(string \| Record&lt;Locale, string&gt;)</code></td>
+<td>Per-locale re-ask text when extractor produces low-confidence value</td>
+</tr>
+<tr>
+<td><code>.dependsOn({ when: predicate })</code></td>
+<td>Field becomes askable only when predicate returns true (e.g. age only after consent)</td>
+</tr>
+<tr>
+<td><code>.askWhen({ priority: 'early' \| 'normal' \| 'late' })</code></td>
+<td>Hint to the graph evaluator on ordering preference</td>
+</tr>
+<tr>
+<td><code>.validates(fn)</code></td>
+<td>Pure predicate run at runtime; failure produces <code>FieldRejected</code> event</td>
+</tr>
+<tr>
+<td><code>.default(value \| (ctx) =&gt; value)</code></td>
+<td>Default applied if field absent at readiness</td>
+</tr>
+<tr>
+<td><code>.options([...])</code></td>
+<td>For <code>enum</code>: list of choices. For <code>string</code>: known-good values (extractor preferred to match).</td>
+</tr>
+<tr>
+<td><code>.label(string \| Record&lt;Locale, string&gt;)</code></td>
+<td>Display label in UI (distinct from askHint, which is the AI prompt)</td>
+</tr>
+<tr>
+<td><code>.help(string \| Record&lt;Locale, string&gt;)</code></td>
+<td>Long-form help text below the field</td>
+</tr>
+<tr>
+<td><code>.placeholder(string \| Record&lt;Locale, string&gt;)</code></td>
+<td>Input placeholder</td>
+</tr>
+<tr>
+<td><code>.confidential()</code></td>
+<td>Hint to UI: don't echo back in scrollback summaries</td>
+</tr>
+</tbody>
+</table>
+<h3 id="field-metadata-that-must-match-the-compliance-manifest">Field metadata that <strong>must</strong> match the compliance manifest<a class="headerlink" href="#field-metadata-that-must-match-the-compliance-manifest" title="Permalink to this section">&para;</a></h3>
+<p>The CrawcusSpec <strong>does not</strong> declare PII level, retention, or lawful basis
+inline. Those properties live in <code>codicil.compliance.ts</code> (see
+<code>02-product/compliance-manifest-schema.md</code>). At build time, the spec
+compiler validates:</p>
+<ol>
+<li>Every field declared in <code>fields</code> has a matching entry in
+   <code>compliance.fields['&lt;projection&gt;.&lt;field&gt;']</code>.</li>
+<li>If <code>compliance.fields[…].pii === 'special-art-9'</code> (special category),
+   the CrawcusSpec must declare a <code>dependsOn</code> that gates the field on a
+   consent event (<code>when: ({ has }) =&gt; has('&lt;consentEventId&gt;')</code>).</li>
+<li>Fields declared as <code>forbidden-for: &lt;purpose&gt;</code> in the compliance
+   manifest cannot be referenced from this Intent if its purpose
+   matches.</li>
+</ol>
+<p><strong>Compliance violations are compile errors, not runtime issues.</strong></p>
+<h2 id="readiness-predicate">Readiness predicate<a class="headerlink" href="#readiness-predicate" title="Permalink to this section">&para;</a></h2>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kr">type</span><span class="w"> </span><span class="nx">ReadinessCtx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nx">has</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">...keys</span><span class="o">:</span><span class="w"> </span><span class="kt">FieldKey</span><span class="p">[])</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">K</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">FieldKey</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="kt">K</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">FieldValue</span><span class="o">&lt;</span><span class="nx">K</span><span class="o">&gt;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nx">consentFor</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">purpose</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nx">events</span><span class="o">:</span><span class="w"> </span><span class="kt">EventSummary</span><span class="p">[];</span><span class="w">   </span><span class="c1">// typed by event kind</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">};</span>
+</span></code></pre></div>
+<p>The predicate is <strong>pure</strong> — it cannot read external state or perform I/O.
+This is what makes the readiness gate hash-testable (per
+the project's engineering ratchets #3) and replayable.</p>
+<p>The runtime enforces readiness in three places (per
+<code>00-canon/architecture-primitives.md</code> "Readiness gate"):</p>
+<ol>
+<li><strong>UI</strong> — CTA button greyed until predicate returns true.</li>
+<li><strong>AI extractor prompt</strong> — extractor told which fields remain.</li>
+<li><strong>Reducer atomic guard</strong> — <code>writeEvent</code> for <code>ProjectionCommit</code> rejects
+   the event transactionally if predicate is false. Cannot be bypassed.</li>
+</ol>
+<h2 id="versioning">Versioning<a class="headerlink" href="#versioning" title="Permalink to this section">&para;</a></h2>
+<p>Each CrawcusSpec carries an integer <code>version</code>. Customer codebases pin
+which version they're on; upgrades are explicit.</p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Bump</th>
+<th>Migration required?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add an optional field</td>
+<td>None (additive)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Add a required field</td>
+<td><code>version + 1</code></td>
+<td>Yes — supply default or backfill</td>
+</tr>
+<tr>
+<td>Remove a field</td>
+<td><code>version + 1</code></td>
+<td>Yes — two-release deprecation per ratchet #4</td>
+</tr>
+<tr>
+<td>Change a field's type</td>
+<td><code>version + 1</code></td>
+<td>Yes — coercion or backfill</td>
+</tr>
+<tr>
+<td>Tighten a validator</td>
+<td><code>version + 1</code></td>
+<td>Yes if existing data fails new validator</td>
+</tr>
+<tr>
+<td>Change <code>askHint</code> text only</td>
+<td>None</td>
+<td>No (UI / extractor only)</td>
+</tr>
+<tr>
+<td>Change <code>readiness</code> predicate</td>
+<td><code>version + 1</code></td>
+<td>Yes if existing in-flight Intents would fail new predicate</td>
+</tr>
+</tbody>
+</table>
+<p>Multiple versions can coexist in production. The Event log records
+which <code>(intentKey, version)</code> produced each event; replay uses the
+historical version.</p>
+<h2 id="inheritance-sector-packs">Inheritance + sector packs<a class="headerlink" href="#inheritance-sector-packs" title="Permalink to this section">&para;</a></h2>
+<p><code>extends</code> lets a sector pack overlay a base spec:</p>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// @tallyseal/spec-ferpa-edu/intents/create-course.ts</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">defineCrawcusSpec</span><span class="p">({</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="s1">'CreateCourse'</span><span class="p">,</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="k">extends</span><span class="o">:</span><span class="w"> </span><span class="s1">'internal-package/intents/create-course'</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nx">version</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span><span class="p">,</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="nx">fields</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nx">parentalConsentEventId</span><span class="o">:</span><span class="w"> </span><span class="kt">field</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="p">.</span><span class="nx">reference</span><span class="p">(</span><span class="s1">'ConsentEvent'</span><span class="p">)</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span><span class="p">.</span><span class="nx">required</span><span class="p">()</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="p">.</span><span class="nx">dependsOn</span><span class="p">({</span><span class="w"> </span><span class="nx">when</span><span class="o">:</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nx">value</span><span class="p">(</span><span class="s1">'learnerAge'</span><span class="p">)</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="mf">99</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">16</span><span class="w"> </span><span class="p">}),</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="p">});</span>
+</span></code></pre></div>
+<p>Composition rules:</p>
+<ul>
+<li><strong>Fields</strong>: child fields are merged with parent; same-named fields are
+  overridden.</li>
+<li><strong>Readiness</strong>: child predicate ANDs with parent predicate (default).
+  Explicit <code>readiness</code> in child fully replaces if <code>replaceParent: true</code>.</li>
+<li><strong>customReducer</strong>: child overrides parent if both present.</li>
+<li><strong>classification</strong>: child must be ≥ parent (cannot downgrade <code>high-risk</code>
+  to <code>standard</code>).</li>
+</ul>
+<h2 id="contracts-added-v02">Contracts (added v0.2)<a class="headerlink" href="#contracts-added-v02" title="Permalink to this section">&para;</a></h2>
+<blockquote>
+<p><strong>A Contract is a named, citable, pure synchronous predicate that an
+CrawcusSpec commits to. Contracts are evaluated by the runtime at
+well-defined checkpoints, rendered into audit bundles, and recorded
+as <code>ContractViolation</code> events on failure. They make an Intent
+<em>defensible</em>, not just <em>describable</em>.</strong></p>
+<p>Design rationale: <code>02-product/crawcus-contracts.md</code>. This section
+is the canonical specification — read the design memo for the <em>why</em>.</p>
+</blockquote>
+<h3 id="what-contracts-add-to-v01">What Contracts add to v0.1<a class="headerlink" href="#what-contracts-add-to-v01" title="Permalink to this section">&para;</a></h3>
+<p>v0.1 described what an Intent <strong>collects</strong> (fields) and <strong>when it's
+complete</strong> (readiness). v0.2 adds what an Intent <strong>commits to</strong>:
+which predicates must hold <em>before</em> the Intent opens, <em>during</em> every
+event write, and <em>after</em> the Intent commits — and which regulation
+each commitment honours by citation.</p>
+<table>
+<thead>
+<tr>
+<th>v0.1 construct</th>
+<th>v0.2 status</th>
+<th>Relationship to Contracts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>readiness</code></td>
+<td>Unchanged</td>
+<td>Intent-level postcondition over field presence; distinct from <code>contracts.post</code> which evaluates against the projection after commit</td>
+</tr>
+<tr>
+<td><code>field.X().dependsOn({ when })</code></td>
+<td>Unchanged</td>
+<td>Askability gate; controls whether the field is <em>asked</em> — Contracts control whether structural commitments <em>hold</em></td>
+</tr>
+<tr>
+<td><code>field.X().validates(fn)</code></td>
+<td>Unchanged — sugar</td>
+<td>Implicitly creates an anonymous field-level Contract with <code>id = &lt;intentKey&gt;/&lt;fieldKey&gt;/validates-N</code>, no citation, severity <code>'block'</code></td>
+</tr>
+<tr>
+<td><code>classification: 'high-risk'</code></td>
+<td>Unchanged</td>
+<td>Triggers <strong>default Contracts</strong> from regulation modules cited in <code>compliance.regulations</code> — e.g., EU AI Act Art. 14 readiness-gate-enforcement Contract is auto-applied</td>
+</tr>
+</tbody>
+</table>
+<h3 id="top-level-shape_1">Top-level shape<a class="headerlink" href="#top-level-shape_1" title="Permalink to this section">&para;</a></h3>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nx">defineCrawcusSpec</span><span class="p">({</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="c1">// ... all v0.1 fields ...</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nx">contracts</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nx">pre</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nx">gdpr</span><span class="p">.</span><span class="nx">art6</span><span class="p">.</span><span class="nx">lawfulBasisDeclared</span><span class="p">({</span><span class="w"> </span><span class="nx">purpose</span><span class="o">:</span><span class="w"> </span><span class="s1">'course-setup'</span><span class="w"> </span><span class="p">}),</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="p">],</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nx">invariants</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">      </span><span class="nx">gdpr</span><span class="p">.</span><span class="nx">art8</span><span class="p">.</span><span class="nx">minorConsent</span><span class="p">({</span><span class="w"> </span><span class="nx">ageField</span><span class="o">:</span><span class="w"> </span><span class="s1">'learnerAge'</span><span class="p">,</span><span class="w"> </span><span class="nx">consentField</span><span class="o">:</span><span class="w"> </span><span class="s1">'parentalConsentEventId'</span><span class="w"> </span><span class="p">}),</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="nx">ferpa</span><span class="p">[</span><span class="s1">'99.31'</span><span class="p">].</span><span class="nx">disclosureConsent</span><span class="p">(),</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="p">],</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="nx">post</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">      </span><span class="p">({</span><span class="w"> </span><span class="nx">snapshot</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">snapshot</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'created'</span><span class="p">,</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="p">],</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="p">});</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Checked when</th>
+<th>Common uses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>contracts.pre</code></td>
+<td>When the Intent opens (first event for the <code>intentId</code>)</td>
+<td>"This Intent requires consent-for-purpose Y was previously granted"; "Tenant must be in allowed-residency for this Intent type"</td>
+</tr>
+<tr>
+<td><code>contracts.invariants</code></td>
+<td>On every <code>writeEvent</code> for the <code>intentId</code></td>
+<td>"If learnerAge &lt; 16 ⟹ parentalConsentEventId present"; "End date &gt; start date"; "Consent referenced by this event has not been revoked"</td>
+</tr>
+<tr>
+<td><code>contracts.post</code></td>
+<td>On <code>ProjectionCommit</code></td>
+<td>"Projection.status === 'created'"; "A <code>CourseCreated</code> event exists in the log"; "All Article-22 explanation fields are present"</td>
+</tr>
+</tbody>
+</table>
+<h3 id="contract-shape">Contract shape<a class="headerlink" href="#contract-shape" title="Permalink to this section">&para;</a></h3>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">type</span><span class="w"> </span><span class="nx">Contract</span><span class="o">&lt;</span><span class="nx">TCtx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ContractCtx</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="cm">/** Stable identifier. Convention: '&lt;module&gt;.&lt;reference&gt;' (e.g.</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="cm">   *  'gdpr.art8.minorConsent') for regulation-module Contracts;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="cm">   *  '&lt;spec-package&gt;/&lt;name&gt;' for sector-pack Contracts;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="cm">   *  '&lt;name&gt;' for Intent-local Contracts. Audit-bundle render</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="cm">   *  fully qualifies: '&lt;intentKey&gt;:&lt;id&gt;:v&lt;event.version&gt;'.</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="cm">   */</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span><span class="cm">/** Human-readable description; auditor + regulator + underwriter</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="cm">   *  read this. Single string or per-locale record (i18n per v0.1</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="cm">   *  LOCKED discipline). */</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">  </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="kt">LocalisedText</span><span class="p">;</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">  </span><span class="cm">/** Optional regulator citation. Strongly preferred for any</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="cm">   *  contract that exists *because* of a regulation. */</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">  </span><span class="nx">citation?</span><span class="o">:</span><span class="w"> </span><span class="kt">RegulationCitation</span><span class="p">;</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">  </span><span class="cm">/** The predicate itself. PURE + SYNC. Operates only on the</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="cm">   *  materialised ContractCtx; no I/O; no closures over external</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="cm">   *  state. Determinism is the W3C/IEEE-credible invariant. */</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">  </span><span class="nx">predicate</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">ctx</span><span class="o">:</span><span class="w"> </span><span class="kt">TCtx</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">  </span><span class="cm">/** 'block' (default) — violation throws ContractViolationError +</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="cm">   *  emits ContractViolation event + rolls back the surrounding</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="cm">   *  transaction. 'warn' — emits ContractViolation event + execution</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="cm">   *  continues; use only for aspirational or deprecation-window</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="cm">   *  contracts. */</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">  </span><span class="nx">severity</span><span class="o">?:</span><span class="w"> </span><span class="s1">'block'</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s1">'warn'</span><span class="p">;</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="p">};</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="kr">type</span><span class="w"> </span><span class="nx">RegulationCitation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">  </span><span class="nx">regulation</span><span class="o">:</span><span class="w"> </span><span class="kt">RegulationVersion</span><span class="p">;</span><span class="w">  </span><span class="c1">// 'gdpr@2025-Q1'</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w">  </span><span class="nx">article</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">                 </span><span class="c1">// 'Art. 8'</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="w">  </span><span class="nx">paragraph?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">              </span><span class="c1">// '§3(a)'</span>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="w">  </span><span class="cm">/** Case-law citation (e.g., 'ECJ Case C-311/18') for jurisdictions</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="cm">   *  whose binding interpretations come from courts. */</span>
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="w">  </span><span class="nx">decisionId?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="w">  </span><span class="cm">/** Binding regulator FAQ / guidance reference (e.g., 'ICO FAQ 2024/3'). */</span>
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="w">  </span><span class="nx">guidanceId?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="w">  </span><span class="nx">url?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">                    </span><span class="c1">// canonical regulator-published source</span>
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="p">};</span>
+</span></code></pre></div>
+<h3 id="field-level-contracts">Field-level Contracts<a class="headerlink" href="#field-level-contracts" title="Permalink to this section">&para;</a></h3>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nx">field</span><span class="p">.</span><span class="kt">string</span><span class="p">()</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="p">.</span><span class="nx">required</span><span class="p">()</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="p">.</span><span class="nx">askHint</span><span class="p">({</span><span class="w"> </span><span class="nx">en</span><span class="o">:</span><span class="w"> </span><span class="s2">"What's the course called?"</span><span class="w"> </span><span class="p">})</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="p">.</span><span class="nx">contract</span><span class="p">({</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s1">'title-non-empty'</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">en</span><span class="o">:</span><span class="w"> </span><span class="s1">'Course title must be non-empty after trim'</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="nx">predicate</span><span class="o">:</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">fieldValue</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">typeof</span><span class="w"> </span><span class="nx">fieldValue</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'string'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">fieldValue</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="p">});</span>
+</span></code></pre></div>
+<p>Field-level Contracts evaluate on every <code>FieldProposed</code> /
+<code>SuggestionAccepted</code> / <code>SuggestionEdited</code> event for that field.</p>
+<h3 id="contractctx-whats-materialised">ContractCtx — what's materialised<a class="headerlink" href="#contractctx-whats-materialised" title="Permalink to this section">&para;</a></h3>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kr">type</span><span class="w"> </span><span class="nx">ContractCtx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nx">intent</span><span class="o">:</span><span class="w"> </span><span class="kt">Readonly</span><span class="o">&lt;</span><span class="nx">Intent</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nx">spec</span><span class="o">:</span><span class="w"> </span><span class="kt">Readonly</span><span class="o">&lt;</span><span class="nx">CrawcusSpec</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nx">tenant</span><span class="o">:</span><span class="w"> </span><span class="kt">Readonly</span><span class="o">&lt;</span><span class="nx">Tenant</span><span class="o">&gt;</span><span class="p">;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nx">events</span><span class="o">:</span><span class="w"> </span><span class="kt">readonly</span><span class="w"> </span><span class="nx">Event</span><span class="p">[];</span><span class="w">                  </span><span class="c1">// chronological for this intentId</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nx">snapshot</span><span class="o">:</span><span class="w"> </span><span class="kt">Readonly</span><span class="o">&lt;</span><span class="nx">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">unknown</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nx">has</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">...keys</span><span class="o">:</span><span class="w"> </span><span class="kt">readonly</span><span class="w"> </span><span class="kt">string</span><span class="p">[])</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">unknown</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">T</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="p">;</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="nx">consentFor</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">purpose</span><span class="o">:</span><span class="w"> </span><span class="kt">Purpose</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="kt">boolean</span><span class="p">;</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span><span class="nx">eventsOfKind</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="kt">EventKind</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="nx">Event</span><span class="p">[];</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="p">};</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="kr">type</span><span class="w"> </span><span class="nx">FieldContractCtx</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ContractCtx</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">  </span><span class="nx">fieldValue</span><span class="o">:</span><span class="w"> </span><span class="kt">T</span><span class="p">;</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">  </span><span class="nx">compliance?</span><span class="o">:</span><span class="w"> </span><span class="kt">FieldCompliance</span><span class="p">;</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="p">};</span>
+</span></code></pre></div>
+<p>The runtime is responsible for materialising the context once per
+checkpoint; predicates are pure functions over the materialisation.
+<strong>Predicates that need external state must consume it from <code>ctx</code>;
+they may not perform I/O.</strong></p>
+<h3 id="sector-pack-composition-monotonic-explicit-derogations">Sector-pack composition (monotonic + explicit derogations)<a class="headerlink" href="#sector-pack-composition-monotonic-explicit-derogations" title="Permalink to this section">&para;</a></h3>
+<p><code>extends</code> already allows sector packs to override fields + extend
+readiness predicates. v0.2 adds discipline for Contracts:</p>
+<ul>
+<li>Child packs may <strong>ADD</strong> Contracts to parents.</li>
+<li>Child packs may <strong>INCREASE</strong> a parent Contract's severity (<code>'warn'</code>
+  → <code>'block'</code>).</li>
+<li>Child packs may <strong>NOT REMOVE</strong> parent Contracts silently.</li>
+<li>Child packs may <strong>NOT LOWER</strong> a parent's severity silently.</li>
+</ul>
+<p>The rule: <code>extends</code> is monotonic over commitments <strong>by default</strong>.
+Composition cannot weaken guarantees without explicit declaration;
+otherwise sector-pack composition becomes a vector for hidden
+weakening. <strong>Enforced at build-time by the spec compiler.</strong></p>
+<h4 id="explicit-derogations-the-legitimate-weakening-escape-valve">Explicit derogations (the legitimate-weakening escape valve)<a class="headerlink" href="#explicit-derogations-the-legitimate-weakening-escape-valve" title="Permalink to this section">&para;</a></h4>
+<p>Some regulations <em>require</em> the ability to weaken a Contract under
+specific basis — GDPR Art. 89 (research/archiving exemptions), HIPAA
+45 CFR 164.512(i) (research with IRB waiver), FDA IND/IDE
+expanded-access provisions, FCA Consumer Duty research exemptions.
+Forcing the spec to forbid these would force forking the parent
+pack, which destroys the audit story.</p>
+<p>Sector packs may declare derogations as a separate, explicit field:</p>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nx">defineCrawcusSpec</span><span class="p">({</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="k">extends</span><span class="o">:</span><span class="w"> </span><span class="s1">'@tallyseal/spec-hipaa-clinical/patient-intake'</span><span class="p">,</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nx">derogations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">      </span><span class="nx">contractId</span><span class="o">:</span><span class="w"> </span><span class="s1">'hipaa.164-508.authorisationRequired'</span><span class="p">,</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">      </span><span class="nx">basis</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">        </span><span class="nx">regulation</span><span class="o">:</span><span class="w"> </span><span class="s1">'hipaa@2024'</span><span class="p">,</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">        </span><span class="nx">article</span><span class="o">:</span><span class="w"> </span><span class="s1">'45 CFR'</span><span class="p">,</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="nx">paragraph</span><span class="o">:</span><span class="w"> </span><span class="s1">'§164.512(i)'</span><span class="p">,</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">        </span><span class="nx">decisionId</span><span class="o">:</span><span class="w"> </span><span class="s1">'IRB-2026-042'</span><span class="p">,</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">      </span><span class="p">},</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">      </span><span class="nx">justification</span><span class="o">:</span><span class="w"> </span><span class="s1">'IRB-waived research protocol; subjects de-identified per Safe Harbor.'</span><span class="p">,</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="p">});</span>
+</span></code></pre></div>
+<p>Each derogation MUST carry:
+- <code>contractId</code>: the parent Contract being weakened
+- <code>basis</code>: a RegulationCitation justifying the derogation (citing the
+  regulation that <em>grants</em> the exemption, not the one being weakened)
+- <code>justification</code>: human-readable explanation surfaced in the audit
+  bundle</p>
+<p>Derogations are <strong>first-class in audit bundles</strong> — every render shows
+the full derogation list with citations, so an auditor sees the
+explicit weakening immediately. Silent weakening (removing a contract
+or lowering severity without a derogation entry) remains a build-time
+error.</p>
+<p>Derogations may NOT be used to bypass a <code>'block'</code> Contract entirely
+unless the basis citation is to a regulation that <em>explicitly</em> grants
+the exemption. The spec compiler does not verify the legal validity
+of the basis (that's the customer's compliance officer's job + their
+auditor's job + their counsel's job) — but the basis MUST be present.</p>
+<h3 id="evaluation-order-within-a-checkpoint-q-t-lock">Evaluation order within a checkpoint (Q-T lock)<a class="headerlink" href="#evaluation-order-within-a-checkpoint-q-t-lock" title="Permalink to this section">&para;</a></h3>
+<p>When a checkpoint (<code>pre</code> / <code>invariants</code> / <code>post</code>) contains multiple
+Contracts, they evaluate in <strong>declaration order</strong> — the order they
+appear in the <code>contracts.pre</code> / <code>contracts.invariants</code> /
+<code>contracts.post</code> arrays. Field-level Contracts evaluate in the order
+declared on the field builder.</p>
+<p>This is normative — replay determinism requires a canonical order.
+Implementations MUST evaluate in declaration order; parallel
+evaluation is permitted only if the implementation guarantees the
+same result-sequence as serial declaration-order evaluation.</p>
+<h3 id="replay-semantics-for-warn-contract-violations-q-u-lock">Replay semantics for <code>'warn'</code> Contract violations (Q-U lock)<a class="headerlink" href="#replay-semantics-for-warn-contract-violations-q-u-lock" title="Permalink to this section">&para;</a></h3>
+<p>When an audit bundle is replayed (e.g., for verification, regulator
+inspection, or eval-corpus regression testing), <code>'warn'</code> Contract
+violations re-evaluate against the <strong>historical predicate</strong> — the
+predicate whose SHA-256 hash matches the <code>predicateHash</code> on the
+recorded <code>ContractViolation</code> event, NOT against the current spec's
+predicate.</p>
+<p>This is load-bearing: predicates may change between spec versions
+(<code>version + 1</code> bump per the versioning rules). A bundle generated
+against spec v3 must replay-verify against v3's predicates, not v4's
+— otherwise replay produces non-deterministic results.</p>
+<p>Implementations achieve this by:
+1. Storing each Contract's normalised predicate source in the audit
+   bundle alongside the predicate hash.
+2. During replay, recompiling and evaluating the historical predicate.
+3. If the historical predicate source is missing from the bundle (e.g.,
+   bundle generated by an older implementation that didn't include
+   source), replay reports the violation as <code>'historical-unverifiable'</code>
+   rather than <code>'pass'</code> or <code>'fail'</code>.</p>
+<h3 id="contractviolation-event">ContractViolation event<a class="headerlink" href="#contractviolation-event" title="Permalink to this section">&para;</a></h3>
+<p>When a Contract's predicate returns <code>false</code>, the runtime emits a
+<code>ContractViolation</code> event before the surrounding transaction's
+outcome (rollback for <code>'block'</code>, continued for <code>'warn'</code>):</p>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nx">kind</span><span class="o">:</span><span class="w"> </span><span class="s1">'ContractViolation'</span><span class="p">,</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nx">payload</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nx">contractId</span><span class="o">:</span><span class="w"> </span><span class="s1">'gdpr.art8.minorConsent'</span><span class="p">,</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="nx">contractDescription</span><span class="o">:</span><span class="w"> </span><span class="s1">'...'</span><span class="p">,</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="nx">citation</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">regulation</span><span class="o">:</span><span class="w"> </span><span class="s1">'gdpr@2025-Q1'</span><span class="p">,</span><span class="w"> </span><span class="nx">article</span><span class="o">:</span><span class="w"> </span><span class="s1">'Art. 8'</span><span class="p">,</span><span class="w"> </span><span class="nx">paragraph</span><span class="o">:</span><span class="w"> </span><span class="s1">'§3(a)'</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="nx">predicateHash</span><span class="o">:</span><span class="w"> </span><span class="s1">'sha256:...'</span><span class="p">,</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="nx">severity</span><span class="o">:</span><span class="w"> </span><span class="s1">'block'</span><span class="p">,</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="nx">triggeringEventId</span><span class="o">:</span><span class="w"> </span><span class="s1">'evt_...'</span><span class="p">,</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="nx">contextSummary</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">intentId</span><span class="p">,</span><span class="w"> </span><span class="nx">snapshot</span><span class="p">,</span><span class="w"> </span><span class="nx">missingFields</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">'parentalConsentEventId'</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>ContractViolation is a first-class <code>EventKind</code> in core's
+<code>event/event-kinds.ts</code>. Audit-bundle extractors surface a per-Intent
+summary of all ContractViolations. MGA telemetry treats violation
+rate as a priceable signal.</p>
+<h3 id="audit-bundle-output">Audit-bundle output<a class="headerlink" href="#audit-bundle-output" title="Permalink to this section">&para;</a></h3>
+<p>The audit bundle includes a top-level <code>contracts</code> section per Intent:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">"intentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"int_01H..."</span><span class="p">,</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">"intentKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CreateCourse"</span><span class="p">,</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">"specVersion"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">"contracts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="nt">"pre"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="cm">/* Contract + evaluation history */</span><span class="p">],</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="nt">"invariants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="cm">/* ... */</span><span class="p">],</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="nt">"post"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="cm">/* ... */</span><span class="p">]</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">  </span><span class="nt">"violations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="cm">/* extracted ContractViolation events */</span><span class="p">]</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Each rendered Contract carries: <code>id</code> (fully qualified),
+<code>description</code>, <code>citation</code>, <code>severity</code>, <code>predicateSource</code>
+(Prettier-normalised), <code>predicateHash</code> (SHA-256 over normalised
+source), <code>evaluations</code> (per-event pass/fail history). Auditors read
+the description + can verify the hash matches the source they see;
+tampering with either is detectable. Predicate-source render rules
+owned by the audit-bundle layer (deferred package).</p>
+<h3 id="defaults-from-regulations-ergonomic-discipline">Defaults from regulations + ergonomic discipline<a class="headerlink" href="#defaults-from-regulations-ergonomic-discipline" title="Permalink to this section">&para;</a></h3>
+<p><strong>Most Contracts come from regulation modules.</strong> A regulation module
+exports typed Contract factories that take the spec-specific binding
+(which field is the age, which is the consent event ID, etc.):</p>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">// @tallyseal/regulations/gdpr/art8.ts (exported)</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">minorConsent</span><span class="p">(</span><span class="nx">opts</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nx">ageField</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nx">consentField</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nx">minorAge?</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="p">})</span><span class="o">:</span><span class="w"> </span><span class="nx">Contract</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<p>The Intent author composes them like Lego (see "Top-level shape"
+above). Hand-written Contracts are reserved for domain-specific
+invariants the regulation modules don't cover. The discipline:
+<strong>predicates are the noun; everything else is sugar</strong>.</p>
+<h3 id="versioning-interaction-with-contracts">Versioning interaction with Contracts<a class="headerlink" href="#versioning-interaction-with-contracts" title="Permalink to this section">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Bump</th>
+<th>Migration required?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add an optional Contract</td>
+<td>None (additive; new commitment doesn't invalidate prior events)</td>
+<td>No, but audit-bundle prior periods will show the Contract absent</td>
+</tr>
+<tr>
+<td>Add a required Contract (severity 'block')</td>
+<td><code>version + 1</code></td>
+<td>Yes — confirm existing in-flight Intents satisfy the new Contract or supply remediation</td>
+</tr>
+<tr>
+<td>Remove a Contract</td>
+<td><code>version + 1</code> + ADR documenting the weakening</td>
+<td>Yes — explicit acknowledgement that audit-bundle prior periods showed a Contract that no longer applies</td>
+</tr>
+<tr>
+<td>Raise a Contract's severity ('warn' → 'block')</td>
+<td><code>version + 1</code></td>
+<td>Same as adding a block Contract</td>
+</tr>
+<tr>
+<td>Lower a Contract's severity ('block' → 'warn')</td>
+<td><code>version + 1</code> + ADR</td>
+<td>Yes — weakening</td>
+</tr>
+<tr>
+<td>Edit a Contract's predicate</td>
+<td><code>version + 1</code> (predicate hash changes)</td>
+<td>Replay log shows the version transition; auditor reads both predicate hashes in bundle</td>
+</tr>
+<tr>
+<td>Edit a Contract's description (text only)</td>
+<td>None</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<h2 id="wire-format-stability-added-v02">Wire-format stability (added v0.2)<a class="headerlink" href="#wire-format-stability-added-v02" title="Permalink to this section">&para;</a></h2>
+<blockquote>
+<p><strong>The CrawcusSpec wire format is normatively a UTF-8 JSON document
+canonicalised per RFC 8785 (JSON Canonicalization Scheme). Hash
+equivalence across implementations is a load-bearing property.</strong></p>
+</blockquote>
+<h3 id="why-a-wire-format">Why a wire format<a class="headerlink" href="#why-a-wire-format" title="Permalink to this section">&para;</a></h3>
+<p>CrawcusSpec is authored in TypeScript but <strong>distributed as a wire
+format</strong>. Sector packs cross machine boundaries (npm install);
+audit bundles cross organisation boundaries (federation); the spec
+crosses language boundaries (Go / Rust / Python reference
+implementations are required for W3C/IEEE submission credibility).
+Hash-identical re-serialisation across implementations is the
+property that makes all of this work.</p>
+<h3 id="the-format">The format<a class="headerlink" href="#the-format" title="Permalink to this section">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Encoding</td>
+<td>UTF-8, Unicode NFC normalised</td>
+</tr>
+<tr>
+<td>Structure</td>
+<td>JSON, per RFC 8259</td>
+</tr>
+<tr>
+<td>Canonicalisation</td>
+<td>RFC 8785 (JCS): keys sorted lexicographically by UTF-8 code-point; no insignificant whitespace; numbers per IEEE 754 + RFC 8785's number serialisation; strings per RFC 8785's string serialisation</td>
+</tr>
+<tr>
+<td>Predicates</td>
+<td>Source code normalised by the <strong><code>internal-package</code> canonical TS-AST normaliser</strong> (in-house; rules normatively defined in this spec — see §"Predicate canonicalisation" below) + SHA-256 content hash over the normalised source. <strong>Not</strong> Prettier-dependent — Prettier ships breaking format changes between minor versions, which would silently re-hash every Contract in every deployed audit bundle. The in-house normaliser is part of the spec and pinned to a Codicil version. Reference implementations carry their own evaluator (a TS implementation cannot run a Rust predicate, by design — predicates compile to evaluator-native artefacts at adapter publish-time)</td>
+</tr>
+<tr>
+<td>Dates</td>
+<td>ISO-8601 strings, UTC, sub-second precision in <code>Z</code>-terminated format</td>
+</tr>
+<tr>
+<td>Numbers</td>
+<td>JSON numbers without trailing zeros (<code>1</code>, not <code>1.0</code>); integers and floats distinguishable by presence of decimal point</td>
+</tr>
+<tr>
+<td>Locale strings (<code>askHint</code>, <code>description</code>, etc.)</td>
+<td>Plain UTF-8 strings; keys are BCP-47 locale identifiers</td>
+</tr>
+<tr>
+<td>References (<code>extends</code>, <code>references</code>)</td>
+<td>Spec-package paths (<code>'@tallyseal/spec-ferpa-edu/intents/create-course'</code>) or canonical-URI form (<code>'urn:codicil:spec:gdpr-art8-base'</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="predicate-canonicalisation-in-house-ts-ast-normaliser">Predicate canonicalisation (in-house TS-AST normaliser)<a class="headerlink" href="#predicate-canonicalisation-in-house-ts-ast-normaliser" title="Permalink to this section">&para;</a></h3>
+<p>The Codicil canonical TS-AST normaliser is part of the format spec
+(<code>internal-package/contract/normalise.ts</code>). It is <strong>not</strong> Prettier and
+<strong>not</strong> any other third-party formatter — version drift in third-party
+formatters silently invalidates predicate hashes across audit bundles,
+which is a chain-break-shaped problem.</p>
+<p>Normalisation rules (normative; v0.2 lock):</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Whitespace</td>
+<td>Single space between tokens; one newline between statements; no trailing whitespace</td>
+</tr>
+<tr>
+<td>Indentation</td>
+<td>Two spaces, never tabs</td>
+</tr>
+<tr>
+<td>Quotes</td>
+<td>Single quotes for strings (escape via <code>\'</code>); never template literals unless interpolation is present</td>
+</tr>
+<tr>
+<td>Object keys</td>
+<td>Sorted lexicographically by UTF-8 code-point (matches RFC 8785 sorting)</td>
+</tr>
+<tr>
+<td>Trailing commas</td>
+<td>Always — last array element + last object property + last function argument</td>
+</tr>
+<tr>
+<td>Semicolons</td>
+<td>Always — every statement, including the last in a block</td>
+</tr>
+<tr>
+<td>Arrow function bodies</td>
+<td>If body is a single return expression, use expression-body (<code>x =&gt; x.foo</code>); else block-body (<code>x =&gt; { return ... }</code>)</td>
+</tr>
+<tr>
+<td>Parameter parens</td>
+<td>Always required (<code>(x) =&gt;</code> not <code>x =&gt;</code>)</td>
+</tr>
+<tr>
+<td>Comments</td>
+<td>Removed entirely — comments are non-normative; if a contract needs explanation, it lives in <code>description</code></td>
+</tr>
+<tr>
+<td>Type annotations</td>
+<td>Removed entirely — predicates are evaluated by type-erasure; type annotations exist for authoring ergonomics, not runtime</td>
+</tr>
+<tr>
+<td><code>const</code>/<code>let</code>/<code>var</code></td>
+<td>All normalised to <code>const</code> for top-level temp bindings; <code>let</code> only inside loops (rare in pure predicates)</td>
+</tr>
+<tr>
+<td>Identifier order</td>
+<td>Stable (preserves author's binding order); no reordering of independent statements</td>
+</tr>
+</tbody>
+</table>
+<p>Implementations of <code>internal-package</code> ship a normalisation engine that
+implements every rule above; the TCK enforces byte-identical output
+across reference implementations.</p>
+<p><strong>Predicate size limit (Q-S lock)</strong>: a single predicate's normalised
+source MUST NOT exceed <strong>4 KB</strong>. Enforced at build-time by the spec
+compiler. Larger predicates are an anti-pattern (they're hard to
+audit, hard to test, hard to render in audit bundles); refactor into
+multiple smaller named Contracts.</p>
+<h3 id="hash-equivalence-test">Hash equivalence test<a class="headerlink" href="#hash-equivalence-test" title="Permalink to this section">&para;</a></h3>
+<p>A v0.2 reference implementation passes the wire-format conformance
+test if:
+1. Reading a CrawcusSpec JSON document
+2. Re-serialising via the implementation's JCS canonicaliser
+3. Computing SHA-256 over the serialisation</p>
+<p>produces a <code>contentHash</code> byte-identical to the TS reference
+implementation's output. <code>@crawcus/tck</code> ships the
+fixture suite for this test.</p>
+<h3 id="implications-for-predicates">Implications for predicates<a class="headerlink" href="#implications-for-predicates" title="Permalink to this section">&para;</a></h3>
+<p>Predicates <strong>cannot cross language boundaries directly</strong> — a
+TypeScript predicate <code>({ has }) =&gt; has('x') &amp;&amp; has('y')</code> is not
+syntactically valid Rust. The wire format carries the predicate's
+<strong>source text + content hash</strong>; each language's reference
+implementation ships its own translator (a TS reference impl can
+evaluate the JS source directly; a Go reference impl translates
+canonical predicate shapes to Go; etc.). The set of <em>canonical
+predicate shapes</em> is a constrained subset of TS expressions (no
+async, no I/O, no closures over external state); this constraint
+makes cross-language translation tractable. The full constrained
+subset is normatively defined by the TCK.</p>
+<h3 id="what-this-rules-out-additional-to-v01">What this rules out (additional to v0.1)<a class="headerlink" href="#what-this-rules-out-additional-to-v01" title="Permalink to this section">&para;</a></h3>
+<ul>
+<li>Predicate source containing language-specific features not in the
+  canonical subset (e.g., TS decorators, generators, dynamic
+  <code>import()</code>)</li>
+<li>Wire-format hashes computed via non-RFC-8785 canonicalisers
+  (<code>JSON.stringify</code> is non-canonical — do not use)</li>
+<li>Cross-implementation rounds with whitespace differences (RFC 8785
+  is strict — no insignificant whitespace)</li>
+</ul>
+<h3 id="wire-format-stability-signed-bundle-v02">Wire-format stability — signed bundle (v0.2)<a class="headerlink" href="#wire-format-stability-signed-bundle-v02" title="Permalink to this section">&para;</a></h3>
+<blockquote>
+<p><em>Added per the Q-VERIFIER-CLI-OSS-LOCK Open Q-1 memo (hypothesis-pending-lock 2026-06-03). That memo is not published in this repository. This section is the normative source for the signed-bundle envelope shape for any CRAWCUS-conformant verifier.</em></p>
+</blockquote>
+<p>The unsigned canonical-JSON bundle (above) is the <strong>payload</strong>. To make audit bundles transportable, tamper-evident, and third-party-verifiable, CRAWCUS adopts the <strong><a href="https://github.com/secure-systems-lab/dsse/blob/master/protocol.md">DSSE (Dead Simple Signing Envelope)</a></strong> specification — the same envelope used by <a href="https://in-toto.io/">in-toto</a>, <a href="https://github.com/slsa-framework/slsa-verifier">SLSA</a>, and <a href="https://docs.sigstore.dev/cosign/verifying/verify/">Sigstore cosign</a> for chain-of-custody attestations.</p>
+<h4 id="envelope-shape">Envelope shape<a class="headerlink" href="#envelope-shape" title="Permalink to this section">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>{
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  "payloadType": "application/vnd.crawcus.bundle+jsonl",
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>  "payload": "&lt;base64-encoded JCS-canonical JSONL bundle&gt;",
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>  "signatures": [
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    {
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>      "keyid": "&lt;ed25519 public-key fingerprint&gt;",
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>      "sig": "&lt;base64-encoded ed25519 signature over PAE(payloadType, decoded(payload))&gt;"
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    }
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>  ]
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>}
+</span></code></pre></div>
+<p>Where DSSE Pre-Authentication Encoding (PAE) is defined as:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>PAE(type, payload) = "DSSEv1" + SP + LEN(type) + SP + type + SP + LEN(payload) + SP + payload
+</span></code></pre></div>
+<p>The signature is computed over the bytes of <code>PAE(payloadType, decoded(payload))</code> — not over the JSON envelope. This preserves the JCS-canonical payload bytes byte-identically; the verifier base64-decodes once and the resulting bytes hash-equate to the original JCS bundle (per §"Hash equivalence test" above).</p>
+<h4 id="payload-type-family-open-enum-per-q-cr9-discipline">Payload-type family (open enum per Q-CR9 discipline)<a class="headerlink" href="#payload-type-family-open-enum-per-q-cr9-discipline" title="Permalink to this section">&para;</a></h4>
+<p>CRAWCUS-conformant verifiers MUST NOT hardcode a single <code>payloadType</code> string. The verifier accepts the <code>application/vnd.crawcus.*+jsonl</code> family with explicit subtype dispatch:</p>
+<table>
+<thead>
+<tr>
+<th><code>payloadType</code> subtype</th>
+<th>v0.2 status</th>
+<th>Verifier behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>application/vnd.crawcus.bundle+jsonl</code></td>
+<td>Shipped (audit bundle — this section)</td>
+<td>Verify hash chain + Contract pre/inv/post per the unsigned format above</td>
+</tr>
+<tr>
+<td><code>application/vnd.crawcus.disclosure-bundle+jsonl</code></td>
+<td>Reserved (post-v0.2)</td>
+<td>Envelope signature verified; subtype-specific verification deferred with <code>unknown-subtype</code> warning + manifest reference</td>
+</tr>
+<tr>
+<td><code>application/vnd.crawcus.warrant-bundle+jsonl</code></td>
+<td>Reserved (post-v0.2)</td>
+<td>Same fall-through</td>
+</tr>
+<tr>
+<td><code>application/vnd.crawcus.attestation-bundle+jsonl</code></td>
+<td>Reserved (post-v0.2)</td>
+<td>Same fall-through</td>
+</tr>
+<tr>
+<td>Other <code>application/vnd.crawcus.*+jsonl</code></td>
+<td>Forward-compat reserved</td>
+<td>Envelope verification holds even if subtype semantics are not yet shipped — chain-of-custody on the wrapper is preserved</td>
+</tr>
+</tbody>
+</table>
+<p>This is the Q-CR9-style discriminator pattern applied to the payload-type axis: one canon entry covers all future bundle types without re-lock.</p>
+<h4 id="signature-suite-v02">Signature suite (v0.2)<a class="headerlink" href="#signature-suite-v02" title="Permalink to this section">&para;</a></h4>
+<p><strong>ed25519</strong> is the default + only required Wave-1 signature suite. 32-byte public keys + 64-byte signatures. Native to Node.js crypto, Web Crypto API, and most TS DSSE libraries.</p>
+<p>Adding additional suites (ECDSA-P256, Ed25519ph, post-quantum candidates such as ML-DSA) is <strong>additive-MINOR per ratchet #16</strong> — Wave-2+ engineering memo. The DSSE envelope supports multiple signatures per bundle (<code>signatures: []</code> is an array), so dual-signing (e.g., ed25519 + ML-DSA) is <em>additive</em>, not <em>deprecating</em>, and does not interact with ratchet #4's two-release-deprecation discipline.</p>
+<h4 id="cross-vendor-verification">Cross-vendor verification<a class="headerlink" href="#cross-vendor-verification" title="Permalink to this section">&para;</a></h4>
+<p>A bundle signed under this envelope is verifiable by:</p>
+<ul>
+<li>The reference CRAWCUS verifier (<code>crawcus-verify</code> — see Q-VERIFIER-CLI-OSS-LOCK memo)</li>
+<li>Any second-vendor CRAWCUS-conformant verifier implementing this section</li>
+<li>Sigstore cosign DSSE-envelope verification (CLI invocation depends on cosign version + cert-mode; in keyless mode <code>cosign verify-blob --bundle &lt;envelope&gt; &lt;payload&gt;</code> accepts a bare DSSE envelope and verifies the embedded signature against the included public key — cosign treats CRAWCUS bundles as a generic DSSE envelope; subtype-specific verification stays CRAWCUS-side)</li>
+<li><code>slsa-verifier verify-artifact --provenance &lt;bundle&gt;</code> for SLSA-pipeline interop (when the bundle includes SLSA-provenance subtype, per future spec extension)</li>
+</ul>
+<h4 id="iana-media-type-registration">IANA media-type registration<a class="headerlink" href="#iana-media-type-registration" title="Permalink to this section">&para;</a></h4>
+<p>The <code>application/vnd.crawcus.*+jsonl</code> family uses the <code>vnd.</code> prefix, which per <a href="https://www.rfc-editor.org/rfc/rfc6838#section-3.2">RFC 6838 §3.2</a> is for vendor-specific media types and does <strong>not</strong> require IANA registration to be deployed. Formal IANA registration is queued for the Y1 H2 CRAWCUS spec spin-out (when <code>@crawcus/spec</code> becomes the canonical source) per <code>identity.md</code> Y1 H2 milestone.</p>
+<h4 id="what-this-rules-out-additional-to-the-unsigned-format">What this rules out (additional to the unsigned format)<a class="headerlink" href="#what-this-rules-out-additional-to-the-unsigned-format" title="Permalink to this section">&para;</a></h4>
+<ul>
+<li>Bundles signed under non-DSSE envelopes (e.g., bare JWS, COSE, bespoke) — see Open Q-1 memo §"Why DSSE" for rejected alternatives</li>
+<li>Re-canonicalising the payload bytes between sign and verify (DSSE PAE preserves payload byte-identical)</li>
+<li>Hardcoding <code>application/vnd.crawcus.bundle+jsonl</code> as the only acceptable <code>payloadType</code> — forward-compat family dispatch is mandatory</li>
+<li>Removing signature suites in a backwards-incompatible way without a ratchet #4 two-release deprecation window</li>
+<li><strong>Nested DSSE envelopes</strong> (DSSE-in-DSSE) — the verifier MUST reject a <code>payload</code> that itself decodes to a DSSE envelope. The verifier-output countersign use case uses a <em>parallel</em> DSSE wrap (separate envelope), not a nested one; this rule-out forecloses a known DSSE foot-gun while preserving the parallel-wrap pattern</li>
+</ul>
+<h2 id="what-this-rules-out">What this rules out<a class="headerlink" href="#what-this-rules-out" title="Permalink to this section">&para;</a></h2>
+<ul>
+<li>Imperative logic inside a spec (loops, mutations, I/O)</li>
+<li>Runtime construction of specs (specs are static modules)</li>
+<li>Cross-spec field references except via <code>extends</code></li>
+<li>PII / retention annotations on fields (those live in compliance manifest)</li>
+<li>Locale-free <code>askHint</code> strings in production (i18n is mandatory per
+  <code>09-operating/decision-log.md</code> LOCKED row)</li>
+<li><strong>Async predicates</strong> (v0.2 addition — see Contracts §)</li>
+<li><strong>Wire-format hashes via non-RFC-8785 canonicalisers</strong> (v0.2 addition)</li>
+<li><strong>Sector-pack Contract removal or severity-lowering</strong> (v0.2 addition)</li>
+</ul>
+<h2 id="gdpr-erasure">GDPR erasure<a class="headerlink" href="#gdpr-erasure" title="Permalink to this section">&para;</a></h2>
+<blockquote>
+<p><strong>TODO.</strong> A crypto-shred and tombstone mechanism for GDPR erasure is
+not specified in this repository. This heading exists so documentation
+that mentions the pattern has a real anchor. It is not normative, and
+it does not define fields, algorithms, or verifier behaviour.</p>
+</blockquote>
+<h2 id="open-questions-deferred-for-v10">Open questions deferred for v1.0<a class="headerlink" href="#open-questions-deferred-for-v10" title="Permalink to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Owner</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Optional <code>pre</code>/<code>post</code> hooks for field-level extractor tuning</td>
+<td>Founder</td>
+<td>Risk: invites imperative logic; defer until proven necessary</td>
+</tr>
+<tr>
+<td>Declarative <code>dependencies</code> graph (DAG) vs imperative <code>dependsOn</code></td>
+<td>Founder</td>
+<td>Current <code>dependsOn</code> predicate is pragmatic; DAG may be needed for visualisation</td>
+</tr>
+<tr>
+<td>Standard "completion" events beyond <code>ProjectionCommit</code></td>
+<td>Founder</td>
+<td>E.g. <code>IntentParked</code> for incomplete-but-saved flows</td>
+</tr>
+<tr>
+<td>Spec marketplace identity (registry, signing, attestation)</td>
+<td>Founder</td>
+<td>Becomes load-bearing once third-party specs ship</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permalink to this section">&para;</a></h2>
+<ul>
+<li><code>00-canon/architecture-primitives.md</code> — primitives 1 and 2 (Intent, CrawcusSpec)</li>
+<li><code>02-product/compliance-manifest-schema.md</code> — the companion contract</li>
+<li><code>02-product/integration-tiers.md</code> — Tier 2 / customReducer pattern</li>
+<li><code>02-product/three-adoption-modes.md</code> — how <code>npx @tallyseal/generator migrate-form</code> generates a spec</li>
+<li>the project's engineering ratchets — disciplines #3, #4, #13</li>
+<li><code>09-operating/decision-log.md</code> — LOCKED rows for i18n, W3C/IEEE submission</li>
+<li><code>HANDOFF-NEXT-SESSION.md</code> — commit-4 build plan for <code>packages/core/src/intent/</code> (replacing the prior in-HF <code>lib/witness/intents/</code> path)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Paul Wander + CRAWCUS contributors. Specification text licensed under CC-BY-4.0. Code licensed under Apache-2.0 or MIT (see per-package LICENSE).
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "content.action.edit", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
