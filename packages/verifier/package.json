@@ -52,7 +52,7 @@
     "url": "https://github.com/tallyseal/crawcus.git",
     "directory": "packages/verifier"
   },
-  "homepage": "https://tallyseal.org",
+  "homepage": "https://crawcus.org",
   "bugs": "https://github.com/tallyseal/crawcus/issues",
   "engines": {
     "node": ">=22.0.0"
