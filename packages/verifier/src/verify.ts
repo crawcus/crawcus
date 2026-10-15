@@ -11,7 +11,7 @@
  *
  *   - `fail`                     if any check failed
  *   - `untrusted-signer`         if the signer is not authorised and
- *                                `allowUntrustedSigner` is not set
+ *                                `allowUntrustedSignerForTestsOnly` is not set
  *   - `historical-unverifiable`  if that check fired and the signer
  *                                is trusted
  *   - `pass`                     otherwise
@@ -98,19 +98,26 @@ export function verifyBundle(input: VerifyInput): VerifyResult {
       verifiedAt,
       verifierIdentity,
       { decision: 'not-evaluated', reason: 'trust.not-evaluated' },
-      opts.allowUntrustedSigner === true,
+      opts.allowUntrustedSignerForTestsOnly === true,
     );
   }
 
   // ===== Check 2: DSSE signature (integrity only) =====
   const sigResult = verifyAllDsseSignatures(parsed.envelope, parsed.payloadBytes);
+  const integrityCiteIndex =
+    sigResult.verified[0] !== undefined ? sigResult.verified[0].index : 0;
   checks.push({
     id: 'dsse.signature',
     label: 'DSSE ed25519 signature',
     verdict: sigResult.verdict,
     ...(sigResult.violationKind !== undefined ? { violationKind: sigResult.violationKind } : {}),
     detail: clipDetail(sigResult.detail),
-    cite: [{ kind: 'envelope-field', value: 'signatures[0]' }],
+    cite: [
+      {
+        kind: 'envelope-field',
+        value: `signatures[${String(integrityCiteIndex)}]`,
+      },
+    ],
   });
 
   const signingTime = metadata.latestEventTs.length > 0 ? metadata.latestEventTs : undefined;
@@ -168,7 +175,7 @@ export function verifyBundle(input: VerifyInput): VerifyResult {
       verifiedAt,
       verifierIdentity,
       trust,
-      opts.allowUntrustedSigner === true,
+      opts.allowUntrustedSignerForTestsOnly === true,
     );
   }
 
@@ -248,7 +255,7 @@ export function verifyBundle(input: VerifyInput): VerifyResult {
     verifiedAt,
     verifierIdentity,
     trust,
-    opts.allowUntrustedSigner === true,
+    opts.allowUntrustedSignerForTestsOnly === true,
   );
 }
 
@@ -294,21 +301,21 @@ function aggregateAndReturn(
   verifiedAt: string,
   verifierIdentity: VerifyResult['verifierIdentity'],
   trust: TrustResult,
-  allowUntrustedSigner: boolean,
+  allowUntrustedSignerForTestsOnly: boolean,
 ): VerifyResult {
-  const verdict = aggregateVerdict(checks, trust, allowUntrustedSigner);
+  const verdict = aggregateVerdict(checks, trust, allowUntrustedSignerForTestsOnly);
   return { verdict, checks, bundleMetadata, verifiedAt, verifierIdentity, trust };
 }
 
 function aggregateVerdict(
   checks: readonly VerifyCheck[],
   trust: TrustResult,
-  allowUntrustedSigner: boolean,
+  allowUntrustedSignerForTestsOnly: boolean,
 ): VerifyVerdict {
   for (const c of checks) {
     if (c.verdict === 'fail') return 'fail';
   }
-  if (trust.decision === 'untrusted' && !allowUntrustedSigner) return 'untrusted-signer';
+  if (trust.decision === 'untrusted' && !allowUntrustedSignerForTestsOnly) return 'untrusted-signer';
   let sawHistoricalUnverifiable = false;
   for (const c of checks) {
     if (c.verdict === 'historical-unverifiable') sawHistoricalUnverifiable = true;
