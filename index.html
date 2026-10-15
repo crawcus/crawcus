@@ -279,6 +279,45 @@
   
 
       
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="scitt/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRAWCUS and SCITT
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="adr/" class="md-tabs__link">
+          
+  
+  
+  Decisions
+
+        </a>
+      </li>
+    
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -654,6 +693,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="spec/crawcus-scitt-profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SCITT payload profile (draft)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -728,6 +795,148 @@
     
   
     Architecture primitives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scitt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRAWCUS and SCITT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Decisions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="adr/ADR-0055-scitt-fit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ADR-0055 SCITT fit
   
 
     
@@ -956,6 +1165,7 @@ SPDX-License-Identifier: CC-BY-4.0
 <h1 id="crawcus">CRAWCUS<a class="headerlink" href="#crawcus" title="Permalink to this section">&para;</a></h1>
 <p><strong>Contract · Receipt · Attestation · Warrant</strong> — an open specification for cryptographic audit receipts covering both application transactions and AI-inference decisions under one canonical shape.</p>
 <p>The specification is authored openly, dual-licensed (<a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a> for spec text, <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a> for code), and on a <a href="https://lfaidata.foundation/">Linux Foundation AI &amp; Data</a> submission path via the <a href="https://www.jointdevelopment.org/">Joint Development Foundation</a>. Any party — systems integrator, adjacent vendor, individual developer, regulator — can implement a conformant runtime or verifier.</p>
+<p>CRAWCUS defines the payload semantics and regulation mapping for cryptographic audit receipts. Envelope-level transparency is the domain of IETF SCITT (<a href="https://www.rfc-editor.org/rfc/rfc9943.html">RFC 9943</a>, <a href="https://www.rfc-editor.org/rfc/rfc9942.html">RFC 9942</a>). That covers registration of Signed Statements with a Transparency Service and COSE Receipts. SCITT treats the payload as opaque, and CRAWCUS is designed to be carried as a SCITT payload. The profile is a draft and has not been tested against any Transparency Service: see <a href="scitt/">CRAWCUS and SCITT</a>.</p>
 <hr />
 <h2 id="why-this-exists">Why this exists<a class="headerlink" href="#why-this-exists" title="Permalink to this section">&para;</a></h2>
 <p>When a regulator, auditor, or plaintiff asks <em>"prove this record has not been altered since it was written,"</em> the honest answer available today is usually one of:</p>
@@ -1015,7 +1225,11 @@ SPDX-License-Identifier: CC-BY-4.0
 </tr>
 <tr>
 <td><a href="canon/architecture-primitives/">Architecture primitives</a></td>
-<td>Canonical documentation of all primitives — Core (4) and Extended (5 additional) tiers, with the shape, semantics, and conformance test surface of each</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>SCITT implementer or WG participant</strong></td>
+<td><a href="scitt/">CRAWCUS and SCITT</a> → <a href="spec/crawcus-scitt-profile/">SCITT payload profile (draft)</a> → <a href="adr/ADR-0055-scitt-fit/">ADR-0055 build plan</a></td>
 </tr>
 </tbody>
 </table>
@@ -1149,6 +1363,10 @@ SPDX-License-Identifier: CC-BY-4.0
 <td><a href="https://www.sigstore.dev">Sigstore</a></td>
 </tr>
 <tr>
+<td>Optional transparency envelope</td>
+<td><a href="https://datatracker.ietf.org/wg/scitt/about/">SCITT</a>: <a href="https://www.rfc-editor.org/rfc/rfc9943.html">RFC 9943</a>, <a href="https://www.rfc-editor.org/rfc/rfc9942.html">RFC 9942</a>. Payload profile <a href="spec/crawcus-scitt-profile/">in draft</a></td>
+</tr>
+<tr>
 <td>Erasable-immutable log pattern</td>
 <td>GDPR crypto-shred + tombstone — <a href="spec/crawcus-format/#gdpr-erasure">not yet specified</a></td>
 </tr>
@@ -1181,6 +1399,7 @@ SPDX-License-Identifier: CC-BY-4.0
 <li>Multi-vendor implementation ecosystem — the reference implementations here are the initial implementations. Third-party conformant implementations are actively encouraged.</li>
 <li>LF / JDF adoption — submission planned, not yet submitted.</li>
 <li>Widespread production deployment — early adopters welcome.</li>
+<li>Interop with SCITT Transparency Services. The payload profile is a draft; registration against Transparency Service implementations is planned and not yet tested.</li>
 </ul>
 <h2 id="verifying-releases-planned">Verifying releases (planned)<a class="headerlink" href="#verifying-releases-planned" title="Permalink to this section">&para;</a></h2>
 <p>Publishing is <strong>planned</strong> to use <a href="https://docs.pypi.org/trusted-publishers/">Trusted Publishers</a> (OIDC — no long-lived API tokens) with <a href="https://docs.sigstore.dev">Sigstore attestations</a> bound to the specific source commit + GitHub Actions workflow run for every <code>@crawcus/*</code> npm package and <code>crawcus-*</code> PyPI package. This pipeline is not in place yet, so there are no attested releases to verify today. Publishing an audit-integrity library without cryptographic supply-chain proof would be self-parodying — which is why this lands before we call any release stable.</p>
