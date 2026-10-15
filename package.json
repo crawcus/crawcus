@@ -7,10 +7,10 @@
   "homepage": "https://crawcus.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tallyseal/crawcus"
+    "url": "https://github.com/crawcus/crawcus"
   },
   "bugs": {
-    "url": "https://github.com/tallyseal/crawcus/issues"
+    "url": "https://github.com/crawcus/crawcus/issues"
   },
   "workspaces": [
     "packages/*"
