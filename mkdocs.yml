@@ -52,6 +52,8 @@ nav:
   - CRAWCUS and SCITT: scitt.md
   - Decisions:
     - Index: adr/README.md
+    - ADR-0053 Merkle log: adr/ADR-0053-merkle-transparency-log.md
+    - ADR-0054 in-toto receipt: adr/ADR-0054-intoto-receipt-attestation.md
     - ADR-0055 SCITT fit: adr/ADR-0055-scitt-fit.md
 
 markdown_extensions:

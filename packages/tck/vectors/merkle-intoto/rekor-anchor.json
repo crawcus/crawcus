@@ -1,0 +1,14 @@
+{
+  "name": "rekor-anchor",
+  "description": "Offline inclusion of a checkpoint-note anchor in a one-leaf Rekor tree.",
+  "keyLabel": "TEST ONLY",
+  "body": {
+    "checkpointNote": "example.com/crawcus-test\n4\nlw1CRlDpeT934HJ+AOnoBOZYPH4/A9uHeaTKTj5Kzcc=\n",
+    "body": "Y3Jhd2N1cy1yZWtvci1hbmNob3ItdjEKMTI0MjI1OTQ4MDNmZWFlZWEwYjk5ZmUwYmVjNDM1ZTRkMmQxMWZkMWY3OGJlYzA4YzM1NDkzNDg5NzQ5YzVlYwo=",
+    "leafIndex": 0,
+    "treeSize": 1,
+    "proof": [],
+    "root": "ewLuWuzRj65WnTqhiUNRXEUR4oITNTmAfaHVSfAJv1E="
+  },
+  "expectedOk": true
+}

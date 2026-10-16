@@ -37,3 +37,11 @@ export {
   type HashChainContractStore,
   type HashChainContractEnv,
 } from './hash-chain.fixture.js';
+
+export {
+  MERKLE_INTOTO_KEY_LABEL,
+  MERKLE_INTOTO_VECTORS,
+  buildMerkleIntotoVectors,
+  runMerkleIntotoVectors,
+  type MerkleIntotoVector,
+} from './merkle-intoto.fixture.js';

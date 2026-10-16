@@ -725,9 +725,13 @@ The `application/vnd.crawcus.*+jsonl` family uses the `vnd.` prefix, which per [
 ## GDPR erasure
 
 > **TODO.** A crypto-shred and tombstone mechanism for GDPR erasure is
-> not specified in this repository. This heading exists so documentation
+> not specified as part of this format. This heading exists so documentation
 > that mentions the pattern has a real anchor. It is not normative, and
 > it does not define fields, algorithms, or verifier behaviour.
+>
+> A proposal is written up in
+> [ADR-0053](../adr/ADR-0053-merkle-transparency-log.md). It is not
+> accepted. The hash chain in this document is unchanged.
 
 ## Open questions deferred for v1.0
 

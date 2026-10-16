@@ -70,3 +70,15 @@ export type { CountersignInput, CountersignedResult } from './countersign.js';
 
 /** PDF renderer — produce an auditor-signable verification report. */
 export { renderPdf } from './format/index.js';
+
+// ===== Proposed Merkle log + in-toto receipt (ADR-0053, ADR-0054) =====
+
+export { verifyOfflineLog } from './tlog/offline.js';
+export type {
+  OfflineInclusion,
+  OfflineConsistency,
+  OfflineLogInput,
+  OfflineLogResult,
+} from './tlog/offline.js';
+export { sealReceipt, verifySealedReceipt } from './intoto/receipt.js';
+export type { SealedReceipt, ReceiptVerifyResult } from './intoto/receipt.js';

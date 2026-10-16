@@ -1,0 +1,31 @@
+{
+  "name": "intoto-merkle",
+  "description": "Statement v1 whose subject is the log entry, not the payload.",
+  "keyLabel": "TEST ONLY",
+  "body": {
+    "statement": {
+      "_type": "https://in-toto.io/Statement/v1",
+      "subject": [
+        {
+          "name": "example.com/crawcus-test#0",
+          "digest": {
+            "sha256": "d47c8a3c111267d1d7fbcdc31646496e7cfa4df5b5047e3ffbe5f66ad500577c"
+          }
+        }
+      ],
+      "predicateType": "https://crawcus.org/ns/in-toto/receipt/v1",
+      "predicate": {
+        "v": 1,
+        "chainMode": "merkle-tlog",
+        "logOrigin": "example.com/crawcus-test",
+        "leafIndex": 0,
+        "treeSize": 1,
+        "logEntry": "AcsNGOVg/2w4QlpSAIBMonuUrdKFSAnMyQ3x1HKNLoIm",
+        "inclusionProof": [],
+        "rootHash": "VgDBLJf1V8pgzjlkzvV9AKizz7yIiKgJEfS9OtO2AoA="
+      }
+    },
+    "statementSha256": "23b640a3a58ec5695551d9d79dc41669db00a46d54815236f30294e49bcbbb41"
+  },
+  "expectedOk": true
+}

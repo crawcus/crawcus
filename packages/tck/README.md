@@ -19,6 +19,11 @@ runnable `runX` functions returning `TckResult` (discriminated
 pass/fail with §-cited diagnostics) — drive from any harness
 (vitest, mocha, a Go test runner).
 
+Proposed Merkle-log and in-toto vectors live in
+`vectors/merkle-intoto/*.json` (`runMerkleIntotoVectors`). Every
+signing key is labelled TEST ONLY. The hash-chain fixtures are
+unchanged.
+
 ## What the TCK will verify
 
 Per `docs/notebook/02-product/crawcus-format.md` v0.2:

@@ -157,6 +157,78 @@ export {
 } from './event/hash-chain.js';
 export type { HashChainProof } from './event/hash-chain-proof.js';
 
+// ============ Proposed Merkle log + in-toto receipt (ADR-0053, ADR-0054) ============
+
+export {
+  MAX_MERKLE_TREE_SIZE,
+  hashLeaf,
+  hashChildren,
+  emptyRoot,
+  merkleRoot,
+  inclusionProof,
+  consistencyProof,
+  rootFromInclusionProof,
+  verifyInclusion,
+  verifyConsistency,
+} from './tlog/merkle.js';
+export {
+  TILE_WIDTH,
+  HASH_BYTES,
+  tileLayout,
+  tileIndexPath,
+  tileResourcePath,
+  entryBundlePath,
+  buildMerkleTiles,
+  encodeEntryBundle,
+  decodeEntryBundle,
+  type TileLayoutRow,
+  type LogTile,
+} from './tlog/tiles.js';
+export {
+  COMMITMENT_DOMAIN,
+  LOG_ENTRY_VERSION,
+  SHRED_KEY_BYTES,
+  NONCE_BYTES,
+  receiptCommitment,
+  logEntryForCommitment,
+  commitmentFromLogEntry,
+  ReceiptSideStore,
+  nakedPayloadHash,
+  type CommitmentOpening,
+} from './tlog/commitment.js';
+export {
+  checkpointNoteText,
+  noteKeyId,
+  ed25519PublicKey,
+  signCheckpoint,
+  verifySignedNote,
+  parseCheckpointNote,
+  encodeBase64,
+  decodeBase64Strict,
+  type NoteKey,
+  type CheckpointBody,
+  type SignedNoteResult,
+} from './tlog/checkpoint.js';
+export {
+  REKOR_ANCHOR_LABEL,
+  rekorAnchorBody,
+  verifyRekorAnchor,
+  type RekorAnchor,
+} from './tlog/rekor.js';
+export {
+  IN_TOTO_STATEMENT_TYPE,
+  IN_TOTO_PAYLOAD_TYPE,
+  CRAWCUS_RECEIPT_PREDICATE_TYPE,
+  buildReceiptStatement,
+  statementBytes,
+  parseReceiptStatement,
+  type ReceiptChainMode,
+  type MerkleReceiptClaim,
+  type HashChainReceiptClaim,
+  type ReceiptClaim,
+  type InTotoStatement,
+} from './intoto/receipt.js';
+
 // ============ CrawcusSpec authoring ============
 
 export { defineCrawcusSpec } from './intent/define-crawcus-spec.js';

@@ -1,0 +1,28 @@
+{
+  "name": "intoto-hash-chain",
+  "description": "Compatibility-mode statement for the golden hash-chain head.",
+  "keyLabel": "TEST ONLY",
+  "body": {
+    "statement": {
+      "_type": "https://in-toto.io/Statement/v1",
+      "subject": [
+        {
+          "name": "crawcus-hash-chain",
+          "digest": {
+            "sha256": "7c1be36cc43d4234f4ac03f4b55e442ca7fa8cfbc3d90b44572eec3d46658ae3"
+          }
+        }
+      ],
+      "predicateType": "https://crawcus.org/ns/in-toto/receipt/v1",
+      "predicate": {
+        "v": 1,
+        "chainMode": "hash-chain",
+        "contentHash": "7c1be36cc43d4234f4ac03f4b55e442ca7fa8cfbc3d90b44572eec3d46658ae3",
+        "prevHash": "bd46648d1b249f18d30667bdd793f525247d42888b3d69a05c6ba47d935a063f"
+      }
+    },
+    "contentHash": "7c1be36cc43d4234f4ac03f4b55e442ca7fa8cfbc3d90b44572eec3d46658ae3",
+    "chainValid": true
+  },
+  "expectedOk": true
+}
