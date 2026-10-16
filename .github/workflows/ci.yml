@@ -1,4 +1,4 @@
-# Continuous integration for tallyseal/crawcus.
+# Continuous integration for crawcus/crawcus.
 # Actions are pinned to commit SHAs.
 #   actions/checkout@v4.2.2
 #   pnpm/action-setup@v4.1.0

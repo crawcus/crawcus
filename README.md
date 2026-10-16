@@ -3,7 +3,10 @@
 **Contract · Receipt · Attestation · Warrant** — an open specification for cryptographic audit receipts covering both application transactions and AI-inference decisions under one canonical shape.
 
 > **Read the spec:** [`docs/spec/crawcus-format.md`](docs/spec/crawcus-format.md) (wire format) · [`docs/spec/crawcus-contracts.md`](docs/spec/crawcus-contracts.md) (Contract primitive) · [`docs/canon/architecture-primitives.md`](docs/canon/architecture-primitives.md) (all primitives)
-> **Rendered site:** [tallyseal.org](https://tallyseal.org)
+> **Rendered site:** [crawcus.org](https://crawcus.org/)
+
+
+> **SCITT:** CRAWCUS is the statement-payload and regulation-mapping layer. IETF SCITT ([RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html)) is the transparency envelope. The profile is a draft and has not been tested against any Transparency Service: see [docs/scitt.md](docs/scitt.md) and [the profile](docs/spec/crawcus-scitt-profile.md).
 
 ---
 
@@ -16,7 +19,7 @@ When a regulator, auditor, or plaintiff asks *"prove this record has not been al
 - *"Here are our SIEM logs."* Unsigned and mutable by anyone with SIEM admin.
 - *"We put hashes on a blockchain."* GDPR-incompatible at enterprise write throughput.
 
-CRAWCUS makes a fourth answer possible: **replay the receipt chain against any conformant verifier and check its integrity cryptographically.** Hash-chain integrity is verifiable today; verifying *who signed* a chain (signer trust) is still in progress — see [crawcus#1](https://github.com/tallyseal/crawcus/issues/1).
+CRAWCUS makes a fourth answer possible: **replay the receipt chain against any conformant verifier and check its integrity cryptographically.** Hash-chain integrity is verifiable today; verifying *who signed* a chain (signer trust) is still in progress — see [crawcus#1](https://github.com/crawcus/crawcus/issues/1).
 
 ## What CRAWCUS is
 
@@ -59,6 +62,9 @@ crawcus/
 │   ├── spec/                           SPECIFICATION TEXT (CC-BY-4.0)
 │   │   ├── crawcus-format.md           wire format canonical serialization
 │   │   ├── crawcus-contracts.md        Contract primitive deep-dive
+│   │   ├── crawcus-scitt-profile.md    SCITT payload profile (draft)
+│   ├── scitt.md                        CRAWCUS ↔ SCITT layering
+│   ├── adr/                            decision records (ADR-0055 SCITT fit)
 │   ├── canon/                          architectural decisions (CC-BY-4.0)
 │   │   ├── architecture-primitives.md  all Core + Extended primitives
 │   └── engineering/                    quality gates (CC-BY-4.0)
@@ -67,6 +73,7 @@ crawcus/
 │   ├── core/          @crawcus/core         runtime + ports + PII tokenisation
 │   ├── verifier/      @crawcus/verifier     UI-agnostic chain verifier (sync core)
 │   ├── tck/           @crawcus/tck          Test Compatibility Kit fixtures
+│   ├── scitt/         @crawcus/scitt        SCITT Signed Statements (experimental)
 │   ├── regulations-gdpr/          @crawcus/regulations-gdpr
 │   ├── regulations-ferpa/         @crawcus/regulations-ferpa
 │   └── regulations-eu-ai-act/     @crawcus/regulations-eu-ai-act
@@ -125,6 +132,7 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 | Timestamps | [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) (subset of ISO 8601) |
 | Optional signature envelope | [DSSE](https://github.com/secure-systems-lab/dsse) |
 | Optional supply-chain signing | [Sigstore](https://www.sigstore.dev) |
+| Optional transparency envelope | [SCITT](https://datatracker.ietf.org/wg/scitt/about/) ([RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html)). CRAWCUS payload profile [in draft](docs/spec/crawcus-scitt-profile.md) |
 | Erasable-immutable log pattern | GDPR crypto-shred + tombstone — not yet specified ([TODO stub](docs/spec/crawcus-format.md#gdpr-erasure)) |
 | Actor-attribution conventions | [OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749), mTLS, SAML — no CRAWCUS-specific extension |
 
@@ -132,7 +140,7 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 
 CRAWCUS is authored openly under the governance model in [`GOVERNANCE.md`](GOVERNANCE.md). During the current pre-donation phase the project has a single maintainer (Paul Wander); the model transitions to a multi-maintainer / TSC structure at Linux Foundation donation.
 
-The intended donation target is the **Linux Foundation AI & Data** foundation, to be submitted via the **Joint Development Foundation (JDF)** — the same track [C2PA](https://c2pa.org), [in-toto](https://in-toto.io), and [Sigstore](https://www.sigstore.dev) took. Progress is public in the [GitHub Discussions](https://github.com/tallyseal/crawcus/discussions) (once the repository goes live).
+The intended donation target is the **Linux Foundation AI & Data** foundation, to be submitted via the **Joint Development Foundation (JDF)** — the same track [C2PA](https://c2pa.org), [in-toto](https://in-toto.io), and [Sigstore](https://www.sigstore.dev) took. Progress is public in the [GitHub Discussions](https://github.com/crawcus/crawcus/discussions) (once the repository goes live).
 
 Rationale for LF over W3C / IEEE / ISO: 6–12 month realistic timeline to a recognised standard, industry-neutral governance from day one, no PAR ceremony blocking spec publication, alignment with existing peer projects in the receipt / supply-chain-signing space.
 
@@ -145,13 +153,14 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 - The spec is published and free to implement (CC-BY-4.0).
 - Reference implementations are shipped as open source (Apache-2.0).
 - Every runtime — including the reference implementations here — is measured against the same TCK fixture set.
-- Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — [crawcus#1](https://github.com/tallyseal/crawcus/issues/1)).
+- Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — [crawcus#1](https://github.com/crawcus/crawcus/issues/1)).
 
 **What is not yet true:**
 
 - Multi-vendor implementation ecosystem — the reference implementations in this repository are the initial implementations. Third-party conformant implementations are actively encouraged.
 - LF / JDF adoption — submission planned, not yet submitted.
 - Widespread production deployment — early adopters welcome.
+- Interop with SCITT Transparency Services. The payload profile is a draft and has not been tested.
 
 Where we describe CRAWCUS externally we use plain language matching the current state, not aspirational marketing. See [`CONTRIBUTING.md`](CONTRIBUTING.md) §"Language + claims" for the discipline maintainers apply.
 

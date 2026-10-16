@@ -23,3 +23,9 @@ These records are proposals. They do not reconstruct ADR-0052, and they are not 
 |---|---|---|
 | [ADR-0053](ADR-0053-merkle-transparency-log.md) | Merkle transparency log, with erase-but-verify | Proposed |
 | [ADR-0054](ADR-0054-intoto-receipt-attestation.md) | in-toto Statement v1 receipt, DSSE kept | Proposed |
+
+## Published
+
+| ID | Title | Status |
+|---|---|---|
+| [ADR-0055](ADR-0055-scitt-fit.md) | SCITT fit — build plan | Proposed |
