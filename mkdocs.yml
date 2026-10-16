@@ -43,6 +43,7 @@ theme:
 
 nav:
   - Overview: index.md
+  - Verify a receipt: https://verify.crawcus.org
   - Specification:
     - Format: spec/crawcus-format.md
     - Contracts: spec/crawcus-contracts.md

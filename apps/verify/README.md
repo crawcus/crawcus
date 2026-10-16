@@ -7,6 +7,18 @@ telemetry, and never uploads the bundle. The only network request the app can ma
 the opt-in "Load crawcus.org anchors (preview)" button, which does a plain GET of a
 public trust-anchor list. Bundle data is never part of that request.
 
+## Deployments
+
+- **Public:** https://verify.crawcus.org (Cloudflare Pages project `crawcus-verify-public`, no login).
+- **Private preview:** https://crawcus-verify.pages.dev, behind Cloudflare Access.
+
+`public/_headers` sets the security headers on both: a strict CSP (`default-src 'self'`,
+no third-party scripts, `frame-ancestors 'none'`), `nosniff`, `no-referrer`, and so on.
+The app has no analytics.
+
+The theme can be Light, Dark, or System (the default). The choice is stored in
+`localStorage` under `crawcus-verify.theme`.
+
 ## Run
 
 ```bash

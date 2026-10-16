@@ -107,5 +107,5 @@ const write = (name, v) => writeFileSync(new URL(name, OUT), JSON.stringify(v, n
 write(`good.dsse.json`, goodEnv);
 write(`tampered.dsse.json`, tamperedEnv);
 write(`untrusted.dsse.json`, untrustedEnv);
-write('demo-anchor.json', { label: 'crawcus demo signer (samples only)', publicKeyHex: bytesToHex(ed25519.getPublicKey(DEMO_KEY)) });
+write('demo-anchor.json', { label: 'DEMO/TEST signer (samples only)', publicKeyHex: bytesToHex(ed25519.getPublicKey(DEMO_KEY)) });
 console.log('samples written; self-hash', good.chainProof.bundleSelfHash);

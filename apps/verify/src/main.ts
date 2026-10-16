@@ -22,6 +22,16 @@ import untrustedRaw from './samples/untrusted.dsse.json?raw';
 import cosignRaw from './samples/cosign.dsse.json?raw';
 import demoAnchor from './samples/demo-anchor.json';
 
+// ---------- theme: light / dark / system (default), persisted ----------
+type Theme = 'light' | 'dark' | 'system';
+const THEME_KEY = 'crawcus-verify.theme';
+function applyTheme(t: Theme): void {
+  if (t === 'system') delete document.documentElement.dataset['theme'];
+  else document.documentElement.dataset['theme'] = t;
+}
+let theme: Theme = ((): Theme => { const v = localStorage.getItem(THEME_KEY); return v === 'light' || v === 'dark' ? v : 'system'; })();
+applyTheme(theme);
+
 // ---------- tiny DOM helper (textContent only; never innerHTML with data) ----------
 type Child = Node | string | null | undefined | false;
 function h<K extends keyof HTMLElementTagNameMap>(
@@ -82,7 +92,7 @@ const expander = (label: string, value: unknown, open = false): HTMLDetailsEleme
 };
 
 // ---------- trust anchors (localStorage only) ----------
-const LS = 'crawcus-verify.anchors.v1';
+const LS = 'crawcus-verify.anchors.v2';
 const SAMPLE_ANCHOR: TrustAnchor = { label: demoAnchor.label, publicKeyHex: demoAnchor.publicKeyHex, source: 'sample' };
 function loadAnchors(): TrustAnchor[] {
   try { const v = JSON.parse(localStorage.getItem(LS) ?? 'null') as TrustAnchor[] | null; if (Array.isArray(v)) return v; } catch { /* ignore */ }
@@ -128,18 +138,18 @@ function inputPanel(): HTMLElement {
 }
 function samplesPanel(): HTMLElement {
   const s = (dot: string, title: string, sub: string, raw: string, file: string): HTMLElement =>
-    h('button', { class: 'sample', onclick: () => run(enc(raw), file) }, h('b', {}, h('span', { class: `dot ${dot}` }), title), h('small', {}, sub));
+    h('button', { class: 'sample', onclick: () => run(enc(raw), file) }, h('b', {}, h('span', { class: `dot ${dot}` }), title, h('span', { class: 'demo' }, 'DEMO')), h('small', {}, sub));
   return h('div', { class: 'panel' },
-    h('div', { class: 'card k', style: 'border:0;padding:0;margin-bottom:10px;background:none' }, 'Try a sample'),
+    h('div', { class: 'card k', style: 'border:0;padding:0;margin-bottom:10px;background:none' }, 'Try a sample', h('span', { class: 'demo' }, 'DEMO / TEST DATA')),
     h('div', { class: 'samples' },
-      s('ok', 'Good bundle', '8 rows, signed by the pinned demo key', goodRaw, 'good.dsse.json'),
+      s('ok', 'Good bundle', '8 rows, signed by the DEMO/TEST key', goodRaw, 'good.dsse.json'),
       s('bad', 'Tampered', 'row #3 edited after signing', tamperedRaw, 'tampered.dsse.json'),
       s('warn', 'Untrusted signer', 'valid signature, unpinned key', untrustedRaw, 'untrusted.dsse.json'),
       s('acc', 'Cross-vendor', 'cosign-emitted DSSE (TCK fixture)', cosignRaw, 'cosign.dsse.json')));
 }
 function renderAnchors(): void {
   anchorList.replaceChildren(...anchors.map((a, i) => h('li', {},
-    h('div', { style: 'min-width:0;display:flex;flex-direction:column' }, h('span', {}, a.label, ' ', h('span', { class: 'pill mute' }, a.source)), h('code', {}, a.publicKeyHex)),
+    h('div', { style: 'min-width:0;display:flex;flex-direction:column' }, h('span', {}, a.label, ' ', a.source === 'sample' ? h('span', { class: 'demo' }, 'DEMO / TEST KEY') : h('span', { class: 'pill mute' }, a.source)), h('code', {}, a.publicKeyHex)),
     h('button', { class: 'sm ghost', onclick: () => { anchors.splice(i, 1); saveAnchors(); renderAnchors(); rerun(); } }, 'remove'))));
   if (anchors.length === 0) anchorList.append(h('li', {}, h('span', { class: 'note', style: 'margin:0' }, 'No anchors pinned — signer identity will show as unknown.')));
 }
@@ -168,6 +178,7 @@ function trustPanel(): HTMLElement {
         }, (e: unknown) => { anchorMsg.textContent = `Not available yet: ${e instanceof Error ? e.message : String(e)}`; anchorMsg.className = 'note err'; });
       } }, 'Load crawcus.org anchors (preview)'),
       h('button', { class: 'ghost sm', onclick: () => { anchors = [SAMPLE_ANCHOR]; saveAnchors(); renderAnchors(); rerun(); } }, 'reset')),
+    h('div', { class: 'notice' }, h('b', {}, 'NOTE'), 'The official crawcus trust-anchor list is not published yet. The pre-pinned key is a DEMO/TEST key that only signs the sample receipts — it identifies no real signer.'),
     h('div', { class: 'note' }, 'Planned source: ', h('code', {}, WELL_KNOWN_TRUST_ANCHORS_URL)),
     anchorMsg);
 }
@@ -276,11 +287,26 @@ function linkRow(l: ChainLinkV1, raw: unknown): HTMLElement {
       expander('raw row JSON', raw)));
 }
 
+function themeSwitch(): HTMLElement {
+  const wrap = h('div', { class: 'theme', role: 'group', 'aria-label': 'Color theme' });
+  const opts: [Theme, string][] = [['light', 'Light'], ['dark', 'Dark'], ['system', 'System']];
+  const paint = (): void => wrap.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset['t'] === theme)));
+  for (const [t, label] of opts) {
+    const b = h('button', { 'data-t': t, onclick: () => {
+      theme = t; if (t === 'system') localStorage.removeItem(THEME_KEY); else localStorage.setItem(THEME_KEY, t);
+      applyTheme(t); paint();
+    } }, label);
+    wrap.append(b);
+  }
+  paint();
+  return wrap;
+}
+
 // ---------- shell ----------
 app.append(h('div', { class: 'wrap' },
   h('header', { class: 'top' },
     h('div', { class: 'brand' }, h('div', { class: 'mark' }, svg(ICON.pass, 16)), h('b', {}, 'crawcus'), h('span', {}, 'verify')),
-    h('span', { class: 'badge' }, h('i'), 'client-side · nothing leaves this tab')),
+    h('div', { class: 'hdr-r' }, h('span', { class: 'badge' }, h('i'), 'Everything runs in your browser; nothing is uploaded.'), themeSwitch())),
   h('div', { class: 'grid2' }, inputPanel(), h('div', {}, samplesPanel(), trustPanel())),
   resultHost,
   h('footer', {}, h('span', {}, 'crawcus verify · DSSE + RFC 8785 + SHA-256 hash chain · ed25519'), h('a', { href: 'https://crawcus.org', rel: 'noopener' }, 'crawcus.org'))));
