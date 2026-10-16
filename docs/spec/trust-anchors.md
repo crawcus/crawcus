@@ -27,12 +27,38 @@ threshold-free; the threshold lives only here).
 | :--- | :--- |
 | Canonical | `trust/trust-anchors.json` in `crawcus/crawcus` (history: `trust/history/<version>.json`, planned) |
 | Mirror | `https://crawcus.org/.well-known/crawcus-trust-anchors.json`, byte-identical, built from `docs/.well-known/` |
-| Root fingerprints | README "Verifying CRAWCUS" |
+| Root pin | `trust/pinned-root.json` (keyids + threshold) and README "Verifying CRAWCUS" |
 
-CI (`pnpm lint` → `tools/anchors/anchors.mjs check`) fails when the
-mirror differs from the canonical copy, when the README fingerprints
-differ from `roles.root.keyids`, or when a non-TEST document expires
-within 60 days.
+Remote sources are one ordered list, tried in order:
+
+1. `https://crawcus.org/.well-known/crawcus-trust-anchors.json`
+2. `https://raw.githubusercontent.com/crawcus/crawcus/main/trust/trust-anchors.json`
+
+Every source must verify against the trust chain rooted in the pinned
+root; no source is trusted because of where it was found. The
+reference verifier exports this list as `CRAWCUS_ANCHOR_SOURCES`.
+Other issuers supply their own ordered list and pin.
+
+CI (`pnpm lint` → `tools/anchors/anchors.mjs check`) fails when:
+
+- the mirror differs from the canonical copy;
+- the README fingerprints or `trust/pinned-root.json` differ from
+  `roles.root`;
+- a non-TEST document expires less than 30 days from now;
+- `version` or `issued_at` is not strictly greater than the previous
+  version's (the newest `trust/history/<version>.json` below it, and
+  the copy on the git base branch).
+
+`/trust/` is covered by CODEOWNERS. On any change under `trust/`, the
+`trust-anchors` workflow verifies the root threshold signatures against
+`trust/pinned-root.json`.
+
+### Publication cadence
+
+A new version is published at least every **6 months**, even if no key
+changed, and `expires` is at most 12 months after `issued_at`. This
+keeps the CI expiry gate (30 days) from being reached in normal
+operation and bounds how long a withheld update can go unnoticed.
 
 ## Document
 
@@ -88,16 +114,28 @@ match its `public_key` rejects the whole document.
 - `expires` is after `issued_at` and at most 12 calendar months later.
   Publishers re-sign at least every 6 months.
 - `purpose` is one of `root`, `release`, `test-vectors`,
-  `foundry-audit-export` (an audit-export key for one deployment). Each
+  `audit-export` (audit bundles of one deployment). Each
   key has exactly one purpose. `deployment` is required for
-  `foundry-audit-export` and null otherwise.
+  `audit-export` and null otherwise.
 - `status` is `active`, `retired` or `revoked`. `revoked` requires
   `revoked_at` and `revocation_reason` (`key-compromise`, `superseded`,
   `retired`, the trust-policy names). Both are null otherwise.
 - A key with an unknown `purpose` or `status` is ignored, not the file.
   Unknown fields inside `signed` are ignored; they are still covered by
   the signature. Unknown top-level fields reject the document.
+- `superseded_by`, when set, must name a different key in the same
+  document whose `status` is `active` or `revoked`; otherwise the whole
+  document is rejected.
+- `not_before` is inclusive and `not_after` is exclusive: a key is
+  valid for signing times in `[not_before, not_after)`.
 - Root keys are listed in `keys` with `purpose: "root"`.
+
+### Root keys and threshold
+
+The number of root keys (N) and `roles.root.threshold` are configurable
+per document; production documents use a threshold of at least 2. Root
+keys sign only this document. The TEST placeholder uses N = 2 with
+threshold 2.
 
 ### Signatures
 
@@ -140,7 +178,7 @@ Fetching uses HTTPS only, a 1 MiB cap, a 10 s timeout and no redirects.
 
 `trustPolicyFromAnchors(signed, { purpose, deployment? })` selects keys
 whose purpose matches the artifact (release → `release`, vectors →
-`test-vectors`, audit bundle → `foundry-audit-export` plus deployment).
+`test-vectors`, audit bundle → `audit-export` plus `deployment`).
 `root` is never mapped. Each selected key becomes an `ed25519-pinned`
 anchor with `notBefore`/`notAfter`; each revoked key also becomes a
 `revoked` row with its reason. The existing evaluator then applies:
@@ -149,7 +187,7 @@ anchor with `notBefore`/`notAfter`; each revoked key also becomes a
 | :--- | :--- |
 | `revoked` / `key-compromise` | Fail, whatever the signing time |
 | `revoked` / `superseded` or `retired` | Accept only if signing time < `revoked_at`; result carries `signingTimeSelfAsserted: true` |
-| `active`, `retired` | Signing time must fall in the validity window |
+| `active`, `retired` | Signing time must fall in `[not_before, not_after)` |
 
 Until bundles carry an independent signing time, a holder of a
 superseded or retired (not compromised) key can back-date into its old

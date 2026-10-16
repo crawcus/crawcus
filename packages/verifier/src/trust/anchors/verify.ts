@@ -155,8 +155,13 @@ export interface LoadTrustAnchorsOptions extends AnchorCheckOptions {
   readonly store?: TrustAnchorsStore;
   /** Local candidates applied in order, e.g. `--anchors <path>` or `trust/history/` steps (VER-4, VER-7). */
   readonly candidates?: readonly unknown[];
-  /** Remote copy, e.g. https://crawcus.org/.well-known/crawcus-trust-anchors.json. */
-  readonly url?: string;
+  /**
+   * Ordered remote sources (VER-12), tried in order until one yields a
+   * document that verifies. Every source is checked against the trust
+   * chain rooted in `pinnedRoot`; a source is never trusted on its own.
+   * For crawcus.org use `CRAWCUS_ANCHOR_SOURCES`.
+   */
+  readonly sources?: readonly string[];
   readonly fetch?: FetchLike;
   /** No network calls (VER-6). */
   readonly offline?: boolean;
@@ -167,6 +172,12 @@ export interface LoadTrustAnchorsOptions extends AnchorCheckOptions {
   /** Fetch timeout in ms (default 10000). */
   readonly timeoutMs?: number;
 }
+
+/** Ordered anchor sources for the crawcus.org issuer: .well-known first, then the raw repository copy. */
+export const CRAWCUS_ANCHOR_SOURCES: readonly string[] = [
+  'https://crawcus.org/.well-known/crawcus-trust-anchors.json',
+  'https://raw.githubusercontent.com/crawcus/crawcus/main/trust/trust-anchors.json',
+];
 
 export type FetchLike = (
   url: string,
@@ -221,10 +232,18 @@ export async function loadTrustAnchors(options: LoadTrustAnchorsOptions): Promis
 
   for (const c of options.candidates ?? []) if (!tryUpdate(c)) break;
 
-  if (updateRejected === undefined && options.offline !== true && options.url !== undefined) {
-    const fetched = await fetchJson(options.url, options);
-    if (fetched.kind === 'fail') updateRejected = { code: fetched.code, detail: fetched.detail };
-    else tryUpdate(fetched.json);
+  if (updateRejected === undefined && options.offline !== true) {
+    for (const url of options.sources ?? []) {
+      const fetched = await fetchJson(url, options);
+      if (fetched.kind === 'fail') {
+        updateRejected = { code: fetched.code, detail: `${url}: ${fetched.detail}`.slice(0, 200) };
+        continue;
+      }
+      if (tryUpdate(fetched.json)) {
+        updateRejected = undefined;
+        break;
+      }
+    }
   }
 
   if (trusted.digest !== initialDigest) await store.save(options.issuer, { signed: trusted.rawSigned, signatures: trusted.signatures });
@@ -275,7 +294,7 @@ async function fetchJson(
 export interface TrustPolicyFromAnchorsOptions {
   /** The artifact's purpose (KEY-1). `root` is never accepted. */
   readonly purpose: Exclude<KeyPurpose, 'root'>;
-  /** Required for `foundry-audit-export` (VER-8). */
+  /** Required for `audit-export` (VER-8). */
   readonly deployment?: string;
   /** Optional exact payloadType allowlist. Omitted → crawcus `+jsonl` family default. */
   readonly payloadTypes?: readonly string[];
@@ -298,14 +317,14 @@ export function trustPolicyFromAnchors(
   options: TrustPolicyFromAnchorsOptions,
 ): TrustPolicyFromAnchorsResult {
   if ((options.purpose as string) === 'root') return fail('anchors-no-keys-for-purpose', 'root keys sign only trust-anchors.json');
-  if (options.purpose === 'foundry-audit-export' && options.deployment === undefined) {
-    return fail('anchors-no-keys-for-purpose', 'foundry-audit-export requires a deployment');
+  if (options.purpose === 'audit-export' && options.deployment === undefined) {
+    return fail('anchors-no-keys-for-purpose', 'audit-export requires a deployment');
   }
   const anchors: TrustAnchor[] = [];
   const revoked: RevokedKey[] = [];
   for (const key of signed.keys) {
     if (key.purpose !== options.purpose) continue;
-    if (options.purpose === 'foundry-audit-export' && key.deployment !== options.deployment) continue;
+    if (options.purpose === 'audit-export' && key.deployment !== options.deployment) continue;
     const raw = rawFromSpkiBase64(key.public_key);
     if (raw === null) continue;
     const hex = bytesToHex(raw);

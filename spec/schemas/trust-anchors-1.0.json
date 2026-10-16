@@ -49,8 +49,8 @@
         "keyid": { "$ref": "#/$defs/keyid" },
         "alg": { "const": "ed25519" },
         "public_key": { "type": "string", "description": "base64 SubjectPublicKeyInfo DER (44 bytes).", "pattern": "^MCowBQYDK2VwAyEA[A-Za-z0-9+/]{43}=$" },
-        "purpose": { "type": "string", "description": "Known: root, release, test-vectors, foundry-audit-export. Unknown values: key ignored." },
-        "deployment": { "$ref": "#/$defs/nullableString", "description": "Required for foundry-audit-export, null otherwise." },
+        "purpose": { "type": "string", "description": "Known: root, release, test-vectors, audit-export. Unknown values: key ignored." },
+        "deployment": { "$ref": "#/$defs/nullableString", "description": "Required for audit-export, null otherwise." },
         "custody": { "$ref": "#/$defs/nullableString" },
         "kms_resource": { "$ref": "#/$defs/nullableString" },
         "not_before": { "$ref": "#/$defs/time" },
@@ -58,7 +58,7 @@
         "status": { "type": "string", "description": "Known: active, retired, revoked. Unknown values: key ignored." },
         "revoked_at": { "oneOf": [{ "$ref": "#/$defs/time" }, { "type": "null" }] },
         "revocation_reason": { "enum": ["key-compromise", "superseded", "retired", null] },
-        "superseded_by": { "oneOf": [{ "$ref": "#/$defs/keyid" }, { "type": "null" }] }
+        "superseded_by": { "description": "Must name a different active or revoked key in the same document.", "oneOf": [{ "$ref": "#/$defs/keyid" }, { "type": "null" }] }
       },
       "allOf": [
         {
@@ -66,7 +66,7 @@
           "then": { "required": ["revoked_at", "revocation_reason"], "properties": { "revoked_at": { "$ref": "#/$defs/time" }, "revocation_reason": { "type": "string" } } }
         },
         {
-          "if": { "properties": { "purpose": { "const": "foundry-audit-export" } }, "required": ["purpose"] },
+          "if": { "properties": { "purpose": { "const": "audit-export" } }, "required": ["purpose"] },
           "then": { "required": ["deployment"], "properties": { "deployment": { "type": "string" } } }
         }
       ]

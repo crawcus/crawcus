@@ -1,0 +1,8 @@
+{
+  "_comment": "TEST placeholder pin. Out-of-band root fingerprints the repository copy must verify against.",
+  "keyids": [
+    "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+    "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207"
+  ],
+  "threshold": 2
+}

@@ -88,6 +88,14 @@ function build(): Vector[] {
     v('bootstrap-tampered', 'Purpose changed after signing.', null, tampered, { kind: 'fail', code: 'anchors-threshold-unmet' }),
     v('bootstrap-expired', 'Evaluated at expires.', null, v3, { kind: 'fail', code: 'anchors-expired' }, '2027-04-01T00:00:00Z'),
     v('bootstrap-unknown-purpose-ignored', 'A key with an unknown purpose is ignored, not the file.', null, signDoc(unknownPurpose, [ROOT[0], ROOT[1]]), { kind: 'ok' }),
+    v('bootstrap-superseded-by-valid', 'superseded_by names an active key in the same file.', null,
+      signDoc(body(3, ROOT, { keys: [...body(3).keys, key(seed(0xb0, 2), 'release', {
+        status: 'revoked', revoked_at: '2026-09-01T00:00:00Z', revocation_reason: 'superseded', superseded_by: kid(seed(0xb0, 1)),
+      })] }), [ROOT[0], ROOT[1]]), { kind: 'ok' }),
+    v('bootstrap-superseded-by-dangling', 'superseded_by names a key that is not in the file.', null,
+      signDoc(body(3, ROOT, { keys: [...body(3).keys, key(seed(0xb0, 2), 'release', {
+        status: 'revoked', revoked_at: '2026-09-01T00:00:00Z', revocation_reason: 'superseded', superseded_by: kid(seed(0xb0, 77)),
+      })] }), [ROOT[0], ROOT[1]]), { kind: 'fail', code: 'anchors-malformed' }),
     v('update-valid', 'Version 4 signed by the trusted root.', v3, signDoc(body(4), [ROOT[2], ROOT[3]]), { kind: 'ok' }),
     v('update-rollback', 'Version 2 after version 3.', v3, signDoc(body(2), [ROOT[0], ROOT[1]]), { kind: 'fail', code: 'anchors-rollback' }),
     v('update-fork', 'Same version, different body.', v3, signDoc(body(3, ROOT, { expires: '2027-03-01T00:00:00Z' }), [ROOT[0], ROOT[1]]), { kind: 'fail', code: 'anchors-fork' }),

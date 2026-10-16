@@ -161,14 +161,12 @@ Trusted signing keys are listed in a root-signed trust-anchor document, [`trust/
 
 > **TEST ONLY.** The file and fingerprints below are **TEST placeholders**, generated from public seeds by `tools/anchors/anchors.mjs placeholder`. They are not production keys and must never be trusted. No production root exists yet.
 
-Root keys (TEST placeholder), threshold 2 of 4:
+Root keys (TEST placeholder), threshold 2 of 2. The number of root keys and the threshold are configurable per document; the machine-readable pin is [`trust/pinned-root.json`](trust/pinned-root.json).
 
 - `sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b` (TEST)
 - `sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207` (TEST)
-- `sha256:234117a9695376dd84c40e787fa5a0423b531cb25aa02756d66059f9c1853e8d` (TEST)
-- `sha256:443d5c542659b875eae5f7da236f1ddc3fcea4d0407cb42484009c2bebd21072` (TEST)
 
-A keyid is `sha256:` followed by the lowercase hex SHA-256 of the raw 32-byte ed25519 public key. CI (`pnpm lint`) fails if these fingerprints, the mirror, and the file disagree.
+A keyid is `sha256:` followed by the lowercase hex SHA-256 of the raw 32-byte ed25519 public key. CI (`pnpm lint`) fails if these fingerprints, the pin, the mirror, and the file disagree. Changes under `trust/` are owned by CODEOWNERS and re-verified against the pin by the `trust-anchors` workflow.
 
 ## Verifying releases (planned)
 

@@ -99,6 +99,7 @@ export {
   validRootSignatures,
   trustPolicyFromAnchors,
   createMemoryTrustAnchorsStore,
+  CRAWCUS_ANCHOR_SOURCES,
 } from './trust/anchors/verify.js';
 export type {
   AnchorCheckOptions,

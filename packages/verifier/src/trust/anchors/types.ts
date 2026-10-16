@@ -16,7 +16,7 @@ export const TRUST_ANCHORS_PAYLOAD_TYPE = 'application/vnd.crawcus.trust-anchors
 /** Accepted spec_version majors. */
 export const TRUST_ANCHORS_SPEC_MAJOR = 1;
 
-export const KNOWN_PURPOSES = ['root', 'release', 'test-vectors', 'foundry-audit-export'] as const;
+export const KNOWN_PURPOSES = ['root', 'release', 'test-vectors', 'audit-export'] as const;
 export type KeyPurpose = (typeof KNOWN_PURPOSES)[number];
 export const KNOWN_STATUSES = ['active', 'retired', 'revoked'] as const;
 export type KeyStatus = (typeof KNOWN_STATUSES)[number];
@@ -29,7 +29,7 @@ export interface AnchorKey {
   /** base64 SubjectPublicKeyInfo DER. */
   readonly public_key: string;
   readonly purpose: KeyPurpose;
-  /** Required for `foundry-audit-export`, null otherwise. */
+  /** Required for `audit-export`, null otherwise. */
   readonly deployment: string | null;
   readonly custody?: string | null;
   readonly kms_resource?: string | null;

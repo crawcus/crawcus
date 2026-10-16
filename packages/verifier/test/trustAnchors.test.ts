@@ -12,6 +12,7 @@ import { ed25519 } from '@noble/curves/ed25519';
 import { describe, expect, it } from 'vitest';
 import {
   bootstrapTrustAnchors,
+  CRAWCUS_ANCHOR_SOURCES,
   createMemoryTrustAnchorsStore,
   keyIdFor,
   loadTrustAnchors,
@@ -142,6 +143,15 @@ describe('structure (TA-1..TA-8)', () => {
     const r = parseTrustAnchors(await sign(b as Record<string, unknown>));
     expect(r).toMatchObject({ kind: 'fail', code: 'anchors-malformed' });
   });
+  it('superseded_by must name an active or revoked key in the same file', async () => {
+    const keys = k0(body());
+    const releaseId = keys[4].keyid as string;
+    const retiredId = keys[7].keyid as string;
+    const point = (target: string) => keys.map((k, i) => (i === 8 ? { ...k, superseded_by: target } : k));
+    expect(parseTrustAnchors(await sign({ ...body(), keys: point(releaseId) })).kind).toBe('ok');
+    expect(parseTrustAnchors(await sign({ ...body(), keys: point(`sha256:${'b'.repeat(64)}`) }))).toMatchObject({ code: 'anchors-malformed' });
+    expect(parseTrustAnchors(await sign({ ...body(), keys: point(retiredId) }))).toMatchObject({ code: 'anchors-malformed' });
+  });
   it('rejects unknown top-level fields and major version 2', async () => {
     expect(parseTrustAnchors({ ...(await sign(body())), extra: 1 }).kind).toBe('fail');
     expect(parseTrustAnchors(await sign(body({ spec_version: '2.0.0' })))).toMatchObject({ code: 'anchors-unsupported-version' });
@@ -205,7 +215,7 @@ describe('loadTrustAnchors (VER-1..VER-7)', () => {
   it('bootstraps, refreshes from the URL, and persists', async () => {
     const store = createMemoryTrustAnchorsStore();
     const r = await loadTrustAnchors({
-      issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), store, url, fetch: fetchOf(await sign(body({ version: 4 }))), now: NOW,
+      issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), store, sources: [url], fetch: fetchOf(await sign(body({ version: 4 }))), now: NOW,
     });
     expect(r).toMatchObject({ kind: 'ok', anchorsExpired: false });
     if (r.kind === 'ok') expect(r.anchors.signed.version).toBe(4);
@@ -215,7 +225,7 @@ describe('loadTrustAnchors (VER-1..VER-7)', () => {
   it('keeps the trusted copy and reports anchors-update-rejected on rollback', async () => {
     const store = createMemoryTrustAnchorsStore();
     await loadTrustAnchors({ issuer, pinnedRoot: PINNED, bootstrap: await sign(body({ version: 6 })), store, now: NOW });
-    const r = await loadTrustAnchors({ issuer, pinnedRoot: PINNED, store, url, fetch: fetchOf(await sign(body({ version: 5 }))), now: NOW });
+    const r = await loadTrustAnchors({ issuer, pinnedRoot: PINNED, store, sources: [url], fetch: fetchOf(await sign(body({ version: 5 }))), now: NOW });
     expect(r.kind).toBe('ok');
     if (r.kind === 'ok') {
       expect(r.anchors.signed.version).toBe(6);
@@ -226,13 +236,13 @@ describe('loadTrustAnchors (VER-1..VER-7)', () => {
   it('a website serving a validly self-signed document from another root is rejected', async () => {
     const attacker = [testSeed(0xee, 1), testSeed(0xee, 2)];
     const evil = await sign(body({ version: 99 }, attacker), attacker);
-    const r = await loadTrustAnchors({ issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), url, fetch: fetchOf(evil), now: NOW });
+    const r = await loadTrustAnchors({ issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), sources: [url], fetch: fetchOf(evil), now: NOW });
     expect(r.kind === 'ok' && r.anchors.signed.version).toBe(3);
     expect(r.kind === 'ok' && r.updateRejected?.code).toBe('anchors-threshold-unmet');
   });
 
   it('expired trusted copy fails closed offline (VER-5, VER-6)', async () => {
-    const opts = { issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), offline: true, url, now: '2027-05-01T00:00:00Z' };
+    const opts = { issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), offline: true, sources: [url], now: '2027-05-01T00:00:00Z' };
     let called = false;
     const r = await loadTrustAnchors({ ...opts, fetch: async () => { called = true; throw new Error('x'); } });
     expect(r).toMatchObject({ kind: 'fail', code: 'anchors-expired' });
@@ -243,7 +253,7 @@ describe('loadTrustAnchors (VER-1..VER-7)', () => {
 
   it('expired copy plus failed refresh fails closed', async () => {
     const r = await loadTrustAnchors({
-      issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), url, now: '2027-05-01T00:00:00Z',
+      issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), sources: [url], now: '2027-05-01T00:00:00Z',
       fetch: async () => ({ ok: false, status: 503, text: async () => '' }),
     });
     expect(r).toMatchObject({ code: 'anchors-expired' });
@@ -251,7 +261,7 @@ describe('loadTrustAnchors (VER-1..VER-7)', () => {
 
   it('expired trusted copy recovers through a valid newer document', async () => {
     const r = await loadTrustAnchors({
-      issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), url, now: '2027-05-01T00:00:00Z',
+      issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), sources: [url], now: '2027-05-01T00:00:00Z',
       fetch: fetchOf(await sign(body({ version: 4, issued_at: '2027-04-15T00:00:00Z', expires: '2027-10-01T00:00:00Z' }))),
     });
     expect(r.kind === 'ok' && r.anchors.signed.version).toBe(4);
@@ -261,11 +271,37 @@ describe('loadTrustAnchors (VER-1..VER-7)', () => {
     const attacker = [testSeed(0xee, 1), testSeed(0xee, 2)];
     const r = await loadTrustAnchors({
       issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), now: NOW,
-      candidates: [await sign(body({ version: 4 }, attacker), attacker)], url: 'http://x.invalid/a.json',
+      candidates: [await sign(body({ version: 4 }, attacker), attacker)], sources: ['http://x.invalid/a.json'],
     });
     expect(r.kind === 'ok' && r.updateRejected?.code).toBe('anchors-threshold-unmet');
-    const h = await loadTrustAnchors({ issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), now: NOW, url: 'http://x.invalid/a.json' });
+    const h = await loadTrustAnchors({ issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), now: NOW, sources: ['http://x.invalid/a.json'] });
     expect(h.kind === 'ok' && h.updateRejected?.code).toBe('anchors-fetch-failed');
+  });
+
+  it('sources are tried in order; a bad first source falls through to the next', async () => {
+    const good = JSON.stringify(await sign(body({ version: 4 })));
+    const seen: string[] = [];
+    const r = await loadTrustAnchors({
+      issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), now: NOW, sources: CRAWCUS_ANCHOR_SOURCES,
+      fetch: async (u) => {
+        seen.push(u);
+        return u.includes('.well-known') ? { ok: false, status: 503, text: async () => '' } : { ok: true, status: 200, text: async () => good };
+      },
+    });
+    expect(seen).toEqual([...CRAWCUS_ANCHOR_SOURCES]);
+    expect(r.kind === 'ok' && r.anchors.signed.version).toBe(4);
+    expect(r.kind === 'ok' && r.updateRejected).toBeUndefined();
+  });
+
+  it('every source must verify against the pinned chain', async () => {
+    const attacker = [testSeed(0xee, 1), testSeed(0xee, 2)];
+    const evil = JSON.stringify(await sign(body({ version: 9 }, attacker), attacker));
+    const r = await loadTrustAnchors({
+      issuer, pinnedRoot: PINNED, bootstrap: await sign(body()), now: NOW, sources: CRAWCUS_ANCHOR_SOURCES,
+      fetch: async () => ({ ok: true, status: 200, text: async () => evil }),
+    });
+    expect(r.kind === 'ok' && r.anchors.signed.version).toBe(3);
+    expect(r.kind === 'ok' && r.updateRejected?.code).toBe('anchors-threshold-unmet');
   });
 
   it('a tampered store entry is rejected', async () => {
@@ -313,10 +349,10 @@ describe('trustPolicyFromAnchors → verifyBundle (KEY-1, VER-8, VER-9, TA-9)', 
     expect(run(RELEASE_SEED, p, '2025-12-31T00:00:00.000Z').trust.reason).toBe('signer.untrusted.not-yet-valid');
   });
   it('audit-export keys are bound to their deployment', async () => {
-    expect(run(AX_SEED, await policy({ purpose: 'foundry-audit-export', deployment: 'dep-a' })).verdict).toBe('pass');
+    expect(run(AX_SEED, await policy({ purpose: 'audit-export', deployment: 'dep-a' })).verdict).toBe('pass');
     const t = await trusted();
-    expect(trustPolicyFromAnchors(t.signed, { purpose: 'foundry-audit-export', deployment: 'dep-b' })).toMatchObject({ code: 'anchors-no-keys-for-purpose' });
-    expect(trustPolicyFromAnchors(t.signed, { purpose: 'foundry-audit-export' })).toMatchObject({ code: 'anchors-no-keys-for-purpose' });
+    expect(trustPolicyFromAnchors(t.signed, { purpose: 'audit-export', deployment: 'dep-b' })).toMatchObject({ code: 'anchors-no-keys-for-purpose' });
+    expect(trustPolicyFromAnchors(t.signed, { purpose: 'audit-export' })).toMatchObject({ code: 'anchors-no-keys-for-purpose' });
     expect(trustPolicyFromAnchors(t.signed, { purpose: 'root' as never })).toMatchObject({ code: 'anchors-no-keys-for-purpose' });
   });
   it('root keys never become bundle anchors', async () => {
@@ -333,7 +369,10 @@ describe('repository copies', () => {
     expect(doc.signed.issuer).toMatch(/TEST/i);
     const parsed = parseTrustAnchors(doc);
     expect(parsed.kind).toBe('ok');
-    const r = bootstrapTrustAnchors(doc, doc.signed.roles.root, { allowExpired: true });
+    const pin = JSON.parse(read('trust/pinned-root.json')) as { keyids: string[]; threshold: number };
+    expect(pin.threshold).toBe(2);
+    expect(pin.keyids).toHaveLength(2);
+    const r = bootstrapTrustAnchors(doc, pin, { allowExpired: true });
     expect(r.kind).toBe('ok');
     // README lists the same root fingerprints and threshold (PUB-3, PUB-6).
     const readme = read('README.md');

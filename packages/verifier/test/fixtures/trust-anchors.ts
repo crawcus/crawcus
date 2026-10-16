@@ -58,7 +58,7 @@ export function opKeys(): AnchorKey[] {
     anchorKeyFromPublicKey(pub(SUPERSEDED_SEED), {
       purpose: 'release', ...WIN, status: 'revoked', revokedAt: '2026-09-01T00:00:00Z', revocationReason: 'superseded',
     }),
-    anchorKeyFromPublicKey(pub(AX_SEED), { purpose: 'foundry-audit-export', deployment: 'dep-a', ...WIN }),
+    anchorKeyFromPublicKey(pub(AX_SEED), { purpose: 'audit-export', deployment: 'dep-a', ...WIN }),
   ];
 }
 

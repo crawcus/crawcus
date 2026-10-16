@@ -112,6 +112,16 @@ export function parseTrustAnchors(input: unknown): ParseTrustAnchorsResult {
     keys.push(parsed.key);
   }
 
+  // superseded_by must name another key in this file that is active or revoked.
+  const byId = new Map(keys.map((k) => [k.keyid, k]));
+  for (const k of keys) {
+    if (k.superseded_by == null) continue;
+    const target = byId.get(k.superseded_by);
+    if (target === undefined || target.keyid === k.keyid || (target.status !== 'active' && target.status !== 'revoked')) {
+      return bad(`superseded_by of ${k.keyid} must name another active or revoked key in this file`);
+    }
+  }
+
   const sigsRaw = input['signatures'];
   if (!Array.isArray(sigsRaw) || sigsRaw.length === 0 || sigsRaw.length > MAX_SIGNATURES) {
     return bad(`signatures must hold 1..${String(MAX_SIGNATURES)} entries`);
@@ -173,8 +183,8 @@ function parseKey(
   if (!isTime(k['not_before']) || !isTime(k['not_after'])) return bad(`${where}.not_before/not_after must be RFC 3339`);
   if (Date.parse(k['not_before']) >= Date.parse(k['not_after'])) return bad(`${where}.not_before must precede not_after`);
   const deployment = k['deployment'] ?? null;
-  if (purpose === 'foundry-audit-export') {
-    if (typeof deployment !== 'string' || !ISSUER.test(deployment)) return bad(`${where}.deployment is required for foundry-audit-export`);
+  if (purpose === 'audit-export') {
+    if (typeof deployment !== 'string' || !ISSUER.test(deployment)) return bad(`${where}.deployment is required for audit-export`);
   } else if (deployment !== null) {
     return bad(`${where}.deployment must be null for purpose ${purpose}`);
   }
