@@ -319,7 +319,7 @@ function anchorProblem(
       detail: `anchor ${anchor.id} is not yet valid at the signing time`,
     };
   }
-  if (anchor.notAfter !== undefined && signedAt > Date.parse(anchor.notAfter)) {
+  if (anchor.notAfter !== undefined && signedAt >= Date.parse(anchor.notAfter)) {
     return {
       reason: 'signer.untrusted.expired',
       violationKind: 'Envelope.signer.expired',

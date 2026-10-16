@@ -21,7 +21,7 @@ export interface Ed25519PinnedAnchor {
   readonly publicKey: string;
   /** Inclusive RFC 3339 instant. Optional. */
   readonly notBefore?: string;
-  /** Inclusive RFC 3339 instant. Optional. */
+  /** Exclusive RFC 3339 instant: valid while signingTime < notAfter. Optional. */
   readonly notAfter?: string;
   /**
    * Exact `payloadType` allowlist. When omitted, the anchor authorises

@@ -25,7 +25,7 @@ not return `pass` for a signature whose public key is absent from it.
       "id": "example-2026-q3",
       "publicKey": "<64 lowercase hex chars, or 32-byte base64>",
       "notBefore": "2026-07-01T00:00:00Z",
-      "notAfter": "2026-12-31T23:59:59Z",
+      "notAfter": "2027-01-01T00:00:00Z",
       "payloadTypes": ["application/vnd.crawcus.bundle+jsonl"],
       "label": "Example signer"
     }
@@ -57,7 +57,7 @@ bundle verdict is `fail`:
 - duplicate anchor `id`
 - a public key that is not 32 bytes
 - a timestamp that is not RFC 3339
-- `notBefore` later than `notAfter`
+- `notBefore` equal to or later than `notAfter`
 - unknown fields, including top-level `threshold`
 - a `revoked` entry with an unknown `reason`
 
@@ -86,7 +86,8 @@ form of that normalised policy, as lowercase hex.
 
 ### Validity windows
 
-`notBefore` and `notAfter` are inclusive. For a pinned key the signing
+The window is half-open, `[notBefore, notAfter)`: `notBefore` is
+inclusive and `notAfter` is exclusive. For a pinned key the signing
 time is the bundle's latest event timestamp
 (`signingTimeSource: bundle-latest-event-ts`). That timestamp is inside
 the signed payload, so the holder of the key can choose it. A window
