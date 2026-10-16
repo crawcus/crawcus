@@ -22,8 +22,10 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const repo = resolve(here, '../..');
-const lib = await import(pathToFileURL(join(repo, 'packages/verifier/dist/index.js')).href);
+const codeRoot = resolve(here, '../..');
+const lib = await import(pathToFileURL(join(codeRoot, 'packages/verifier/dist/index.js')).href);
+// Data root (trust/, README.md, docs/.well-known/). Overridable for tests.
+const repo = process.env.ANCHORS_REPO_ROOT ? resolve(process.env.ANCHORS_REPO_ROOT) : codeRoot;
 
 const USAGE = `usage: anchors.mjs <command> [options]
 
@@ -136,9 +138,12 @@ function check() {
     const test = /TEST/i.test(parsed.value.signed.issuer);
     const days = (Date.parse(parsed.value.signed.expires) - Date.now()) / 86_400_000;
     if (!test && days < 30) problems.push(`expires in ${days.toFixed(0)} days (< 30)`);
-    for (const prev of previousVersions(a)) {
+    for (const prev of previousVersions(a, problems)) {
       const p = lib.parseTrustAnchors(prev.doc);
-      if (p.kind !== 'ok') continue;
+      if (p.kind !== 'ok') {
+        problems.push(`${prev.from} is not a valid trust-anchor document: ${p.detail}`);
+        continue;
+      }
       if (p.value.signed.version >= parsed.value.signed.version) {
         problems.push(`version ${String(parsed.value.signed.version)} is not greater than ${prev.from} version ${String(p.value.signed.version)}`);
       }
@@ -154,16 +159,41 @@ function check() {
 }
 
 /** Earlier published versions: the newest trust/history/<v>.json below the current one, and the git base copy if it differs. */
-function previousVersions(currentText) {
+function previousVersions(currentText, problems) {
   const out = [];
   const current = JSON.parse(currentText).signed.version;
   const histDir = join(repo, 'trust/history');
   if (existsSync(histDir)) {
-    const versions = readdirSync(histDir).map((f) => /^(\d+)\.json$/.exec(f)).filter(Boolean).map((m) => Number(m[1])).filter((v) => v < current);
-    if (versions.length) {
-      const v = Math.max(...versions);
-      out.push({ from: `trust/history/${String(v)}.json`, doc: readJson(join(histDir, `${String(v)}.json`)) });
+    // Every history file must be a parseable trust-anchor document; none is skipped.
+    const versions = [];
+    for (const f of readdirSync(histDir)) {
+      if (!f.endsWith('.json') || f.endsWith('.rekor.json')) continue;
+      const from = `trust/history/${f}`;
+      const m = /^(\d+)\.json$/.exec(f);
+      if (!m) {
+        problems.push(`${from}: history files must be named <version>.json`);
+        continue;
+      }
+      let doc;
+      try {
+        doc = JSON.parse(readFileSync(join(histDir, f), 'utf8'));
+      } catch (e) {
+        problems.push(`${from} is not valid JSON: ${e instanceof Error ? e.message.slice(0, 100) : 'parse error'}`);
+        continue;
+      }
+      const p = lib.parseTrustAnchors(doc);
+      if (p.kind !== 'ok') {
+        problems.push(`${from} is not a valid trust-anchor document: ${p.detail}`);
+        continue;
+      }
+      if (p.value.signed.version !== Number(m[1])) {
+        problems.push(`${from} contains version ${String(p.value.signed.version)}`);
+        continue;
+      }
+      versions.push({ v: Number(m[1]), from, doc });
     }
+    const older = versions.filter((x) => x.v < current).sort((x, y) => y.v - x.v);
+    if (older.length) out.push({ from: older[0].from, doc: older[0].doc });
   }
   const base = process.env.ANCHORS_BASE_REF ?? 'origin/main';
   try {

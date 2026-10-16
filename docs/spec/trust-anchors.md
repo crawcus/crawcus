@@ -47,7 +47,9 @@ CI (`pnpm lint` → `tools/anchors/anchors.mjs check`) fails when:
 - a non-TEST document expires less than 30 days from now;
 - `version` or `issued_at` is not strictly greater than the previous
   version's (the newest `trust/history/<version>.json` below it, and
-  the copy on the git base branch).
+  the copy on the git base branch). Every file in `trust/history/` must
+  be named `<version>.json` and parse as a valid document with that
+  version; an unparseable history file fails the check.
 
 `/trust/` is covered by CODEOWNERS. On any change under `trust/`, the
 `trust-anchors` workflow verifies the root threshold signatures against
