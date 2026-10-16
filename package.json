@@ -2,7 +2,7 @@
   "name": "@crawcus/monorepo",
   "version": "0.0.0",
   "private": true,
-  "description": "CRAWCUS — an open specification for cryptographic audit receipts. Monorepo root: spec, core runtime, TCK, verifier, and regulations bundles.",
+  "description": "CRAWCUS \u2014 an open specification for cryptographic audit receipts. Monorepo root: spec, core runtime, TCK, verifier, and regulations bundles.",
   "license": "Apache-2.0",
   "homepage": "https://crawcus.org",
   "repository": {
@@ -21,7 +21,8 @@
     "typecheck": "pnpm -r --filter='./packages/*' typecheck",
     "docs:serve": "mkdocs serve",
     "docs:build": "mkdocs build",
-    "docs:deploy": "mkdocs gh-deploy --force"
+    "docs:deploy": "mkdocs gh-deploy --force",
+    "lint": "node tools/anchors/anchors.mjs check"
   },
   "devDependencies": {
     "@types/node": "22.20.1",

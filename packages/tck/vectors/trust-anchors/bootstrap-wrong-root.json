@@ -1,0 +1,87 @@
+{
+  "name": "bootstrap-wrong-root",
+  "description": "Self-signed by a non-pinned root.",
+  "keyLabel": "TEST ONLY",
+  "now": "2026-10-15T00:00:00Z",
+  "pinnedRoot": {
+    "keyids": [
+      "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+      "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+      "sha256:234117a9695376dd84c40e787fa5a0423b531cb25aa02756d66059f9c1853e8d",
+      "sha256:443d5c542659b875eae5f7da236f1ddc3fcea4d0407cb42484009c2bebd21072"
+    ],
+    "threshold": 2
+  },
+  "trusted": null,
+  "candidate": {
+    "signed": {
+      "_type": "crawcus-trust-anchors",
+      "spec_version": "1.0.0",
+      "issuer": "test.invalid",
+      "version": 3,
+      "issued_at": "2026-10-01T00:00:00Z",
+      "expires": "2027-04-01T00:00:00Z",
+      "roles": {
+        "root": {
+          "keyids": [
+            "sha256:58eefd8dcdd2b64c8d9396f2ef6943820250e6de6f704b81023c1a6bf8210322",
+            "sha256:1b29cb5f972dcee2872f0fde2f92d9ab618e2855c60cea7e36fc6b98c599838e"
+          ],
+          "threshold": 2
+        }
+      },
+      "keys": [
+        {
+          "keyid": "sha256:58eefd8dcdd2b64c8d9396f2ef6943820250e6de6f704b81023c1a6bf8210322",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAHXvOWV27XTAXVxsY7HWYaO33xiw7RfvpRoGGoRXNOkM=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:1b29cb5f972dcee2872f0fde2f92d9ab618e2855c60cea7e36fc6b98c599838e",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEA9wTFLZl5PISsm7sKj0qQKQa3opueQ8HZy3xA1wKubno=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:77a79e42639ff9d357ec59d82360882e51b781aab5a85287e1705c302a105d97",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAkkQbyvVzLFaZfTcFG3wK2MIt4RBrkA/TRoGeAqux1LQ=",
+          "purpose": "release",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        }
+      ]
+    },
+    "signatures": [
+      {
+        "keyid": "sha256:58eefd8dcdd2b64c8d9396f2ef6943820250e6de6f704b81023c1a6bf8210322",
+        "sig": "DKv4URn7sq23/hCiYLeuEl+XVoBQGqg+/FuyupQb59+1NYXWwrfLzFVCFoFvx0oeCfU0f87/U8b04awPzbu8Aw=="
+      },
+      {
+        "keyid": "sha256:1b29cb5f972dcee2872f0fde2f92d9ab618e2855c60cea7e36fc6b98c599838e",
+        "sig": "thBru/Ma9haWsts0cyM5KX/nyHfLJK3CmvCuoyBNWNrJNAQU1NzuMAgSg9vFk7w586M+NbWaFootvHQ91zKTAA=="
+      }
+    ]
+  },
+  "expected": {
+    "kind": "fail",
+    "code": "anchors-root-mismatch"
+  }
+}

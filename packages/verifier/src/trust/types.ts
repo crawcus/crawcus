@@ -92,7 +92,10 @@ export type TrustReasonCode =
 export type SigningTimeSource = 'rekor-integrated-time' | 'bundle-latest-event-ts' | 'none';
 
 export interface SignerIdentity {
-  /** sha256(raw public key), lowercase hex. Not the embedded keyid string. */
+  /**
+   * `sha256:` + hex(sha256(raw public key)) — the CRAWCUS keyid (see
+   * `trust/keyid.ts`). Not the embedded DSSE keyid string.
+   */
   readonly keyFingerprint: string;
   /** Lowercase hex of the public key the signature verified against. */
   readonly publicKey: string;

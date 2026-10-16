@@ -1,0 +1,55 @@
+# Verifies trust/trust-anchors.json against the pinned root whenever
+# anything under trust/ (or the tooling that checks it) changes.
+# Actions are pinned to commit SHAs (same versions as ci.yml).
+
+name: trust-anchors
+
+on:
+  pull_request:
+    paths:
+      - "trust/**"
+      - "docs/.well-known/**"
+      - "tools/anchors/**"
+      - ".github/workflows/trust-anchors.yml"
+  push:
+    branches: [main]
+    paths:
+      - "trust/**"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: verify root signatures against pin
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
+        with:
+          version: 9.15.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build verifier
+        run: pnpm --filter @crawcus/spec --filter @crawcus/verifier build
+
+      - name: Verify root threshold against trust/pinned-root.json
+        run: node tools/anchors/anchors.mjs verify-pinned
+
+      - name: Consistency, expiry and monotonic version / issued_at
+        env:
+          ANCHORS_BASE_REF: origin/${{ github.base_ref || 'main' }}
+        run: node tools/anchors/anchors.mjs check
