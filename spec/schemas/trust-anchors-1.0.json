@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://crawcus.org/schemas/trust-anchors-1.0.json",
+  "title": "CRAWCUS trust-anchor document, spec_version 1.x",
+  "description": "Signatures cover DSSE PAE('application/vnd.crawcus.trust-anchors+json', JCS(signed)). Rules not expressible here are normative in docs/spec/trust-anchors.md: keyid = 'sha256:' + hex(SHA-256(raw key)) and must match public_key; expires <= issued_at + 12 months; threshold met by distinct active root keys; keys with unknown purpose or status are ignored.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["signed", "signatures"],
+  "properties": {
+    "signed": { "$ref": "#/$defs/signed" },
+    "signatures": { "type": "array", "minItems": 1, "maxItems": 32, "items": { "$ref": "#/$defs/signature" } }
+  },
+  "$defs": {
+    "keyid": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "time": { "type": "string", "format": "date-time", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,9})?(Z|[+-]\\d{2}:\\d{2})$" },
+    "nullableString": { "type": ["string", "null"], "maxLength": 512 },
+    "signed": {
+      "type": "object",
+      "description": "Unknown fields are ignored by verifiers (they are covered by the signature).",
+      "required": ["_type", "spec_version", "issuer", "version", "issued_at", "expires", "roles", "keys"],
+      "properties": {
+        "_type": { "const": "crawcus-trust-anchors" },
+        "spec_version": { "type": "string", "pattern": "^1\\.\\d+\\.\\d+$" },
+        "issuer": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$" },
+        "version": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 },
+        "issued_at": { "$ref": "#/$defs/time" },
+        "expires": { "$ref": "#/$defs/time" },
+        "roles": {
+          "type": "object",
+          "required": ["root"],
+          "properties": {
+            "root": {
+              "type": "object",
+              "required": ["keyids", "threshold"],
+              "properties": {
+                "keyids": { "type": "array", "minItems": 1, "maxItems": 16, "uniqueItems": true, "items": { "$ref": "#/$defs/keyid" } },
+                "threshold": { "type": "integer", "minimum": 1, "description": "Production files MUST use >= 2; 1 is accepted only in verifier test mode." }
+              }
+            }
+          }
+        },
+        "keys": { "type": "array", "maxItems": 256, "items": { "$ref": "#/$defs/key" } }
+      }
+    },
+    "key": {
+      "type": "object",
+      "required": ["keyid", "alg", "public_key", "purpose", "not_before", "not_after", "status"],
+      "properties": {
+        "keyid": { "$ref": "#/$defs/keyid" },
+        "alg": { "const": "ed25519" },
+        "public_key": { "type": "string", "description": "base64 SubjectPublicKeyInfo DER (44 bytes).", "pattern": "^MCowBQYDK2VwAyEA[A-Za-z0-9+/]{43}=$" },
+        "purpose": { "type": "string", "description": "Known: root, release, test-vectors, foundry-audit-export. Unknown values: key ignored." },
+        "deployment": { "$ref": "#/$defs/nullableString", "description": "Required for foundry-audit-export, null otherwise." },
+        "custody": { "$ref": "#/$defs/nullableString" },
+        "kms_resource": { "$ref": "#/$defs/nullableString" },
+        "not_before": { "$ref": "#/$defs/time" },
+        "not_after": { "$ref": "#/$defs/time" },
+        "status": { "type": "string", "description": "Known: active, retired, revoked. Unknown values: key ignored." },
+        "revoked_at": { "oneOf": [{ "$ref": "#/$defs/time" }, { "type": "null" }] },
+        "revocation_reason": { "enum": ["key-compromise", "superseded", "retired", null] },
+        "superseded_by": { "oneOf": [{ "$ref": "#/$defs/keyid" }, { "type": "null" }] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "revoked" } }, "required": ["status"] },
+          "then": { "required": ["revoked_at", "revocation_reason"], "properties": { "revoked_at": { "$ref": "#/$defs/time" }, "revocation_reason": { "type": "string" } } }
+        },
+        {
+          "if": { "properties": { "purpose": { "const": "foundry-audit-export" } }, "required": ["purpose"] },
+          "then": { "required": ["deployment"], "properties": { "deployment": { "type": "string" } } }
+        }
+      ]
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["keyid", "sig"],
+      "properties": {
+        "keyid": { "$ref": "#/$defs/keyid" },
+        "sig": { "type": "string", "pattern": "^[A-Za-z0-9+/]+={0,2}$", "maxLength": 128 }
+      }
+    }
+  }
+}

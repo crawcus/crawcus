@@ -155,6 +155,21 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 
 Where we describe CRAWCUS externally we use plain language matching the current state, not aspirational marketing. See [`CONTRIBUTING.md`](CONTRIBUTING.md) §"Language + claims" for the discipline maintainers apply.
 
+## Verifying CRAWCUS
+
+Trusted signing keys are listed in a root-signed trust-anchor document, [`trust/trust-anchors.json`](trust/trust-anchors.json), mirrored at `https://crawcus.org/.well-known/crawcus-trust-anchors.json`. Format: [`docs/spec/trust-anchors.md`](docs/spec/trust-anchors.md).
+
+> **TEST ONLY.** The file and fingerprints below are **TEST placeholders**, generated from public seeds by `tools/anchors/anchors.mjs placeholder`. They are not production keys and must never be trusted. No production root exists yet.
+
+Root keys (TEST placeholder), threshold 2 of 4:
+
+- `sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b` (TEST)
+- `sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207` (TEST)
+- `sha256:234117a9695376dd84c40e787fa5a0423b531cb25aa02756d66059f9c1853e8d` (TEST)
+- `sha256:443d5c542659b875eae5f7da236f1ddc3fcea4d0407cb42484009c2bebd21072` (TEST)
+
+A keyid is `sha256:` followed by the lowercase hex SHA-256 of the raw 32-byte ed25519 public key. CI (`pnpm lint`) fails if these fingerprints, the mirror, and the file disagree.
+
 ## Verifying releases (planned)
 
 Publishing is **planned** to use [Trusted Publishers](https://docs.pypi.org/trusted-publishers/) (OIDC — no long-lived API tokens) with [Sigstore attestations](https://docs.sigstore.dev) bound to the specific source commit + GitHub Actions workflow run for every `@crawcus/*` npm package and `crawcus-*` PyPI package. This pipeline is not in place yet, so there are no attested releases to verify today. Publishing an audit-integrity library without cryptographic supply-chain proof would be self-parodying — which is why this lands before we call any release stable.

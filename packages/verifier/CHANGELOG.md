@@ -1,5 +1,22 @@
 # @crawcus/verifier
 
+## Unreleased
+
+### Added
+
+- Signed trust-anchor documents (`trust-anchors.json`, spec_version
+  1.0.0): `bootstrapTrustAnchors`, `updateTrustAnchors` (root threshold,
+  root-rotation chain, rollback/fork rejection, fail-closed expiry),
+  `loadTrustAnchors` (pluggable store and fetch, offline mode),
+  `trustPolicyFromAnchors` (purpose and deployment binding),
+  `signTrustAnchors` with a pluggable `AnchorSigner`. See
+  `docs/spec/trust-anchors.md`.
+
+### Changed
+
+- `TrustResult.signer.keyFingerprint` is now `sha256:<hex>`, the single
+  CRAWCUS keyid derivation (previously bare hex of the same digest).
+
 ## 0.4.0
 
 ### Breaking

@@ -88,3 +88,54 @@ export type { CountersignInput, CountersignedResult } from './countersign.js';
 
 /** PDF renderer — produce an auditor-signable verification report. */
 export { renderPdf } from './format/index.js';
+
+// ===== Signed trust-anchor document (trust-anchors.json) =====
+export { keyIdFor, rawFromSpkiBase64, spkiBase64FromRaw } from './trust/keyid.js';
+export {
+  bootstrapTrustAnchors,
+  updateTrustAnchors,
+  loadTrustAnchors,
+  checkNotExpired,
+  validRootSignatures,
+  trustPolicyFromAnchors,
+  createMemoryTrustAnchorsStore,
+} from './trust/anchors/verify.js';
+export type {
+  AnchorCheckOptions,
+  AnchorsFail,
+  AnchorsOk,
+  FetchLike,
+  LoadTrustAnchorsOptions,
+  LoadTrustAnchorsResult,
+  TrustPolicyFromAnchorsOptions,
+  TrustPolicyFromAnchorsResult,
+} from './trust/anchors/verify.js';
+export { parseTrustAnchors } from './trust/anchors/parse.js';
+export type { ParseTrustAnchorsResult } from './trust/anchors/parse.js';
+export {
+  trustAnchorsSigningInput,
+  signTrustAnchors,
+  createLocalEd25519Signer,
+  anchorKeyFromPublicKey,
+} from './trust/anchors/sign.js';
+export {
+  TRUST_ANCHORS_TYPE,
+  TRUST_ANCHORS_PAYLOAD_TYPE,
+  TRUST_ANCHORS_SPEC_MAJOR,
+  KNOWN_PURPOSES,
+  KNOWN_STATUSES,
+} from './trust/anchors/types.js';
+export type {
+  AnchorKey,
+  AnchorSigner,
+  DetachedSignature,
+  KeyPurpose,
+  KeyStatus,
+  ParsedTrustAnchors,
+  PinnedRoot,
+  RevocationReason,
+  RootRole,
+  TrustAnchorsErrorCode,
+  TrustAnchorsSigned,
+  TrustAnchorsStore,
+} from './trust/anchors/types.js';

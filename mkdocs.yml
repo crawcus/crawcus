@@ -46,6 +46,7 @@ nav:
   - Specification:
     - Format: spec/crawcus-format.md
     - Trust policy: spec/crawcus-trust-policy.md
+    - Trust anchors: spec/trust-anchors.md
     - Contracts: spec/crawcus-contracts.md
   - Canon:
     - Architecture primitives: canon/architecture-primitives.md
@@ -78,3 +79,7 @@ validation:
 
 plugins:
   - search
+
+# Publish docs/.well-known/ (dot-directories are excluded by default).
+exclude_docs: |
+  !.well-known/
