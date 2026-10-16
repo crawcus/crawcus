@@ -22,14 +22,8 @@ import untrustedRaw from './samples/untrusted.dsse.json?raw';
 import cosignRaw from './samples/cosign.dsse.json?raw';
 import demoAnchor from './samples/demo-anchor.json';
 
-// ---------- theme: light / dark / system (default), persisted ----------
-type Theme = 'light' | 'dark' | 'system';
-const THEME_KEY = 'crawcus-verify.theme';
-function applyTheme(t: Theme): void {
-  if (t === 'system') delete document.documentElement.dataset['theme'];
-  else document.documentElement.dataset['theme'] = t;
-}
-let theme: Theme = ((): Theme => { const v = localStorage.getItem(THEME_KEY); return v === 'light' || v === 'dark' ? v : 'system'; })();
+import { applyTheme, loadTheme, saveTheme, DISCLAIMER, type Theme } from './ui/theme.js';
+let theme: Theme = loadTheme();
 applyTheme(theme);
 
 // ---------- tiny DOM helper (textContent only; never innerHTML with data) ----------
@@ -227,6 +221,7 @@ function renderResult(r: VerifyResultV1, bytes: Uint8Array): void {
       h('span', {}, h('b', {}, 'checks'), `${String(passed)} pass · ${String(failed)} fail`),
       h('span', {}, h('b', {}, 'verified'), fmtTs(r.verifiedAt)),
       h('span', {}, h('b', {}, 'schema'), r.schema)));
+  const disclaimer = h('p', { class: 'disclaimer', role: 'note' }, DISCLAIMER, ' ', h('a', { href: './terms' }, 'Terms'));
 
   const trustPill = r.signer
     ? h('span', { class: `pill ${r.signer.trust === 'trusted' ? 'ok' : r.signer.trust === 'untrusted' ? 'bad' : 'warn'}` },
@@ -253,7 +248,7 @@ function renderResult(r: VerifyResultV1, bytes: Uint8Array): void {
   const brokenCount = r.chain.links.filter((l) => l.status === 'broken').length;
   const timeline = h('div', { class: 'tl' }, ...r.chain.links.map((l) => linkRow(l, events[l.index])));
 
-  resultHost.replaceChildren(verdict,
+  resultHost.replaceChildren(verdict, disclaimer,
     h('h2', {}, 'Summary'), cards,
     h('h2', {}, `Checks performed · ${String(r.checks.length)}`), checks,
     h('h2', {}, `Hash-chain timeline · ${String(r.chain.links.length)} rows`),
@@ -293,7 +288,7 @@ function themeSwitch(): HTMLElement {
   const paint = (): void => wrap.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset['t'] === theme)));
   for (const [t, label] of opts) {
     const b = h('button', { 'data-t': t, onclick: () => {
-      theme = t; if (t === 'system') localStorage.removeItem(THEME_KEY); else localStorage.setItem(THEME_KEY, t);
+      theme = t; saveTheme(t);
       applyTheme(t); paint();
     } }, label);
     wrap.append(b);
@@ -309,7 +304,10 @@ app.append(h('div', { class: 'wrap' },
     h('div', { class: 'hdr-r' }, h('span', { class: 'badge' }, h('i'), 'Everything runs in your browser; nothing is uploaded.'), themeSwitch())),
   h('div', { class: 'grid2' }, inputPanel(), h('div', {}, samplesPanel(), trustPanel())),
   resultHost,
-  h('footer', {}, h('span', {}, 'crawcus verify · DSSE + RFC 8785 + SHA-256 hash chain · ed25519'), h('a', { href: 'https://crawcus.org', rel: 'noopener' }, 'crawcus.org'))));
+  h('footer', {},
+    h('p', { class: 'disclaimer foot' }, DISCLAIMER),
+    h('span', {}, 'crawcus verify · DSSE + RFC 8785 + SHA-256 hash chain · ed25519'),
+    h('span', { class: 'flinks' }, h('a', { href: './terms' }, 'Terms & Privacy'), h('a', { href: 'https://crawcus.org', rel: 'noopener' }, 'crawcus.org')))));
 resultHost.append(h('div', { class: 'empty' }, 'Drop a bundle or pick a sample to see a full verification report.'));
 
 // Deep link for demos/screenshots: #sample=good|tampered|untrusted|cosign

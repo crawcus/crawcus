@@ -10,6 +10,7 @@ public trust-anchor list. Bundle data is never part of that request.
 ## Deployments
 
 - **Public:** https://verify.crawcus.org (Cloudflare Pages project `crawcus-verify-public`, no login).
+- **Terms & privacy:** `terms.html` (served at `/terms`). Governing law and the legal entity are left out until confirmed; the placeholder lives in a comment in `src/terms.ts`.
 - **Private preview:** https://crawcus-verify.pages.dev, behind Cloudflare Access.
 
 `public/_headers` sets the security headers on both: a strict CSP (`default-src 'self'`,
