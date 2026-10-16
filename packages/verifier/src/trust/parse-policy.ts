@@ -198,9 +198,9 @@ function parsePinned(
   if (
     typeof notBefore === 'string' &&
     typeof notAfter === 'string' &&
-    Date.parse(notBefore) > Date.parse(notAfter)
+    Date.parse(notBefore) >= Date.parse(notAfter)
   ) {
-    return fail(`${where} notBefore is after notAfter`);
+    return fail(`${where} notBefore must be earlier than notAfter (window is [notBefore, notAfter))`);
   }
 
   let payloadTypes: readonly string[] | undefined;

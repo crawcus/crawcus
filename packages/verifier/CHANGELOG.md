@@ -4,6 +4,10 @@
 
 ### Breaking
 
+- Validity windows are half-open, `[notBefore, notAfter)`: a signing
+  time equal to `notAfter` is now `signer.untrusted.expired`, and a
+  policy with `notBefore == notAfter` is malformed.
+
 - The integrity-only `verifyDsseEnvelope` export is removed. It verified
   a signature against the public key embedded in the envelope and
   returned `pass` with no trust check. Callers must use `verifyBundle`
