@@ -305,6 +305,25 @@
   
   
   
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
     
     
       <li class="md-tabs__item">
@@ -932,6 +951,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
     
@@ -946,10 +992,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -967,8 +1013,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1348,7 +1394,7 @@ as the lighthouse-driven architectural surface for v0.1.0.</p>
 <p>A conversational thread with a typed completion contract. Has a <strong>CrawcusSpec</strong> declaring required fields, dependencies, askHints, options.</p>
 <p><strong>Examples:</strong> <code>CreateCourse</code>, <code>OriginateLoan</code>, <code>ScreenCandidate</code>, <code>IntakePatient</code>.</p>
 <h3 id="2-crawcusspec">2. CrawcusSpec<a class="headerlink" href="#2-crawcusspec" title="Permalink to this section">&para;</a></h3>
-<p>Declarative TypeScript / YAML data — list of fields with metadata. Pure data, not code. Build-time validated. The format is the <strong>CRAWCUS open standard slated for W3C / IEEE submission within 12 months.</strong> (Renamed from <code>IntentSpec</code> 2026-05-21 per B1.2; the canonical contract for <code>defineCrawcusSpec({...})</code> lives at <a href="../../spec/crawcus-format/"><code>crawcus-format.md</code></a>.)</p>
+<p>Declarative TypeScript / YAML data — list of fields with metadata. Pure data, not code. Build-time validated. The format is part of <strong>CRAWCUS, an open spec we publish (CC-BY-4.0).</strong> (Renamed from <code>IntentSpec</code> 2026-05-21 per B1.2; the canonical contract for <code>defineCrawcusSpec({...})</code> lives at <a href="../../spec/crawcus-format/"><code>crawcus-format.md</code></a>.)</p>
 <div class="language-ts highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nx">defineCrawcusSpec</span><span class="p">({</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="s2">"CreateCourse"</span><span class="p">,</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nx">projection</span><span class="o">:</span><span class="w"> </span><span class="s2">"Course"</span><span class="p">,</span>
@@ -1409,9 +1455,9 @@ as the lighthouse-driven architectural surface for v0.1.0.</p>
 </span></code></pre></div>
 <p>See <a href="../../spec/crawcus-contracts/"><code>crawcus-contracts.md</code></a> for the design memo.</p>
 <h3 id="9-attestation-aka-auditbundle">9. Attestation (a.k.a. AuditBundle)<a class="headerlink" href="#9-attestation-aka-auditbundle" title="Permalink to this section">&para;</a></h3>
-<p>Composed audit artifact rendering Events + Contracts + Warrants + Disclosures + Consents + Lineage + HumanOversight reviews for a given Intent / period / data subject. Standards-grade output; can be cryptographically signed by external authority for Big-4 / Notified Body workflows. (<code>composeAuditBundle()</code> shipped commit <code>220f7089</code>.) <strong>Attestation</strong> is the CRAWCUS-vocabulary name; <strong>AuditBundle</strong> is the implementation type. Both refer to the same primitive.</p>
+<p>Composed audit artifact rendering Events + Contracts + Warrants + Disclosures + Consents + Lineage + HumanOversight reviews for a given Intent / period / data subject. Signed by the system that produced it, so a third party can verify it offline. An Attestation is a machine-checkable statement by the signing system, not an auditor's opinion or assurance report; an external auditor or Notified Body that reviews it does so separately and signs its own, separate artefact. In non-technical copy, call it an "audit bundle" (see the <a href="../../glossary/">glossary</a>). (<code>composeAuditBundle()</code> shipped commit <code>220f7089</code>.) <strong>Attestation</strong> is the CRAWCUS-vocabulary name; <strong>AuditBundle</strong> is the implementation type. Both refer to the same primitive.</p>
 <h3 id="10-warrant">10. Warrant<a class="headerlink" href="#10-warrant" title="Permalink to this section">&para;</a></h3>
-<p>A verifiable, time-bounded, revocable, issuer-signed authorization that some authority attaches to a tenant's runtime, attesting <em>"we have reviewed this; it is authorized to operate under our authority until T."</em></p>
+<p>A verifiable, time-bounded, revocable, issuer-signed authorization that some authority attaches to a tenant's runtime, stating <em>"it is authorized to operate under our authority until T."</em> In non-technical copy, call it a "signed, expiring authorisation" (see the <a href="../../glossary/">glossary</a>).</p>
 <p><strong>Distinct from Contract</strong> (Contract = per-event predicate; Warrant = continuing authorization). <strong>Distinct from Consent</strong> (Consent = data-subject-issued; Warrant = authority-issued).</p>
 <p><strong>Issuers:</strong> self / Big-4 (PwC, EY, Deloitte, KPMG) / Notified Body / Insurance MGA / Regulator / Cloud / OEM platform.</p>
 <p><strong>Lifecycle:</strong> issued → exercised → expired / revoked. Three checkpoint slots — <code>pre</code> / <code>inv</code> / <code>post</code> — configurable per CrawcusSpec.</p>
@@ -1491,8 +1537,8 @@ as the lighthouse-driven architectural surface for v0.1.0.</p>
 <td>NB issues Warrant after audit; HumanOversight records inform NB's surveillance audits; Attestation bundle is the audit artifact</td>
 </tr>
 <tr>
-<td><strong>Big-4 attestation marketplace</strong></td>
-<td>Big-4 firm issues Warrant; quarterly attestation renewal; Cloud distributes signed Warrants</td>
+<td><strong>Big-4 warrant marketplace</strong> (hypothetical)</td>
+<td>Big-4 firm issues Warrant; quarterly Warrant renewal; Cloud distributes signed Warrants</td>
 </tr>
 <tr>
 <td>Regulator-side ingestion</td>

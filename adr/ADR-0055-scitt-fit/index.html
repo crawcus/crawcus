@@ -300,6 +300,25 @@
   
   
   
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
     
   
   
@@ -650,6 +669,33 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -671,10 +717,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
             
   
   
@@ -692,8 +738,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1005,7 +1051,7 @@ SPDX-License-Identifier: CC-BY-4.0
 <p><strong>Status:</strong> proposed (draft).
 <strong>Profile:</strong> <a href="../../spec/crawcus-scitt-profile/">CRAWCUS as a SCITT payload</a></p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permalink to this section">&para;</a></h2>
-<p>Add a <code>@crawcus/scitt</code> package. It carries CRAWCUS bundles as SCITT Signed Statements and verifies SCITT Receipts offline. The existing trust-policy verifier keeps deciding signer trust. In SCITT mode the COSE_Sign1 signature replaces DSSE (profile §2.3).</p>
+<p>Add a <code>@crawcus/scitt</code> package. It carries CRAWCUS bundles as SCITT Signed Statements and verifies SCITT receipts offline. The existing trust-policy verifier keeps deciding signer trust. In SCITT mode the COSE_Sign1 signature replaces DSSE (profile §2.3).</p>
 <h2 id="libraries">Libraries<a class="headerlink" href="#libraries" title="Permalink to this section">&para;</a></h2>
 <table>
 <thead>
@@ -1042,15 +1088,15 @@ SPDX-License-Identifier: CC-BY-4.0
 <h2 id="transparency-services-to-test-against">Transparency Services to test against<a class="headerlink" href="#transparency-services-to-test-against" title="Permalink to this section">&para;</a></h2>
 <p>I checked these repositories on 2026-10-15. <strong>Nothing has been tested against any of them yet.</strong></p>
 <ul>
-<li><a href="https://github.com/microsoft/scitt-ccf-ledger"><code>microsoft/scitt-ccf-ledger</code></a> (MIT): active, last pushed 2026-10-14. It is the CCF-based TS behind the CCF Receipt profile (<code>draft-ietf-scitt-receipts-ccf-profile</code>). Note that its Receipts use the CCF VDS, not RFC9162_SHA256, so S3 must handle both.</li>
+<li><a href="https://github.com/microsoft/scitt-ccf-ledger"><code>microsoft/scitt-ccf-ledger</code></a> (MIT): active, last pushed 2026-10-14. It is the CCF-based TS behind the CCF Receipt profile (<code>draft-ietf-scitt-receipts-ccf-profile</code>). Note that its SCITT receipts use the CCF VDS, not RFC9162_SHA256, so S3 must handle both.</li>
 <li><a href="https://github.com/scitt-community/scitt-api-emulator"><code>scitt-community/scitt-api-emulator</code></a> (MIT): <strong>archived</strong>, last pushed 2024-11. Useful only as a reference.</li>
 <li>Other public repositories exist (for example <code>tradeverifyd/transparency-service</code>), but I have not assessed them. The list at <a href="https://scitt.io/implementations.html">https://scitt.io/implementations.html</a> is the place to pick further targets.</li>
 </ul>
 <h2 id="scrapi">SCRAPI<a class="headerlink" href="#scrapi" title="Permalink to this section">&para;</a></h2>
 <p><code>draft-ietf-scitt-scrapi</code> defines the HTTP surface:</p>
 <ul>
-<li><code>POST /entries</code> registers a <code>application/cose</code> Signed Statement. It returns <code>201</code> with the Receipt, or <code>202</code> with a <code>Location</code> to poll.</li>
-<li><code>GET /entries/{id}</code> resolves the Receipt.</li>
+<li><code>POST /entries</code> registers a <code>application/cose</code> Signed Statement. It returns <code>201</code> with the SCITT receipt, or <code>202</code> with a <code>Location</code> to poll.</li>
+<li><code>GET /entries/{id}</code> resolves the SCITT receipt.</li>
 <li><code>GET /.well-known/scitt-keys</code> lists the TS keys.</li>
 </ul>
 <p>The registration client should be small and <code>fetch</code>-based. It should treat 202 polling as normal, and it should pin the draft revision it was tested against.</p>
@@ -1076,17 +1122,17 @@ SPDX-License-Identifier: CC-BY-4.0
 </tr>
 <tr>
 <td>S3</td>
-<td>RFC 9942 Receipt verifier: RFC9162_SHA256 inclusion proof → root → COSE signature under a pinned TS key. Then the CCF Receipt profile.</td>
+<td>RFC 9942 SCITT receipt verifier: RFC9162_SHA256 inclusion proof → root → COSE signature under a pinned TS key. Then the CCF Receipt profile.</td>
 <td>Fixtures with hand-built trees; negative cases (bad index, wrong root, wrong TS key)</td>
 </tr>
 <tr>
 <td>S4</td>
-<td><code>verifyTransparentStatement</code>: Receipt + statement signature + CRAWCUS trust policy + payload checks (profile §3). Reports each layer separately. TS registration time becomes a <code>SigningTimeSource</code>. Depends on PR #2 (trust policy).</td>
+<td><code>verifyTransparentStatement</code>: SCITT receipt + statement signature + CRAWCUS trust policy + payload checks (profile §3). Reports each layer separately. TS registration time becomes a <code>SigningTimeSource</code>. Depends on PR #2 (trust policy).</td>
 <td>End-to-end offline verify</td>
 </tr>
 <tr>
 <td>S5</td>
-<td>TCK <code>scitt/</code> vectors: valid, wrong <code>content_type</code>, missing <code>sub</code>, tampered payload, untrusted issuer, bad Receipt, hash-envelope</td>
+<td>TCK <code>scitt/</code> vectors: valid, wrong <code>content_type</code>, missing <code>sub</code>, tampered payload, untrusted issuer, bad SCITT receipt, hash-envelope</td>
 <td>Vectors usable by any runtime</td>
 </tr>
 <tr>
@@ -1096,8 +1142,8 @@ SPDX-License-Identifier: CC-BY-4.0
 </tr>
 <tr>
 <td>S7</td>
-<td>Native-log alignment (PR #3): RFC9162_SHA256 hashing + RFC 9942 Receipts</td>
-<td>One Receipt verifier for both</td>
+<td>Native-log alignment (PR #3): RFC9162_SHA256 hashing + RFC 9942 SCITT receipts</td>
+<td>One SCITT receipt verifier for both</td>
 </tr>
 </tbody>
 </table>

@@ -305,6 +305,25 @@
   
   
   
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
     
     
       <li class="md-tabs__item">
@@ -844,6 +863,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
     
@@ -858,10 +904,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -879,8 +925,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1150,12 +1196,13 @@ SPDX-License-Identifier: CC-BY-4.0
 <h1 id="crawcus-as-a-scitt-payload-profile-draft">CRAWCUS as a SCITT payload (profile, draft)<a class="headerlink" href="#crawcus-as-a-scitt-payload-profile-draft" title="Permalink to this section">&para;</a></h1>
 <p><strong>Status:</strong> draft, version 0. It is not an Internet-Draft and has not been reviewed by the IETF SCITT WG. It has <strong>not yet been tested</strong> against any Transparency Service implementation. Identifiers marked <em>provisional</em> are not registered with IANA.</p>
 <p>The key words MUST, SHOULD and MAY are used as in BCP 14 ([RFC 2119], [RFC 8174]), but only within this profile.</p>
+<p><strong>Terminology.</strong> "Receipt", "attestation" and "warrant" are used as defined in <a href="../crawcus-format/#terminology">CRAWCUS format §Terminology</a>. A bare "receipt" in this profile means a CRAWCUS receipt. SCITT's object (RFC 9943, RFC 9942) is always written "SCITT receipt" or "registration receipt". When a CRAWCUS receipt is registered, the CRAWCUS receipt is the Signed Statement and the SCITT receipt is its proof of registration.</p>
 <h2 id="1-scope">1. Scope<a class="headerlink" href="#1-scope" title="Permalink to this section">&para;</a></h2>
 <p>CRAWCUS is an open spec for audit-receipt <strong>payloads</strong>. It defines the receipt fields and their meaning, a regulation mapping (GDPR, EU AI Act, FERPA packages), an offline verifier, and a TCK.</p>
-<p>SCITT ([RFC 9943], [RFC 9942]) defines the <strong>transparency envelope</strong>. That covers Signed Statements (COSE_Sign1), Registration with a Transparency Service (TS), Verifiable Data Structures (VDS) and Receipts. RFC 9943 treats the Statement as opaque to the TS (§3). Payload formats are left to profiles.</p>
+<p>SCITT ([RFC 9943], [RFC 9942]) defines the <strong>transparency envelope</strong>. That covers Signed Statements (COSE_Sign1), Registration with a Transparency Service (TS), Verifiable Data Structures (VDS) and SCITT receipts (registration receipts, RFC 9942). RFC 9943 treats the Statement as opaque to the TS (§3). Payload formats are left to profiles.</p>
 <p>This profile says how a CRAWCUS bundle is carried as the payload of a SCITT Signed Statement. Each layer keeps its own job:</p>
 <ul>
-<li>CRAWCUS does <strong>not</strong> define a Transparency Service, a VDS, Receipts, or a registration API.</li>
+<li>CRAWCUS does <strong>not</strong> define a Transparency Service, a VDS, SCITT receipts, or a registration API.</li>
 <li>SCITT does not define CRAWCUS payload semantics or regulation mapping.</li>
 </ul>
 <h2 id="2-mapping">2. Mapping<a class="headerlink" href="#2-mapping" title="Permalink to this section">&para;</a></h2>
@@ -1215,7 +1262,7 @@ SPDX-License-Identifier: CC-BY-4.0
 </tr>
 </tbody>
 </table>
-<p>The unprotected header MUST be empty at signing. Receipts are added later under label <code>394</code> ([RFC 9942]), which turns the Signed Statement into a Transparent Statement (RFC 9943 §7).</p>
+<p>The unprotected header MUST be empty at signing. SCITT receipts are added later under label <code>394</code> ([RFC 9942]), which turns the Signed Statement into a Transparent Statement (RFC 9943 §7).</p>
 <p><strong>Content type choice.</strong> We reuse the DSSE <code>payloadType</code> string, so one identifier names the bundle bytes in both JSON and SCITT modes. The <code>+jsonl</code> suffix is inherited and is itself provisional (Q2).</p>
 <h3 id="22-payload-bytes">2.2 Payload bytes<a class="headerlink" href="#22-payload-bytes" title="Permalink to this section">&para;</a></h3>
 <p>The payload is exactly the bundle bytes that CRAWCUS already produces: the JCS ([RFC 8785]) canonical JSON. The bytes MUST NOT be re-serialised.</p>
@@ -1248,7 +1295,7 @@ SPDX-License-Identifier: CC-BY-4.0
 <tbody>
 <tr>
 <td>1</td>
-<td>Receipt: RFC 9942 §5.2 (RFC9162_SHA256 inclusion proof → Merkle root as payload → COSE signature under a TS key the RP trusts)</td>
+<td>SCITT receipt: RFC 9942 §5.2 (RFC9162_SHA256 inclusion proof → Merkle root as payload → COSE signature under a TS key the RP trusts)</td>
 <td>The Signed Statement was registered in that TS's VDS at the stated tree size</td>
 <td>Anything about who the issuer is or what the payload says</td>
 </tr>
@@ -1267,12 +1314,12 @@ SPDX-License-Identifier: CC-BY-4.0
 <tr>
 <td>4</td>
 <td>CRAWCUS payload: JCS hash equivalence, hash chain, contract re-evaluation</td>
-<td>The receipt contents are internally consistent</td>
+<td>The CRAWCUS receipt contents are internally consistent</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Time.</strong> CWT <code>iat</code> and the bundle event timestamps are signed by the issuer, so they can be back-dated. The TS <strong>registration time</strong> (RFC 9943 §7) is the only time not under the issuer's control. Planned (§5, S3): when a valid Receipt is present, the CRAWCUS verifier uses it as an independent signing-time source for validity windows and <code>superseded</code> revocation. Without a Receipt the existing rule stands: only <code>key-compromise</code> revocation is a security boundary.</p>
+<p><strong>Time.</strong> CWT <code>iat</code> and the bundle event timestamps are signed by the issuer, so they can be back-dated. The TS <strong>registration time</strong> (RFC 9943 §7) is the only time not under the issuer's control. Planned (§5, S3): when a valid SCITT receipt is present, the CRAWCUS verifier uses it as an independent signing-time source for validity windows and <code>superseded</code> revocation. Without a SCITT receipt the existing rule stands: only <code>key-compromise</code> revocation is a security boundary.</p>
 <h2 id="4-privacy-and-gdpr">4. Privacy and GDPR<a class="headerlink" href="#4-privacy-and-gdpr" title="Permalink to this section">&para;</a></h2>
 <p>RFC 9943 §6.2 allows a Statement over the <em>hash</em> of a payload. For CRAWCUS receipts with personal data, issuers SHOULD use COSE Hash Envelope ([draft-ietf-cose-hash-envelope], an Internet-Draft) with these headers:</p>
 <ul>
@@ -1285,14 +1332,14 @@ SPDX-License-Identifier: CC-BY-4.0
 <p>The TS stores only a digest. That fits the CRAWCUS tombstone and crypto-shred erasure pattern: erasing the preimage leaves the registration verifiable as "something with this digest existed" and discloses nothing more. A Relying Party that holds the bundle checks the digest and then runs §3, steps 3–4.</p>
 <h2 id="5-relation-to-the-crawcus-merkle-log-pr-3">5. Relation to the CRAWCUS Merkle log (PR #3)<a class="headerlink" href="#5-relation-to-the-crawcus-merkle-log-pr-3" title="Permalink to this section">&para;</a></h2>
 <p>PR #3 prototypes a CRAWCUS-native transparency log. This profile makes a <strong>SCITT TS the preferred transparency layer</strong>. The native log is a compatibility mode for deployments with no TS.</p>
-<p>If the native log ships, it SHOULD use RFC9162_SHA256 leaf and node hashing, and SHOULD emit RFC 9942 Receipts, so that one Receipt verifier covers both. That is a requirement on PR #3, not something this document claims PR #3 already does.</p>
+<p>If the native log ships, it SHOULD use RFC9162_SHA256 leaf and node hashing, and SHOULD emit RFC 9942 SCITT receipts, so that one SCITT receipt verifier covers both. That is a requirement on PR #3, not something this document claims PR #3 already does.</p>
 <h2 id="6-open-questions-for-the-wg">6. Open questions for the WG<a class="headerlink" href="#6-open-questions-for-the-wg" title="Permalink to this section">&para;</a></h2>
 <ul>
 <li><strong>Q1.</strong> Is EdDSA (<code>-8</code>) acceptable for Registration Policies in practice, or should profiles mandate ES256 for interop?</li>
 <li><strong>Q2.</strong> Media type: <code>+jsonl</code> vs <code>+json</code>, and is a vendor-tree registration the right path for a statement payload type?</li>
 <li><strong>Q3.</strong> Is <code>sub</code> = one subject per intent the right granularity? Is there a convention for application-level, non-artifact subjects?</li>
 <li><strong>Q4.</strong> Should a payload profile define a Registration Policy fragment (required <code>content_type</code> or <code>259</code>, a <code>sub</code> scheme), or leave it to each TS?</li>
-<li><strong>Q5.</strong> Is TS registration time, carried through a Receipt, an accepted source of signing time for issuer key-validity decisions?</li>
+<li><strong>Q5.</strong> Is TS registration time, carried through a SCITT receipt, an accepted source of signing time for issuer key-validity decisions?</li>
 <li><strong>Q6.</strong> Is there a recommended way to link successive Statements for one <code>sub</code>, e.g. a CRAWCUS chain head hash in a protected header?</li>
 </ul>
 <h2 id="7-worked-example-illustrative-only">7. Worked example (illustrative only)<a class="headerlink" href="#7-worked-example-illustrative-only" title="Permalink to this section">&para;</a></h2>
@@ -1317,7 +1364,7 @@ SPDX-License-Identifier: CC-BY-4.0
 </span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  / signature   / h'...'                                       / 64 bytes /
 </span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>])
 </span></code></pre></div>
-<p>After Registration, the Transparent Statement has <code>{ 394: [ h'&lt;Receipt&gt;' ] }</code> in its unprotected header. The Receipt's protected header carries <code>395: 1</code> (RFC9162_SHA256), and its unprotected header carries <code>396: { -1: [ &lt;&lt;[tree-size, leaf-index, [path...]]&gt;&gt; ] }</code> (RFC 9942 §5.2.1).</p>
+<p>After Registration, the Transparent Statement has <code>{ 394: [ h'&lt;SCITT receipt&gt;' ] }</code> in its unprotected header. The SCITT receipt's protected header carries <code>395: 1</code> (RFC9162_SHA256), and its unprotected header carries <code>396: { -1: [ &lt;&lt;[tree-size, leaf-index, [path...]]&gt;&gt; ] }</code> (RFC 9942 §5.2.1).</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permalink to this section">&para;</a></h2>
 <ul>
 <li>[RFC 9943] An Architecture for Trustworthy and Transparent Digital Supply Chains. <a href="https://www.rfc-editor.org/rfc/rfc9943.html">https://www.rfc-editor.org/rfc/rfc9943.html</a></li>

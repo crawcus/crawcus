@@ -305,6 +305,25 @@
   
   
   
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
     
     
       <li class="md-tabs__item">
@@ -669,6 +688,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
     
@@ -683,10 +729,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
             
   
   
@@ -704,8 +750,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1690,7 +1736,7 @@ adds complexity to v0.2; revisit at v1.0 if pattern stabilises.</p>
 </ul>
 <h3 id="specruntime-placement">Spec/runtime placement<a class="headerlink" href="#specruntime-placement" title="Permalink to this section">&para;</a></h3>
 <ul>
-<li><strong>Type definitions</strong> ship in <code>@crawcus/spec</code> (the EventKind taxonomy is part of the open standard).</li>
+<li><strong>Type definitions</strong> ship in <code>@crawcus/spec</code> (the EventKind taxonomy is part of the open spec).</li>
 <li><strong>Runtime EventKind union extension</strong> in <code>@crawcus/core</code> (re-exports <code>DisclosureSignal</code> from <code>@crawcus/spec</code>).</li>
 <li><strong>TCK fixture</strong> in <code>@crawcus/tck</code> covering positive case + SIGNAL-not-gate lint rejection.</li>
 <li><strong>Adapter helper</strong> in <code>@tallyseal/react-assistant-ui</code>: <code>TallysealBanner</code> gains <code>onReadSignal</code> callback wiring IntersectionObserver to emit <code>DisclosureSignal{signalType: 'read'}</code> events.</li>
