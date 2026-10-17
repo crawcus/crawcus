@@ -168,3 +168,9 @@ footer a{color:var(--dim);text-decoration:none}footer a:hover{color:var(--fg)}
 .doc .lead{font-size:16.5px;color:var(--fg)}
 .doc .callout{border:1px solid var(--line);border-left:3px solid var(--warn);background:var(--panel);border-radius:8px;padding:14px 16px;margin-top:22px;box-shadow:var(--shadow)}
 .back{font:12.5px var(--mono);color:var(--dim);text-decoration:none}.back:hover{color:var(--fg)}
+.dl{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.dl-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font:12px var(--mono)}
+.dl-k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.dl a{color:var(--acc);text-decoration:none;display:inline-flex;align-items:center;gap:6px;overflow-wrap:anywhere}
+.dl a:hover,.dl a:focus-visible{text-decoration:underline}
+.dl .demo{margin-left:0}.dl .note{margin-top:6px}

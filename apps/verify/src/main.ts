@@ -139,7 +139,21 @@ function samplesPanel(): HTMLElement {
       s('ok', 'Good bundle', '8 rows, signed by the DEMO/TEST key', goodRaw, 'good.dsse.json'),
       s('bad', 'Tampered', 'row #3 edited after signing', tamperedRaw, 'tampered.dsse.json'),
       s('warn', 'Untrusted signer', 'valid signature, unpinned key', untrustedRaw, 'untrusted.dsse.json'),
-      s('acc', 'Cross-vendor', 'cosign-emitted DSSE (TCK fixture)', cosignRaw, 'cosign.dsse.json')));
+      s('acc', 'Cross-vendor', 'cosign-emitted DSSE (TCK fixture)', cosignRaw, 'cosign.dsse.json')),
+    downloadSamples());
+}
+// Byte-identical copies of src/samples/{good,tampered}.dsse.json served from public/samples/.
+const SAMPLE_DOWNLOADS: ReadonlyArray<readonly [string, string]> = [
+  ['ok', 'crawcus-sample-good.dsse.json'],
+  ['bad', 'crawcus-sample-tampered.dsse.json'],
+];
+function downloadSamples(): HTMLElement {
+  return h('div', { class: 'dl' },
+    h('div', { class: 'dl-row' },
+      h('span', { class: 'dl-k' }, 'Download sample files'),
+      ...SAMPLE_DOWNLOADS.map(([dot, name]) => h('a', { href: `/samples/${name}`, download: name, type: 'application/json' }, h('span', { class: `dot ${dot}` }), name)),
+      h('span', { class: 'demo' }, 'DEMO / TEST DATA')),
+    h('div', { class: 'note' }, 'Download one, then drop it into the box above to check it yourself. Good shows PASS; tampered shows FAIL.'));
 }
 function renderAnchors(): void {
   anchorList.replaceChildren(...anchors.map((a, i) => h('li', {},
