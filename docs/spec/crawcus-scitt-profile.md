@@ -9,15 +9,17 @@ SPDX-License-Identifier: CC-BY-4.0
 
 The key words MUST, SHOULD and MAY are used as in BCP 14 ([RFC 2119], [RFC 8174]), but only within this profile.
 
+**Terminology.** "Receipt", "attestation" and "warrant" are used as defined in [CRAWCUS format §Terminology](crawcus-format.md#terminology). A bare "receipt" in this profile means a CRAWCUS receipt. SCITT's object (RFC 9943, RFC 9942) is always written "SCITT receipt" or "registration receipt". When a CRAWCUS receipt is registered, the CRAWCUS receipt is the Signed Statement and the SCITT receipt is its proof of registration.
+
 ## 1. Scope
 
 CRAWCUS is an open spec for audit-receipt **payloads**. It defines the receipt fields and their meaning, a regulation mapping (GDPR, EU AI Act, FERPA packages), an offline verifier, and a TCK.
 
-SCITT ([RFC 9943], [RFC 9942]) defines the **transparency envelope**. That covers Signed Statements (COSE_Sign1), Registration with a Transparency Service (TS), Verifiable Data Structures (VDS) and Receipts. RFC 9943 treats the Statement as opaque to the TS (§3). Payload formats are left to profiles.
+SCITT ([RFC 9943], [RFC 9942]) defines the **transparency envelope**. That covers Signed Statements (COSE_Sign1), Registration with a Transparency Service (TS), Verifiable Data Structures (VDS) and SCITT receipts (registration receipts, RFC 9942). RFC 9943 treats the Statement as opaque to the TS (§3). Payload formats are left to profiles.
 
 This profile says how a CRAWCUS bundle is carried as the payload of a SCITT Signed Statement. Each layer keeps its own job:
 
-- CRAWCUS does **not** define a Transparency Service, a VDS, Receipts, or a registration API.
+- CRAWCUS does **not** define a Transparency Service, a VDS, SCITT receipts, or a registration API.
 - SCITT does not define CRAWCUS payload semantics or regulation mapping.
 
 ## 2. Mapping
@@ -36,7 +38,7 @@ A CRAWCUS Signed Statement is a tagged `COSE_Sign1` (`#6.18`, [RFC 9052]). It MU
 | 15 → 2 | `sub` | REQUIRED, `urn:crawcus:intent:<intent.id>` | Bundle `intent.id`. It groups the Statements about one CRAWCUS subject, so Relying Parties can check completeness per `sub` (RFC 9943 §3, "Subject"). |
 | 15 → 6 | `iat` | OPTIONAL | Latest event timestamp. **Self-asserted** (§3). |
 
-The unprotected header MUST be empty at signing. Receipts are added later under label `394` ([RFC 9942]), which turns the Signed Statement into a Transparent Statement (RFC 9943 §7).
+The unprotected header MUST be empty at signing. SCITT receipts are added later under label `394` ([RFC 9942]), which turns the Signed Statement into a Transparent Statement (RFC 9943 §7).
 
 **Content type choice.** We reuse the DSSE `payloadType` string, so one identifier names the bundle bytes in both JSON and SCITT modes. The `+jsonl` suffix is inherited and is itself provisional (Q2).
 
@@ -68,12 +70,12 @@ An offline Relying Party verifies two separate layers and reports them separatel
 
 | Step | Check | What it proves | What it does not prove |
 |---|---|---|---|
-| 1 | Receipt: RFC 9942 §5.2 (RFC9162_SHA256 inclusion proof → Merkle root as payload → COSE signature under a TS key the RP trusts) | The Signed Statement was registered in that TS's VDS at the stated tree size | Anything about who the issuer is or what the payload says |
+| 1 | SCITT receipt: RFC 9942 §5.2 (RFC9162_SHA256 inclusion proof → Merkle root as payload → COSE signature under a TS key the RP trusts) | The Signed Statement was registered in that TS's VDS at the stated tree size | Anything about who the issuer is or what the payload says |
 | 2 | Statement signature: COSE_Sign1 under the key named by `kid` | The bytes were signed by that key | That the key is authorised |
 | 3 | CRAWCUS trust policy: the key is pinned for `iss` | The signer is authorised, as in DSSE mode. With no policy it fails closed (`untrusted-signer`). | |
-| 4 | CRAWCUS payload: JCS hash equivalence, hash chain, contract re-evaluation | The receipt contents are internally consistent | |
+| 4 | CRAWCUS payload: JCS hash equivalence, hash chain, contract re-evaluation | The CRAWCUS receipt contents are internally consistent | |
 
-**Time.** CWT `iat` and the bundle event timestamps are signed by the issuer, so they can be back-dated. The TS **registration time** (RFC 9943 §7) is the only time not under the issuer's control. Planned (§5, S3): when a valid Receipt is present, the CRAWCUS verifier uses it as an independent signing-time source for validity windows and `superseded` revocation. Without a Receipt the existing rule stands: only `key-compromise` revocation is a security boundary.
+**Time.** CWT `iat` and the bundle event timestamps are signed by the issuer, so they can be back-dated. The TS **registration time** (RFC 9943 §7) is the only time not under the issuer's control. Planned (§5, S3): when a valid SCITT receipt is present, the CRAWCUS verifier uses it as an independent signing-time source for validity windows and `superseded` revocation. Without a SCITT receipt the existing rule stands: only `key-compromise` revocation is a security boundary.
 
 ## 4. Privacy and GDPR
 
@@ -92,7 +94,7 @@ The TS stores only a digest. That fits the CRAWCUS tombstone and crypto-shred er
 
 PR #3 prototypes a CRAWCUS-native transparency log. This profile makes a **SCITT TS the preferred transparency layer**. The native log is a compatibility mode for deployments with no TS.
 
-If the native log ships, it SHOULD use RFC9162_SHA256 leaf and node hashing, and SHOULD emit RFC 9942 Receipts, so that one Receipt verifier covers both. That is a requirement on PR #3, not something this document claims PR #3 already does.
+If the native log ships, it SHOULD use RFC9162_SHA256 leaf and node hashing, and SHOULD emit RFC 9942 SCITT receipts, so that one SCITT receipt verifier covers both. That is a requirement on PR #3, not something this document claims PR #3 already does.
 
 ## 6. Open questions for the WG
 
@@ -100,7 +102,7 @@ If the native log ships, it SHOULD use RFC9162_SHA256 leaf and node hashing, and
 - **Q2.** Media type: `+jsonl` vs `+json`, and is a vendor-tree registration the right path for a statement payload type?
 - **Q3.** Is `sub` = one subject per intent the right granularity? Is there a convention for application-level, non-artifact subjects?
 - **Q4.** Should a payload profile define a Registration Policy fragment (required `content_type` or `259`, a `sub` scheme), or leave it to each TS?
-- **Q5.** Is TS registration time, carried through a Receipt, an accepted source of signing time for issuer key-validity decisions?
+- **Q5.** Is TS registration time, carried through a SCITT receipt, an accepted source of signing time for issuer key-validity decisions?
 - **Q6.** Is there a recommended way to link successive Statements for one `sub`, e.g. a CRAWCUS chain head hash in a protected header?
 
 ## 7. Worked example (illustrative only)
@@ -133,7 +135,7 @@ Signed Statement (EDN, attached payload):
 ])
 ```
 
-After Registration, the Transparent Statement has `{ 394: [ h'<Receipt>' ] }` in its unprotected header. The Receipt's protected header carries `395: 1` (RFC9162_SHA256), and its unprotected header carries `396: { -1: [ <<[tree-size, leaf-index, [path...]]>> ] }` (RFC 9942 §5.2.1).
+After Registration, the Transparent Statement has `{ 394: [ h'<SCITT receipt>' ] }` in its unprotected header. The SCITT receipt's protected header carries `395: 1` (RFC9162_SHA256), and its unprotected header carries `396: { -1: [ <<[tree-size, leaf-index, [path...]]>> ] }` (RFC 9942 §5.2.1).
 
 ## References
 

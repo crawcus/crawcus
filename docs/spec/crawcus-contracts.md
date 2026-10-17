@@ -672,7 +672,7 @@ pre.disclosureHasOpportunityToBeRead({
 
 ### Spec/runtime placement
 
-- **Type definitions** ship in `@crawcus/spec` (the EventKind taxonomy is part of the open standard).
+- **Type definitions** ship in `@crawcus/spec` (the EventKind taxonomy is part of the open spec).
 - **Runtime EventKind union extension** in `@crawcus/core` (re-exports `DisclosureSignal` from `@crawcus/spec`).
 - **TCK fixture** in `@crawcus/tck` covering positive case + SIGNAL-not-gate lint rejection.
 - **Adapter helper** in `@tallyseal/react-assistant-ui`: `TallysealBanner` gains `onReadSignal` callback wiring IntersectionObserver to emit `DisclosureSignal{signalType: 'read'}` events.

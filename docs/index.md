@@ -10,7 +10,7 @@ SPDX-License-Identifier: CC-BY-4.0
 The specification is authored openly, dual-licensed ([CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) for spec text, [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) for code), and on a [Linux Foundation AI & Data](https://lfaidata.foundation/) submission path via the [Joint Development Foundation](https://www.jointdevelopment.org/). Any party — systems integrator, adjacent vendor, individual developer, regulator — can implement a conformant runtime or verifier.
 
 
-CRAWCUS defines the payload semantics and regulation mapping for cryptographic audit receipts. Envelope-level transparency is the domain of IETF SCITT ([RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html)). That covers registration of Signed Statements with a Transparency Service and COSE Receipts. SCITT treats the payload as opaque, and CRAWCUS is designed to be carried as a SCITT payload. The profile is a draft and has not been tested against any Transparency Service: see [CRAWCUS and SCITT](scitt.md).
+CRAWCUS defines the payload semantics and regulation mapping for cryptographic audit receipts. Envelope-level transparency is the domain of IETF SCITT ([RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html)). That covers registration of Signed Statements with a Transparency Service and SCITT receipts (COSE Receipts, RFC 9942). SCITT treats the payload as opaque, and CRAWCUS is designed to be carried as a SCITT payload. The profile is a draft and has not been tested against any Transparency Service: see [CRAWCUS and SCITT](scitt.md).
 
 ---
 

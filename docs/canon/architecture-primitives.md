@@ -37,7 +37,7 @@ A conversational thread with a typed completion contract. Has a **CrawcusSpec** 
 
 ### 2. CrawcusSpec
 
-Declarative TypeScript / YAML data — list of fields with metadata. Pure data, not code. Build-time validated. The format is the **CRAWCUS open standard slated for W3C / IEEE submission within 12 months.** (Renamed from `IntentSpec` 2026-05-21 per B1.2; the canonical contract for `defineCrawcusSpec({...})` lives at [`crawcus-format.md`](../spec/crawcus-format.md).)
+Declarative TypeScript / YAML data — list of fields with metadata. Pure data, not code. Build-time validated. The format is part of **CRAWCUS, an open spec we publish (CC-BY-4.0).** (Renamed from `IntentSpec` 2026-05-21 per B1.2; the canonical contract for `defineCrawcusSpec({...})` lives at [`crawcus-format.md`](../spec/crawcus-format.md).)
 
 ```ts
 defineCrawcusSpec({
@@ -124,11 +124,11 @@ See [`crawcus-contracts.md`](../spec/crawcus-contracts.md) for the design memo.
 
 ### 9. Attestation (a.k.a. AuditBundle)
 
-Composed audit artifact rendering Events + Contracts + Warrants + Disclosures + Consents + Lineage + HumanOversight reviews for a given Intent / period / data subject. Standards-grade output; can be cryptographically signed by external authority for Big-4 / Notified Body workflows. (`composeAuditBundle()` shipped commit `220f7089`.) **Attestation** is the CRAWCUS-vocabulary name; **AuditBundle** is the implementation type. Both refer to the same primitive.
+Composed audit artifact rendering Events + Contracts + Warrants + Disclosures + Consents + Lineage + HumanOversight reviews for a given Intent / period / data subject. Signed by the system that produced it, so a third party can verify it offline. An Attestation is a machine-checkable statement by the signing system, not an auditor's opinion or assurance report; an external auditor or Notified Body that reviews it does so separately and signs its own, separate artefact. In non-technical copy, call it an "audit bundle" (see the [glossary](../glossary.md)). (`composeAuditBundle()` shipped commit `220f7089`.) **Attestation** is the CRAWCUS-vocabulary name; **AuditBundle** is the implementation type. Both refer to the same primitive.
 
 ### 10. Warrant
 
-A verifiable, time-bounded, revocable, issuer-signed authorization that some authority attaches to a tenant's runtime, attesting *"we have reviewed this; it is authorized to operate under our authority until T."*
+A verifiable, time-bounded, revocable, issuer-signed authorization that some authority attaches to a tenant's runtime, stating *"it is authorized to operate under our authority until T."* In non-technical copy, call it a "signed, expiring authorisation" (see the [glossary](../glossary.md)).
 
 **Distinct from Contract** (Contract = per-event predicate; Warrant = continuing authorization). **Distinct from Consent** (Consent = data-subject-issued; Warrant = authority-issued).
 
@@ -209,7 +209,7 @@ The primitives-audit memo §#14 is not published in this repository.
 | **Federated multi-org** | Same primitives + signed Warrants exchanged between issuers + Attestation bundles cross-tenant + Lineage graphs span data sources |
 | **Insurance MGA federation** | Underwriter issues Warrant; runtime evaluates pre/inv/post; premium tied to runtime-measured risk |
 | **Notified Body conformity** | NB issues Warrant after audit; HumanOversight records inform NB's surveillance audits; Attestation bundle is the audit artifact |
-| **Big-4 attestation marketplace** | Big-4 firm issues Warrant; quarterly attestation renewal; Cloud distributes signed Warrants |
+| **Big-4 warrant marketplace** (hypothetical) | Big-4 firm issues Warrant; quarterly Warrant renewal; Cloud distributes signed Warrants |
 | Regulator-side ingestion | Regulator receives signed Attestation bundles; same Event format; can issue regulatory-sandbox Warrants |
 
 The fractal quality is why no single primitive is patentable but the *pattern* is the moat. One architecture, 26 expansion vectors, multiple marketplace business models anchored by Warrant.

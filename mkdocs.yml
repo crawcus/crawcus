@@ -50,6 +50,7 @@ nav:
   - Canon:
     - Architecture primitives: canon/architecture-primitives.md
   - CRAWCUS and SCITT: scitt.md
+  - Glossary: glossary.md
   - Decisions:
     - Index: adr/README.md
     - ADR-0055 SCITT fit: adr/ADR-0055-scitt-fit.md
