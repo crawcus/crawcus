@@ -2,9 +2,9 @@
 
 **Compliance, as a primitive.**
 
-`@crawcus/core` is the reference runtime for **CRAWCUS** — the open standard
-for in-app compliance evidence. Instrument your existing mutations and get
-auditor-defensible artefacts — Contracts · Receipts · Attestations · Warrants —
+`@crawcus/core` is the reference runtime for **CRAWCUS** — an open spec we
+publish (CC-BY-4.0) for in-app compliance evidence. Instrument your existing
+mutations and get signed, third-party-verifiable artefacts — Contracts · Receipts · Attestations · Warrants —
 from your code, without bolting on a SaaS or rewriting your stack.
 
 Any Node 22+ backend. TypeScript-first. Self-host-complete — no cloud dependency.

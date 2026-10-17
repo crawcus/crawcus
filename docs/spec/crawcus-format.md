@@ -5,8 +5,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # CRAWCUS format — the canonical contract
 
-> **CRAWCUS is the open standard format for AI Application Compliance
-> Infrastructure (AACI). A `CrawcusSpec` is one instance: a typed
+> **CRAWCUS is an open spec we publish (CC-BY-4.0) for AI Application
+> Compliance Infrastructure (AACI). A `CrawcusSpec` is one instance: a typed
 > declaration of what a Witness Intent collects, how it's collected,
 > and what completion means.**
 >
@@ -25,11 +25,42 @@ SPDX-License-Identifier: CC-BY-4.0
   commitment.
 - **Reference implementation:** `packages/core/src/intent/` in this repo
   (planned commit 4b per `07-engineering/core-v0.0.1-type-surface.md`).
-- **Standards intent:** open spec, MIT licensed, royalty-free; adopters
+- **Standards intent:** an open spec we publish (CC-BY-4.0), royalty-free; adopters
   may build alternative implementations. Wire format normatively defined
   in §"Wire-format stability" below; reference RFC 8785 (JSON
   Canonicalization Scheme) for byte-identical re-serialisation across
   TS / Go / Rust / Python implementations.
+
+## Terminology
+
+This section defines the three CRAWCUS terms that are most often
+confused with similarly named terms elsewhere. Definitions here are
+normative for every CRAWCUS document, including the
+[SCITT payload profile](crawcus-scitt-profile.md). Where a CRAWCUS
+document uses the key words MUST, SHOULD and MAY, they are used as in
+BCP 14 (RFC 2119, RFC 8174), as that document states.
+
+Receipt
+:   A CRAWCUS receipt is the signed record of one business transaction or AI decision, made by the system that performed it. It is not a SCITT receipt. A SCITT receipt (RFC 9943) is the transparency service's later proof that a signed statement was registered in its log. When a CRAWCUS receipt is registered with SCITT, the CRAWCUS receipt is the signed statement and SCITT's receipt is its proof of registration.
+
+Attestation
+:   In CRAWCUS, an attestation is a signed bundle that collects receipts, their log proofs and the applicable regulation package, so a third party can verify them offline. It is a machine-checkable statement by the signing system, not an auditor's opinion or assurance report.
+
+Warrant
+:   A warrant is a signed, expiring authorisation that says what an agent or system may do, for whom, and until when. A receipt can cite a warrant to show that the action was in scope.
+
+!!! note "Editorial rule: SCITT receipt terminology"
+    In CRAWCUS documents, a bare "receipt" always means a CRAWCUS
+    receipt. When a CRAWCUS document means SCITT's object, it writes
+    "SCITT receipt" or "registration receipt", never bare "receipt".
+    The title of RFC 9942, "COSE Receipts", may be cited as a title.
+
+!!! info "Plain-language note for non-spec readers"
+    In non-technical copy (landing pages, sales material, summaries for
+    compliance or legal readers), call an attestation an
+    **"audit bundle"** and a warrant a
+    **"signed, expiring authorisation"**. Neither term implies that an
+    auditor has reviewed or signed anything.
 
 ## What a CrawcusSpec is
 
