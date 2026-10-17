@@ -1,6 +1,6 @@
 {
   "name": "@crawcus/tck",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Conformance Test Kit for CrawcusSpec — Gherkin fixtures and coverage ratchet. Any runtime (TS, Go, Rust, Python) must pass the TCK to claim spec compliance.",
   "keywords": [
@@ -35,6 +35,7 @@
   "files": [
     "dist",
     "fixtures",
+    "vectors",
     "README.md"
   ],
   "scripts": {
@@ -44,7 +45,12 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@crawcus/spec": "workspace:*"
+    "@crawcus/spec": "workspace:*",
+    "@noble/curves": "^1.7.0",
+    "@noble/hashes": "^1.6.1"
+  },
+  "devDependencies": {
+    "@crawcus/verifier": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

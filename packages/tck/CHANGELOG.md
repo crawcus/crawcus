@@ -1,5 +1,14 @@
 # @crawcus/tck
 
+## 0.4.0
+
+### Minor Changes
+
+- Signer-trust conformance vectors (`SIGNER_TRUST_VECTORS`) and JSON
+  copies under `vectors/signer-trust/`. Keys are generated from fixed
+  TEST-ONLY seeds. They are not production keys and they are not the
+  RFC 8032 test vector.
+
 ## 0.3.0
 
 ### Minor Changes

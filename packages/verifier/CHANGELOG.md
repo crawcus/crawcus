@@ -1,5 +1,57 @@
 # @crawcus/verifier
 
+## 0.4.0
+
+### Breaking
+
+- Validity windows are half-open, `[notBefore, notAfter)`: a signing
+  time equal to `notAfter` is now `signer.untrusted.expired`, and a
+  policy with `notBefore == notAfter` is malformed.
+
+- The integrity-only `verifyDsseEnvelope` export is removed. It verified
+  a signature against the public key embedded in the envelope and
+  returned `pass` with no trust check. Callers must use `verifyBundle`
+  with a `trustPolicy`. The integrity primitive is renamed
+  `verifyDsseSignatureUntrusted` and is not re-exported from the
+  package entrypoint.
+- `VerifyOptions.allowUntrustedSigner` is renamed
+  `allowUntrustedSignerForTestsOnly`. Same behaviour; louder name.
+  Production callers must not set it.
+- `verifyBundle` no longer returns `pass` for a signature that merely
+  matches the public key embedded in the DSSE envelope. Callers must
+  pass `options.trustPolicy` pinning the ed25519 keys they trust.
+  With no policy the verdict is `untrusted-signer`
+  (`signer.untrusted.no-policy`). A malformed policy is `fail`
+  (`policy.malformed`). See `MIGRATION.md`. The Foundry engine, and
+  any other consumer, has to supply a policy before honestly signed
+  receipts verify again.
+- `VerifyResult.trust` is now always present.
+- `VerifyVerdict` includes `untrusted-signer`.
+- `VERIFIER_VERSION` is `0.4.0`, matching `package.json`. It had been
+  stuck at `0.2.0`.
+
+### Added
+
+- Pinned ed25519 trust anchors with optional validity windows,
+  payload-type allowlists, and a revocation list
+  (`key-compromise`, `superseded`, `retired`).
+- `parseTrustPolicy`, `evaluateSignerTrust`, and the trust types.
+- The policy fingerprint is sha256 of the canonical policy.
+- The schema reserves a later TUF-style rotation document and
+  sigstore identity anchors. Those anchors are parsed and are not a
+  `pass` in this version. See `docs/spec/crawcus-trust-policy.md`.
+- PDF reports include a signer-trust section. Countersigned results
+  include the `trust` object.
+- `trust.signer.signingTimeSelfAsserted` is `true` when the signing
+  time is the bundle's own event timestamp. Validity windows and
+  `superseded` / `retired` revocation are not a security boundary
+  against a back-dating signer; only `key-compromise` is.
+
+### Fixed
+
+- The `dsse.signature` check cites the signature index that verified
+  instead of always `signatures[0]`.
+
 ## 0.3.1
 
 ### Patch Changes

@@ -13,11 +13,13 @@
  *   - Open-Q1 memo: `02-product/q-verifier-cli-oss-lock-open-q1-signed-bundle-wrapper-memo.md`
  *
  * The verifier is a pure function — no network, no key-fetching, no
- * filesystem. The `ed25519.verify` call below operates on bytes
- * supplied by the caller (envelope.signatures[i].sig + the embedded
- * keyid). For Wave-1 the keyid is treated as the public-key bytes
- * (hex- or base64-encoded); Wave-2 introduces the verifier-output
- * signing keypair + key-transparency log per the parent memo.
+ * filesystem.
+ *
+ * `verifyDsseSignatureUntrusted` checks integrity only, against the
+ * public key carried in the envelope. It never decides trust and is
+ * NOT re-exported from the package entrypoint. The trust-checked
+ * public API is `verifyBundle`, which fails closed (`untrusted-signer`)
+ * without a caller-supplied trust policy.
  */
 
 import { ed25519 } from '@noble/curves/ed25519';
@@ -240,9 +242,8 @@ export function decodeBase64Signature(base64: string): Uint8Array {
  * Returns `null` if the keyid cannot be decoded to 32 raw bytes; the
  * verifier surfaces this as `Envelope.signature.invalid`.
  *
- * Wave-2 introduces a key-transparency-log lookup; Wave-1 trusts the
- * embedded keyid directly because the verifier-output countersign
- * flow is a Wave-1b deliverable.
+ * Decoding succeeds only when the hint is a 32-byte key. It does not
+ * mean the key is trusted.
  */
 export function decodeEd25519PublicKey(keyid: string): Uint8Array | null {
   // Hex form first (most common in supply-chain attestations).
@@ -263,18 +264,35 @@ export function decodeEd25519PublicKey(keyid: string): Uint8Array | null {
   return null;
 }
 
+/** One signature whose bytes verified against the public key named by its keyid hint. */
+export interface VerifiedDsseSignature {
+  readonly index: number;
+  readonly publicKey: Uint8Array;
+  readonly keyid: string;
+}
+
+export interface DsseSignatureScan {
+  readonly verdict: 'pass' | 'fail';
+  readonly violationKind?: ContractViolationKind;
+  readonly detail: string;
+  readonly verified: readonly VerifiedDsseSignature[];
+}
+
 /**
- * Verify the DSSE envelope's first signature against the embedded
- * keyid. Spec §5 row 2 (`Envelope.signature.invalid`).
+ * INTEGRITY ONLY. Verifies the first signature against the public key
+ * carried in its own `keyid`. It does not decide signer trust and it
+ * cannot return `untrusted-signer`: a `pass` here only means "this
+ * envelope was signed by the key it embeds".
  *
- * The verifier accepts the envelope iff:
+ * Do not use this to accept a bundle. The trust-checked API is
+ * `verifyBundle`. This primitive is internal; it is not re-exported
+ * from the package entrypoint.
+ *
+ * The check passes iff:
  *   1. The first signature's keyid decodes to a 32-byte ed25519 public key, AND
  *   2. ed25519.verify(sig, PAE(payloadType, decoded(payload)), pubkey) returns true.
- *
- * Wave-1 only checks the first signature — multi-signer aggregation
- * is a Wave-2 surface per the parent memo §"Wave-1 vs Wave-2".
  */
-export function verifyDsseSignature(
+export function verifyDsseSignatureUntrusted(
   envelope: DsseEnvelope,
   payloadBytes: Uint8Array,
 ): DsseVerifyResult {
@@ -286,19 +304,65 @@ export function verifyDsseSignature(
       detail: 'envelope.signatures is empty',
     };
   }
+  return verifyOneSignature(firstSig, envelope.payloadType, payloadBytes);
+}
 
-  const pubkey = decodeEd25519PublicKey(firstSig.keyid);
+/**
+ * Integrity-check every signature, in array order.
+ *
+ * A signature is "verified" when it validates against the public key
+ * decoded from its own keyid. Trust selection happens afterwards and
+ * may skip a verified-but-untrusted signature in favour of a later
+ * trusted one. When none verify, the detail is the first failure.
+ */
+export function verifyAllDsseSignatures(
+  envelope: DsseEnvelope,
+  payloadBytes: Uint8Array,
+): DsseSignatureScan {
+  const verified: VerifiedDsseSignature[] = [];
+  let firstFailure: DsseVerifyResult | null = null;
+  for (let i = 0; i < envelope.signatures.length; i++) {
+    const sig = envelope.signatures[i];
+    if (sig === undefined) continue;
+    const result = verifyOneSignature(sig, envelope.payloadType, payloadBytes);
+    if (result.verdict === 'pass' && result.publicKey !== undefined) {
+      verified.push({ index: i, publicKey: result.publicKey, keyid: sig.keyid });
+    } else if (firstFailure === null) {
+      firstFailure = result;
+    }
+  }
+  if (verified.length === 0) {
+    return {
+      verdict: 'fail',
+      violationKind: 'Envelope.signature.invalid',
+      detail: firstFailure?.detail ?? 'envelope.signatures is empty',
+      verified,
+    };
+  }
+  return {
+    verdict: 'pass',
+    detail: 'ed25519 signature verified (integrity only; signer trust is evaluated separately)',
+    verified,
+  };
+}
+
+function verifyOneSignature(
+  signature: DsseSignature,
+  payloadType: string,
+  payloadBytes: Uint8Array,
+): DsseVerifyResult {
+  const pubkey = decodeEd25519PublicKey(signature.keyid);
   if (pubkey === null) {
     return {
       verdict: 'fail',
       violationKind: 'Envelope.signature.invalid',
-      detail: `signature keyid is not a valid 32-byte ed25519 public key (hex or base64): ${firstSig.keyid.slice(0, 16)}…`,
+      detail: `signature keyid is not a valid 32-byte ed25519 public key (hex or base64): ${keyidHint(signature.keyid)}…`,
     };
   }
 
   let sigBytes: Uint8Array;
   try {
-    sigBytes = decodeBase64Signature(firstSig.sig);
+    sigBytes = decodeBase64Signature(signature.sig);
   } catch (e) {
     return {
       verdict: 'fail',
@@ -315,7 +379,7 @@ export function verifyDsseSignature(
     };
   }
 
-  const pae = preAuthenticationEncoding(envelope.payloadType, payloadBytes);
+  const pae = preAuthenticationEncoding(payloadType, payloadBytes);
 
   let ok: boolean;
   try {
@@ -336,7 +400,15 @@ export function verifyDsseSignature(
     };
   }
 
-  return { verdict: 'pass', detail: 'ed25519 signature verified against embedded keyid' };
+  return {
+    verdict: 'pass',
+    detail: 'ed25519 signature verified (integrity only; signer trust is evaluated separately)',
+    publicKey: pubkey,
+  };
+}
+
+function keyidHint(keyid: string): string {
+  return keyid.slice(0, 16).replace(/[^\x20-\x7e]/g, '?');
 }
 
 // ============ Internal helpers ============

@@ -52,6 +52,11 @@ export interface BuildBundleInput {
   readonly tamperEnvelope?: (envelope: Record<string, unknown>) => Record<string, unknown>;
   /** Override the keyid embedded in the envelope (default: hex of pubkey). */
   readonly overrideKeyId?: string;
+  /**
+   * RFC 3339 timestamp stored on every event. Sets the bundle's
+   * latestEventTs, which pinned-key policies use as signing time.
+   */
+  readonly eventTimestamp?: string;
 }
 
 export interface BuiltBundle {
@@ -84,7 +89,10 @@ export function buildSignedBundle(input: BuildBundleInput = {}): BuiltBundle {
       intentId: 'i_test',
       kind: eventKinds[i] ?? 'CapturedTurn',
       version: i,
-      timestamp: new Date(Date.UTC(2026, 0, 1, 0, 0, i)),
+      timestamp:
+        input.eventTimestamp !== undefined
+          ? input.eventTimestamp
+          : new Date(Date.UTC(2026, 0, 1, 0, 0, i)),
       actor: { type: 'system', id: 'sys' },
       lawfulBasis: 'contract',
       purpose: 'service-delivery',
@@ -212,6 +220,47 @@ export function buildSignedBundle(input: BuildBundleInput = {}): BuiltBundle {
     payloadType,
     keyid,
   };
+}
+
+/**
+ * Sign with a caller-supplied 32-byte seed. The seed is a TEST key.
+ * Do not reuse it in a production trust policy.
+ */
+export function buildSignedBundleWithKey(
+  seed: Uint8Array,
+  input: Omit<BuildBundleInput, 'privateKey'> = {},
+): BuiltBundle {
+  if (seed.length !== 32) {
+    throw new Error(`test seed must be 32 bytes (got ${String(seed.length)})`);
+  }
+  return buildSignedBundle({ ...input, privateKey: seed });
+}
+
+/**
+ * Re-sign an existing envelope's payload with `privateKey`.
+ * The payload bytes stay the same. `keyid` defaults to the new public key.
+ */
+export function resignWithKey(
+  bundleBytes: Uint8Array,
+  privateKey: Uint8Array,
+  keyid?: string,
+): Uint8Array {
+  const envelope = JSON.parse(new TextDecoder().decode(bundleBytes)) as {
+    payloadType: string;
+    payload: string;
+    signatures: { keyid: string; sig: string }[];
+  };
+  const payloadBytes = new Uint8Array(Buffer.from(envelope.payload, 'base64'));
+  const publicKey = ed25519.getPublicKey(privateKey);
+  const pae = preAuthenticationEncoding(envelope.payloadType, payloadBytes);
+  const sigBytes = ed25519.sign(pae, privateKey);
+  envelope.signatures = [
+    {
+      keyid: keyid ?? bytesToHex(publicKey),
+      sig: Buffer.from(sigBytes).toString('base64'),
+    },
+  ];
+  return new TextEncoder().encode(JSON.stringify(envelope));
 }
 
 /** Produce a known SHA-256 hex of a predicate source for fixture wiring. */

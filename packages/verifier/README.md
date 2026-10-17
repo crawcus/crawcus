@@ -23,33 +23,38 @@ import { verifyBundle } from '@crawcus/verifier';
 import { readFile } from 'node:fs/promises';
 
 const bundle = await readFile('./bundle.dsse.json');
-const result = verifyBundle({ bundle });
+const trustPolicy = JSON.parse(await readFile('./trust-policy.json', 'utf8'));
+const result = verifyBundle({ bundle, options: { trustPolicy } });
 
 if (result.verdict === 'pass') {
   console.log(`OK — ${result.bundleMetadata.eventCount} events`);
+  console.log(result.trust.signer?.keyFingerprint);
 } else {
-  for (const check of result.checks) {
-    if (check.verdict === 'fail') console.error(`FAIL ${check.id}: ${check.detail}`);
-  }
+  console.error(result.verdict, result.trust.reason);
 }
 ```
 
+`pass` requires a trust policy. See [MIGRATION.md](./MIGRATION.md).
+`allowUntrustedSignerForTestsOnly: true` is a TEST-ONLY hatch. Never set it in production; read `trust.decision`, not just `verdict`.
+
 ## What it checks (Wave-1)
 
-The 8 Wave-1 checks per the
-[Wave-1a ticket spec](../../docs/notebook/02-product/q-verifier-cli-oss-lock-tkt-verifier-1a-spec.md) §5:
+Wave-1 checks per the
+[Wave-1a ticket spec](../../docs/notebook/02-product/q-verifier-cli-oss-lock-tkt-verifier-1a-spec.md) §5,
+plus signer trust (v0.4.0):
 
 1. **DSSE envelope shape** — `payloadType` in the
    `application/vnd.crawcus.*+jsonl` family
-2. **DSSE signature** — ed25519 over PAE(payloadType, payload)
-3. **JCS canonicalisation hash equivalence** — RFC 8785 byte-equality
-4. **Hash chain integrity** — each event's `prevHash` matches
-5. **Embedded predicate source text required** —
+2. **DSSE signature** — ed25519 over PAE(payloadType, payload), integrity only
+3. **Signer trust** — the verified public key must be in the caller-supplied trust policy
+4. **JCS canonicalisation hash equivalence** — RFC 8785 byte-equality
+5. **Hash chain integrity** — each event's `prevHash` matches
+6. **Embedded predicate source text required** —
    `bundle.predicateSources[contractId]` present
-6. **Contract pre/inv/post re-evaluation** — historical-result audit
-7. **Historical-unverifiable discrete state** — retired predicate
+7. **Contract pre/inv/post re-evaluation** — historical-result audit
+8. **Historical-unverifiable discrete state** — retired predicate
    surfaced without failing
-8. **DisclosureSignal SIGNAL-not-gate lint** — Q-CR9 LOCKED
+9. **DisclosureSignal SIGNAL-not-gate lint** — Q-CR9 LOCKED
    predicate-name discipline
 
 ## Wave-1b auditor surface (`v0.2.0`)

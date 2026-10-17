@@ -1,0 +1,32 @@
+{
+  "name": "attacker-resigned",
+  "description": "Same payload re-signed by a different TEST key.",
+  "keyLabel": "TEST ONLY",
+  "envelope": {
+    "payloadType": "application/vnd.crawcus.bundle+jsonl",
+    "payload": "eyJidW5kbGVWZXJzaW9uIjoiMC4xLjAiLCJjaGFpblByb29mIjp7ImJ1bmRsZVNlbGZIYXNoIjoiODg1MDQxMGJhN2IyNmJkYWFlNjU5MWZlNTYxNjM1NDBlNDRkYzMyZGU1YjM1N2Q5MzRhZmNhNmVlZGY4ZTRlMyIsImZyb21FdmVudElkIjoiZXZ0XzAwMDAiLCJoYXNoZXMiOlt7ImNvbnRlbnRIYXNoIjoiYzU2ZjQ1Y2Y0N2NiZTdkY2MyMzljMzU4ZTRiN2Q1MDkzYmU4OWRmYmQyNTViZTlkYmQ5ZGQ3NmNhYTdkYjZkNyIsImlkIjoiZXZ0XzAwMDAiLCJwcmV2SGFzaCI6bnVsbH1dLCJpbnRlbnRJZCI6ImlfdGVzdCIsInJvb3RIYXNoIjoiYzU2ZjQ1Y2Y0N2NiZTdkY2MyMzljMzU4ZTRiN2Q1MDkzYmU4OWRmYmQyNTViZTlkYmQ5ZGQ3NmNhYTdkYjZkNyIsInRvRXZlbnRJZCI6ImV2dF8wMDAwIn0sImV2ZW50cyI6W3siYWN0b3IiOnsiaWQiOiJzeXMiLCJ0eXBlIjoic3lzdGVtIn0sImNvbnRlbnRIYXNoIjoiYzU2ZjQ1Y2Y0N2NiZTdkY2MyMzljMzU4ZTRiN2Q1MDkzYmU4OWRmYmQyNTViZTlkYmQ5ZGQ3NmNhYTdkYjZkNyIsImRhdGFTdWJqZWN0SWRzIjpbInNfdGVzdCJdLCJpZCI6ImV2dF8wMDAwIiwiaW50ZW50SWQiOiJpX3Rlc3QiLCJraW5kIjoiUHJvamVjdGlvbkNvbW1pdCIsImxhd2Z1bEJhc2lzIjoiY29udHJhY3QiLCJwYXlsb2FkIjp7Im5vdGUiOiJzaWduZXItdHJ1c3QgY29uZm9ybWFuY2UgdmVjdG9yIOKAlCBURVNUIE9OTFkifSwicHJldkhhc2giOm51bGwsInB1cnBvc2UiOiJzZXJ2aWNlLWRlbGl2ZXJ5IiwidGVuYW50SWQiOiJ0X3Rlc3QiLCJ0aW1lc3RhbXAiOiIyMDI2LTA4LTExVDAwOjAwOjAwLjAwMFoiLCJ2ZXJzaW9uIjowfV0sImdlbmVyYXRlZEF0IjoiMjAyNi0wOC0xMVQwMDowMDowMC4wMDBaIiwiaW50ZW50Ijp7ImlkIjoiaV90ZXN0Iiwia2V5IjoiVGVzdEludGVudCJ9LCJzcGVjIjp7ImNsYXNzaWZpY2F0aW9uIjoidW5zcGVjaWZpZWQiLCJrZXkiOiJUZXN0SW50ZW50IiwidmVyc2lvbiI6MX0sInRlbmFudCI6eyJpZCI6InRfdGVzdCIsInJlZ2lvbiI6InVzLXdlc3QtMiJ9fQ==",
+    "signatures": [
+      {
+        "keyid": "4eabd5634af93147f16d113fcd1c8c62c14eebe0855689a00658df67b9dafccf",
+        "sig": "5h4A7AqPJBD/nnNXSbaCbxjS2Y9RSJPOCVDJgZ2aawQqzlkPhlBeCXo4A4EVaVedt5GQMAAusXsbSRqtEAVUBQ=="
+      }
+    ]
+  },
+  "policy": {
+    "crawcusTrustPolicy": 1,
+    "policyId": "test-only",
+    "description": "TEST ONLY — generated conformance keys, not a production policy",
+    "anchors": [
+      {
+        "type": "ed25519-pinned",
+        "id": "test-signer",
+        "publicKey": "c800f2063ef6f1b5a92362aee2c9f3a6332872bd427b0b03c2051cd8b542b24b",
+        "label": "TEST ONLY"
+      }
+    ]
+  },
+  "expected": {
+    "verdict": "untrusted-signer",
+    "reason": "signer.untrusted.unknown-key"
+  }
+}
