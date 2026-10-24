@@ -2030,7 +2030,7 @@ drive the graph evaluator, AI extractor, readiness gate, and reducer.</p>
 <td><code>classification</code></td>
 <td><code>'standard' \| 'high-risk' \| 'prohibited'</code></td>
 <td>No (default <code>'standard'</code>)</td>
-<td>Drives which regulation modules apply (<code>@tallyseal/regulations</code>). <code>'high-risk'</code> triggers AI Act Art. 14 readiness-gate enforcement.</td>
+<td>Drives which regulation modules apply (<code>@crawcus/regulations-*</code>; not yet published). <code>'high-risk'</code> triggers AI Act Art. 14 readiness-gate enforcement.</td>
 </tr>
 <tr>
 <td><code>fields</code></td>
@@ -2286,7 +2286,7 @@ which <code>(intentKey, version)</code> produced each event; replay uses the
 historical version.</p>
 <h2 id="inheritance-sector-packs">Inheritance + sector packs<a class="headerlink" href="#inheritance-sector-packs" title="Permalink to this section">&para;</a></h2>
 <p><code>extends</code> lets a sector pack overlay a base spec:</p>
-<div class="language-ts highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// @tallyseal/spec-ferpa-edu/intents/create-course.ts</span>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// FERPA education sector pack (planned, not yet published): intents/create-course.ts</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">defineCrawcusSpec</span><span class="p">({</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="s1">'CreateCourse'</span><span class="p">,</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="k">extends</span><span class="o">:</span><span class="w"> </span><span class="s1">'internal-package/intents/create-course'</span><span class="p">,</span>
@@ -2501,7 +2501,7 @@ Forcing the spec to forbid these would force forking the parent
 pack, which destroys the audit story.</p>
 <p>Sector packs may declare derogations as a separate, explicit field:</p>
 <div class="language-ts highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nx">defineCrawcusSpec</span><span class="p">({</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="k">extends</span><span class="o">:</span><span class="w"> </span><span class="s1">'@tallyseal/spec-hipaa-clinical/patient-intake'</span><span class="p">,</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="k">extends</span><span class="o">:</span><span class="w"> </span><span class="s1">'&lt;hipaa-clinical-sector-pack&gt;/patient-intake'</span><span class="p">,</span><span class="w"> </span><span class="c1">// sector pack: planned, not yet published</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nx">derogations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="p">{</span>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">      </span><span class="nx">contractId</span><span class="o">:</span><span class="w"> </span><span class="s1">'hipaa.164-508.authorisationRequired'</span><span class="p">,</span>
@@ -2607,7 +2607,7 @@ owned by the audit-bundle layer (deferred package).</p>
 <p><strong>Most Contracts come from regulation modules.</strong> A regulation module
 exports typed Contract factories that take the spec-specific binding
 (which field is the age, which is the consent event ID, etc.):</p>
-<div class="language-ts highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">// @tallyseal/regulations/gdpr/art8.ts (exported)</span>
+<div class="language-ts highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">// @crawcus/regulations-gdpr: src/art8.ts (exported; package not yet published to npm)</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">minorConsent</span><span class="p">(</span><span class="nx">opts</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nx">ageField</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nx">consentField</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
@@ -2718,7 +2718,7 @@ property that makes all of this work.</p>
 </tr>
 <tr>
 <td>References (<code>extends</code>, <code>references</code>)</td>
-<td>Spec-package paths (<code>'@tallyseal/spec-ferpa-edu/intents/create-course'</code>) or canonical-URI form (<code>'urn:codicil:spec:gdpr-art8-base'</code>)</td>
+<td>Spec-package paths (e.g. <code>'&lt;ferpa-edu-sector-pack&gt;/intents/create-course'</code>; sector packs are planned, not yet published) or canonical-URI form (<code>'urn:codicil:spec:gdpr-art8-base'</code>)</td>
 </tr>
 </tbody>
 </table>
@@ -2963,7 +2963,7 @@ it does not define fields, algorithms, or verifier behaviour.</p>
 <li><code>00-canon/architecture-primitives.md</code> — primitives 1 and 2 (Intent, CrawcusSpec)</li>
 <li><code>02-product/compliance-manifest-schema.md</code> — the companion contract</li>
 <li><code>02-product/integration-tiers.md</code> — Tier 2 / customReducer pattern</li>
-<li><code>02-product/three-adoption-modes.md</code> — how <code>npx @tallyseal/generator migrate-form</code> generates a spec</li>
+<li><code>02-product/three-adoption-modes.md</code> — how a form-migration generator (planned, not yet published) generates a spec</li>
 <li>the project's engineering ratchets — disciplines #3, #4, #13</li>
 <li><code>09-operating/decision-log.md</code> — LOCKED rows for i18n, W3C/IEEE submission</li>
 <li><code>HANDOFF-NEXT-SESSION.md</code> — commit-4 build plan for <code>packages/core/src/intent/</code> (replacing the prior in-HF <code>lib/witness/intents/</code> path)</li>

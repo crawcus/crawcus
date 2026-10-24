@@ -1221,7 +1221,7 @@ SPDX-License-Identifier: CC-BY-4.0
 <li><em>"Here are our SIEM logs."</em> Unsigned and mutable by anyone with SIEM admin.</li>
 <li><em>"We put hashes on a blockchain."</em> GDPR-incompatible at enterprise write throughput.</li>
 </ul>
-<p>CRAWCUS makes a fourth answer possible: <strong>replay the receipt chain against any conformant verifier and check its integrity cryptographically.</strong> Hash-chain integrity is verifiable today; verifying <em>who signed</em> a chain (signer trust) is still in progress — see <a href="https://github.com/crawcus/crawcus/issues/1">crawcus#1</a>.</p>
+<p>CRAWCUS makes a fourth answer possible: <strong>replay the receipt chain against any conformant verifier and check its integrity cryptographically.</strong> We're building hash-chain integrity verification; verifying <em>who signed</em> a chain (signer trust) is also still in progress — see <a href="https://github.com/crawcus/crawcus/issues/1">crawcus#1</a>.</p>
 <h2 id="what-crawcus-is">What CRAWCUS is<a class="headerlink" href="#what-crawcus-is" title="Permalink to this section">&para;</a></h2>
 <p>Every CRAWCUS receipt is a small structured JSON document, canonicalised per <a href="https://www.rfc-editor.org/rfc/rfc8785">RFC 8785 (JCS)</a>, hashed with SHA-256, and appended to a hash-chained log where each entry references the hash of the previous one. Tampering with any historical record breaks the chain in a way any auditor can verify with an open-source tool in seconds.</p>
 <p>CRAWCUS composes existing open standards. The primitives underneath — canonical JSON, SHA-256, timestamp formats, signature envelopes — are unchanged. The value CRAWCUS adds is the <em>shape</em>: a specific set of fields, their meanings, and two-scope coverage of both application transactions and AI-inference decisions under one canonical form.</p>
@@ -1241,13 +1241,13 @@ SPDX-License-Identifier: CC-BY-4.0
 <td><strong>CRAWCUS-Core-1.0</strong></td>
 <td>Contract · Receipt · Attestation · Warrant (4)</td>
 <td>Hash-chained audit interop, CloudEvents / JWT / SD-JWT payload embedding, federated-learning per-node receipts, most application-level audit trails</td>
-<td><code>crawcus-flower</code> (Python client for the Flower federated-learning framework)</td>
+<td><code>crawcus-flower</code> (Python client for the Flower federated-learning framework; planned, not yet published)</td>
 </tr>
 <tr>
 <td><strong>CRAWCUS-Extended-1.0</strong></td>
 <td>Core + Disclosure · Consent · Lineage · HumanOversight · Tool-use (9)</td>
 <td>AACI-shape regulator compliance: GDPR Art. 22 automated-decision-making, EU AI Act Art. 14 / Art. 50 human-oversight + deepfake-disclosure, FERPA §99.31 disclosure-consent</td>
-<td><code>@crawcus/regulations-gdpr</code>, <code>@crawcus/regulations-ferpa</code>, <code>@crawcus/regulations-eu-ai-act</code></td>
+<td><code>@crawcus/regulations-gdpr</code>, <code>@crawcus/regulations-ferpa</code>, <code>@crawcus/regulations-eu-ai-act</code> (planned, not yet published)</td>
 </tr>
 </tbody>
 </table>
@@ -1280,7 +1280,7 @@ SPDX-License-Identifier: CC-BY-4.0
 </tbody>
 </table>
 <h2 id="reference-implementations">Reference implementations<a class="headerlink" href="#reference-implementations" title="Permalink to this section">&para;</a></h2>
-<p>The specification ships alongside reference implementations that adopters can point at, extend, or replace with their own conformant runtimes. Reference implementations are one demonstration of correctness — never "the" reference. Anything passing the <a href="https://github.com/crawcus/crawcus/tree/main/packages/tck"><code>@crawcus/tck</code></a> fixture set at the appropriate conformance tier is by definition CRAWCUS-conformant.</p>
+<p>We're building reference implementations alongside the specification, for adopters to point at, extend, or replace with their own conformant runtimes. None of the packages below is published to npm or PyPI yet; the source is in the <a href="https://github.com/crawcus/crawcus">crawcus/crawcus</a> repo. Reference implementations are one demonstration of correctness — never "the" reference. Anything passing the <a href="https://github.com/crawcus/crawcus/tree/main/packages/tck"><code>@crawcus/tck</code></a> fixture set at the appropriate conformance tier is by definition CRAWCUS-conformant.</p>
 <h3 id="typescript-packages-npm">TypeScript packages (npm)<a class="headerlink" href="#typescript-packages-npm" title="Permalink to this section">&para;</a></h3>
 <table>
 <thead>
@@ -1288,6 +1288,7 @@ SPDX-License-Identifier: CC-BY-4.0
 <th>Package</th>
 <th>Purpose</th>
 <th>Depends on</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
@@ -1295,36 +1296,43 @@ SPDX-License-Identifier: CC-BY-4.0
 <td><code>@crawcus/spec</code></td>
 <td>Types + evaluators + canonical JSON serialization. Framework-agnostic.</td>
 <td><code>@noble/curves</code>, <code>@noble/hashes</code>, <code>canonicalize</code></td>
+<td>Planned, not yet published</td>
 </tr>
 <tr>
 <td><code>@crawcus/core</code></td>
 <td>Reference runtime. Ports for warrant / consent / disclosure / lineage / oversight stores; PII tokenisation; reducers; audit-bundle composer.</td>
 <td><code>@crawcus/spec</code></td>
+<td>Planned, not yet published</td>
 </tr>
 <tr>
 <td><code>@crawcus/tck</code></td>
 <td>Test Compatibility Kit. Portable Gherkin-shaped fixtures for spec conformance.</td>
 <td><code>@crawcus/spec</code></td>
+<td>Planned, not yet published</td>
 </tr>
 <tr>
 <td><code>@crawcus/verifier</code></td>
 <td>UI-agnostic chain verifier. Small-chain sync core; suitable for offline CLI + browser lighthouse.</td>
 <td><code>@crawcus/spec</code></td>
+<td>Planned, not yet published</td>
 </tr>
 <tr>
 <td><code>@crawcus/regulations-gdpr</code></td>
 <td>Art. 6 / 8 / 9 / 22 typed Contract factories + Art. 13 / 22 disclosure templates. Quarterly-versioned (<code>gdpr@YYYY-QN</code>).</td>
 <td><code>@crawcus/core</code>, <code>@crawcus/tck</code></td>
+<td>Planned, not yet published</td>
 </tr>
 <tr>
 <td><code>@crawcus/regulations-ferpa</code></td>
 <td>§99.31 factories + §99.7 annual-notice template.</td>
 <td><code>@crawcus/core</code>, <code>@crawcus/tck</code></td>
+<td>Planned, not yet published</td>
 </tr>
 <tr>
 <td><code>@crawcus/regulations-eu-ai-act</code></td>
 <td>Art. 14 (human oversight) + Art. 50 (deepfake / synthetic-media disclosure) factories and templates.</td>
 <td><code>@crawcus/core</code>, <code>@crawcus/tck</code></td>
+<td>Planned, not yet published</td>
 </tr>
 </tbody>
 </table>
@@ -1334,12 +1342,14 @@ SPDX-License-Identifier: CC-BY-4.0
 <tr>
 <th>Package</th>
 <th>Purpose</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>crawcus-flower</code></td>
 <td>Reference client for the <a href="https://flower.ai">Flower federated-learning framework</a>. Per-node receipts, offline-verifiable via the TS verifier.</td>
+<td>Planned, not yet published</td>
 </tr>
 </tbody>
 </table>
@@ -1436,7 +1446,7 @@ SPDX-License-Identifier: CC-BY-4.0
 <p><strong>What is true today:</strong></p>
 <ul>
 <li>The spec is published and free to implement (CC-BY-4.0).</li>
-<li>Reference implementations are shipped as open source (Apache-2.0).</li>
+<li>We're building the reference implementations in the open (Apache-2.0).</li>
 <li>Every runtime — including the reference implementations — is measured against the same TCK fixture set.</li>
 <li>Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — <a href="https://github.com/crawcus/crawcus/issues/1">crawcus#1</a>).</li>
 </ul>
@@ -1454,7 +1464,6 @@ SPDX-License-Identifier: CC-BY-4.0
 <ul>
 <li><strong>Read the spec</strong> — start with <a href="spec/crawcus-format/">Format</a>, then <a href="spec/crawcus-contracts/">Contracts</a></li>
 <li><strong>Verify a real chain</strong> — clone <a href="https://github.com/crawcus/crawcus">crawcus/crawcus</a>, <code>pnpm install</code>, run <code>packages/verifier</code> against a sample chain</li>
-<li><strong>Try the Python reference client</strong> — <code>pip install crawcus-flower</code> and emit receipts from a Flower federated-learning run</li>
 <li><strong>Report an issue</strong> — <a href="https://github.com/crawcus/crawcus/issues">GitHub Issues</a> (bugs / spec clarifications / feature requests) — see the templates for what belongs in each</li>
 <li><strong>Discuss</strong> — <a href="https://github.com/crawcus/crawcus/discussions">GitHub Discussions</a> (spec-change proposals, general questions)</li>
 <li><strong>Contribute</strong> — see <a href="https://github.com/crawcus/crawcus/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for the three contribution tracks (spec change / implementation change / documentation) and DCO sign-off requirement</li>

@@ -903,7 +903,7 @@ SPDX-License-Identifier: CC-BY-4.0
 </tr>
 <tr>
 <td>Cascades</td>
-<td><code>02-product/crawcus-format.md</code> v0.1 → v0.2; <code>07-engineering/core-v0.0.1-type-surface.md</code> (<code>contract/</code> module added to commit 4); <code>00-canon/compliance-by-design.md</code> (12th architectural decision question surfaced); audit-bundle layer (deferred package); <code>@tallyseal/regulations/*</code> ship with reusable Contracts; sector packs override-via-add only</td>
+<td><code>02-product/crawcus-format.md</code> v0.1 → v0.2; <code>07-engineering/core-v0.0.1-type-surface.md</code> (<code>contract/</code> module added to commit 4); <code>00-canon/compliance-by-design.md</code> (12th architectural decision question surfaced); audit-bundle layer (deferred package); <code>@crawcus/regulations-*</code> packages (not yet published) carry reusable Contracts; sector packs override-via-add only</td>
 </tr>
 </tbody>
 </table>
@@ -1124,11 +1124,11 @@ materialises into ContractCtx, and the contract evaluates over the
 materialisation. The contract surface itself never goes async.</p>
 <h2 id="tension-2-contract-ids-and-audit-bundle-clarity">Tension 2 — Contract IDs and audit-bundle clarity<a class="headerlink" href="#tension-2-contract-ids-and-audit-bundle-clarity" title="Permalink to this section">&para;</a></h2>
 <p>Should Contract IDs be globally unique (<code>urn:codicil:contract:gdpr.art8.minorConsent</code>),
-spec-package-namespaced (<code>@tallyseal/spec-ferpa-edu/minorConsent</code>),
+spec-package-namespaced (e.g. <code>&lt;ferpa-edu-sector-pack&gt;/minorConsent</code>; sector packs are planned, not yet published),
 or Intent-namespaced (<code>CreateCourse/minorConsent</code>)?</p>
 <p><strong>Resolution</strong>: Contract IDs are spec-package-namespaced by
 convention (e.g., <code>gdpr.art8.minorConsent</code> if defined in
-<code>@tallyseal/regulations/gdpr</code>) and assigned a fully-qualified ID at
+<code>@crawcus/regulations-gdpr</code>) and assigned a fully-qualified ID at
 audit-bundle render (<code>&lt;intentKey&gt;:&lt;contractId&gt;:&lt;event-version&gt;</code>) for
 reference precision. Allows reusable Contract objects (regulation
 modules export them) while keeping audit-bundle output discrete.</p>
@@ -1380,11 +1380,11 @@ locked recommendation.</strong></p>
 <td>Lands in commit 4b alongside <code>defineCrawcusSpec</code> + <code>defineCompliance</code></td>
 </tr>
 <tr>
-<td><code>@tallyseal/regulations/gdpr</code> etc.</td>
+<td><code>@crawcus/regulations-gdpr</code> etc. (not yet published)</td>
 <td>Ship reusable Contract factories per regulation article — <code>gdpr.art8.minorConsent</code>, <code>gdpr.art22.automatedDecisionExplanation</code>, <code>euAiAct.art14.humanOversight</code>, etc.</td>
 </tr>
 <tr>
-<td><code>@tallyseal/spec-*</code> sector packs</td>
+<td>Sector packs (planned, not yet published)</td>
 <td>Use regulation-module Contract factories + add sector-specific Contracts; <code>extends</code>-monotonic composition</td>
 </tr>
 <tr>
@@ -1619,7 +1619,7 @@ binds all of this.</p>
 with <code>contract/</code> module included in 4b.</p>
 <h2 id="56-what-this-memo-does-not-decide">5.6 What this memo does NOT decide<a class="headerlink" href="#56-what-this-memo-does-not-decide" title="Permalink to this section">&para;</a></h2>
 <ul>
-<li>Specific Contract content for any individual regulation (e.g., the exact predicate for GDPR Art. 22 explanation) — owned by <code>@tallyseal/regulations/&lt;reg&gt;</code> modules; each module decided per-publish-cycle</li>
+<li>Specific Contract content for any individual regulation (e.g., the exact predicate for GDPR Art. 22 explanation) — owned by the <code>@crawcus/regulations-&lt;reg&gt;</code> modules (not yet published); each module decided per-publish-cycle</li>
 <li>The runtime evaluator implementation details (lazy materialisation strategy, caching policy) — engineering choice at commit 4b</li>
 <li>The audit-bundle layer's predicate-source normalisation rules — owned by the audit-bundle package (deferred)</li>
 <li>Whether <code>@crawcus/tck</code> ships an out-of-the-box Contract conformance harness — decided at TCK scaffold time</li>
@@ -1640,7 +1640,7 @@ into context); do not weaken the core surface.</p>
 <h3 id="q-l-contract-ids-how-namespaced">Q-L — Contract IDs: how namespaced?<a class="headerlink" href="#q-l-contract-ids-how-namespaced" title="Permalink to this section">&para;</a></h3>
 <p><strong>Recommendation: <code>&lt;source-module&gt;.&lt;reference&gt;</code> convention</strong> (e.g.,
 <code>gdpr.art8.minorConsent</code>). Sector-pack-published contracts namespace
-under the pack (<code>@tallyseal/spec-ferpa-edu/minorConsentCheck</code>).
+under the pack (e.g. <code>&lt;ferpa-edu-sector-pack&gt;/minorConsentCheck</code>; sector packs are planned, not yet published).
 Intent-local contracts use a short slug (<code>title-non-empty</code>). Audit
 bundle renders fully qualified
 (<code>&lt;intentKey&gt;:&lt;contractId&gt;:v&lt;event.version&gt;</code>).</p>
@@ -1739,7 +1739,7 @@ adds complexity to v0.2; revisit at v1.0 if pattern stabilises.</p>
 <li><strong>Type definitions</strong> ship in <code>@crawcus/spec</code> (the EventKind taxonomy is part of the open spec).</li>
 <li><strong>Runtime EventKind union extension</strong> in <code>@crawcus/core</code> (re-exports <code>DisclosureSignal</code> from <code>@crawcus/spec</code>).</li>
 <li><strong>TCK fixture</strong> in <code>@crawcus/tck</code> covering positive case + SIGNAL-not-gate lint rejection.</li>
-<li><strong>Adapter helper</strong> in <code>@tallyseal/react-assistant-ui</code>: <code>TallysealBanner</code> gains <code>onReadSignal</code> callback wiring IntersectionObserver to emit <code>DisclosureSignal{signalType: 'read'}</code> events.</li>
+<li><strong>Adapter helper</strong> in a React assistant-UI adapter package (planned, not yet published): its disclosure banner component gains an <code>onReadSignal</code> callback wiring IntersectionObserver to emit <code>DisclosureSignal{signalType: 'read'}</code> events.</li>
 </ul>
 <p>Source: HF feedback 2026-06-02 item 5; lighthouse SURFACE-FIRST verdict 2026-06-02; Q-CR9 LOCKED option (b) discriminator pattern 2026-06-02.</p>
 <hr />
