@@ -106,11 +106,12 @@ defineCompliance({
 
 ### 8. Contract
 
-A named, citable, pure predicate that a CrawcusSpec commits to. Three checkpoint slots — `pre` / `inv` / `post` — evaluated at writeEvent time. Built-in to v0.2 of the CRAWCUS format spec. Composed from typed factories in `@tallyseal/regulations-*` packages (GDPR, FERPA, EU AI Act, etc.). Audit-bundle render includes predicate source + SHA-256 hash + per-event evaluation history.
+A named, citable, pure predicate that a CrawcusSpec commits to. Three checkpoint slots — `pre` / `inv` / `post` — evaluated at writeEvent time. Built-in to v0.2 of the CRAWCUS format spec. Composed from typed factories in the `@crawcus/regulations-*` packages (GDPR, FERPA, EU AI Act, etc.; not yet published to npm — source in [crawcus/crawcus](https://github.com/crawcus/crawcus/tree/main/packages)). Audit-bundle render includes predicate source + SHA-256 hash + per-event evaluation history.
 
 ```ts
-import { minorConsent } from '@tallyseal/regulations-gdpr';
-import { disclosureConsent } from '@tallyseal/regulations-ferpa';
+// @crawcus/regulations-* packages are not yet published to npm; build them from the crawcus/crawcus repo.
+import { minorConsent } from '@crawcus/regulations-gdpr';
+import { disclosureConsent } from '@crawcus/regulations-ferpa';
 
 defineCrawcusSpec({
   // ...
