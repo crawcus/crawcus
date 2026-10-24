@@ -23,7 +23,7 @@ When a regulator, auditor, or plaintiff asks *"prove this record has not been al
 - *"Here are our SIEM logs."* Unsigned and mutable by anyone with SIEM admin.
 - *"We put hashes on a blockchain."* GDPR-incompatible at enterprise write throughput.
 
-CRAWCUS makes a fourth answer possible: **replay the receipt chain against any conformant verifier and check its integrity cryptographically.** Hash-chain integrity is verifiable today; verifying *who signed* a chain (signer trust) is still in progress — see [crawcus#1](https://github.com/crawcus/crawcus/issues/1).
+CRAWCUS makes a fourth answer possible: **replay the receipt chain against any conformant verifier and check its integrity cryptographically.** We're building hash-chain integrity verification; verifying *who signed* a chain (signer trust) is also still in progress — see [crawcus#1](https://github.com/crawcus/crawcus/issues/1).
 
 ## What CRAWCUS is
 
@@ -115,7 +115,7 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 **What is true today:**
 
 - The spec is published and free to implement (CC-BY-4.0).
-- Reference implementations are shipped as open source (Apache-2.0).
+- We're building the reference implementations in the open (Apache-2.0).
 - Every runtime — including the reference implementations — is measured against the same TCK fixture set.
 - Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — [crawcus#1](https://github.com/crawcus/crawcus/issues/1)).
 
@@ -136,7 +136,6 @@ Once it lands, each release will include the exact `sigstore verify` command in 
 
 - **Read the spec** — start with [Format](spec/crawcus-format.md), then [Contracts](spec/crawcus-contracts.md)
 - **Verify a real chain** — clone [crawcus/crawcus](https://github.com/crawcus/crawcus), `pnpm install`, run `packages/verifier` against a sample chain
-- **Try the Python reference client** — `pip install crawcus-flower` and emit receipts from a Flower federated-learning run
 - **Report an issue** — [GitHub Issues](https://github.com/crawcus/crawcus/issues) (bugs / spec clarifications / feature requests) — see the templates for what belongs in each
 - **Discuss** — [GitHub Discussions](https://github.com/crawcus/crawcus/discussions) (spec-change proposals, general questions)
 - **Contribute** — see [CONTRIBUTING.md](https://github.com/crawcus/crawcus/blob/main/CONTRIBUTING.md) for the three contribution tracks (spec change / implementation change / documentation) and DCO sign-off requirement
