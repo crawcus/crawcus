@@ -1221,7 +1221,7 @@ SPDX-License-Identifier: CC-BY-4.0
 <li><em>"Here are our SIEM logs."</em> Unsigned and mutable by anyone with SIEM admin.</li>
 <li><em>"We put hashes on a blockchain."</em> GDPR-incompatible at enterprise write throughput.</li>
 </ul>
-<p>CRAWCUS makes a fourth answer possible: <strong>replay the receipt chain against any conformant verifier and check its integrity cryptographically.</strong> Hash-chain integrity is verifiable today; verifying <em>who signed</em> a chain (signer trust) is still in progress — see <a href="https://github.com/crawcus/crawcus/issues/1">crawcus#1</a>.</p>
+<p>CRAWCUS makes a fourth answer possible: <strong>replay the receipt chain against any conformant verifier and check its integrity cryptographically.</strong> We're building hash-chain integrity verification; verifying <em>who signed</em> a chain (signer trust) is also still in progress — see <a href="https://github.com/crawcus/crawcus/issues/1">crawcus#1</a>.</p>
 <h2 id="what-crawcus-is">What CRAWCUS is<a class="headerlink" href="#what-crawcus-is" title="Permalink to this section">&para;</a></h2>
 <p>Every CRAWCUS receipt is a small structured JSON document, canonicalised per <a href="https://www.rfc-editor.org/rfc/rfc8785">RFC 8785 (JCS)</a>, hashed with SHA-256, and appended to a hash-chained log where each entry references the hash of the previous one. Tampering with any historical record breaks the chain in a way any auditor can verify with an open-source tool in seconds.</p>
 <p>CRAWCUS composes existing open standards. The primitives underneath — canonical JSON, SHA-256, timestamp formats, signature envelopes — are unchanged. The value CRAWCUS adds is the <em>shape</em>: a specific set of fields, their meanings, and two-scope coverage of both application transactions and AI-inference decisions under one canonical form.</p>
@@ -1436,7 +1436,7 @@ SPDX-License-Identifier: CC-BY-4.0
 <p><strong>What is true today:</strong></p>
 <ul>
 <li>The spec is published and free to implement (CC-BY-4.0).</li>
-<li>Reference implementations are shipped as open source (Apache-2.0).</li>
+<li>We're building the reference implementations in the open (Apache-2.0).</li>
 <li>Every runtime — including the reference implementations — is measured against the same TCK fixture set.</li>
 <li>Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — <a href="https://github.com/crawcus/crawcus/issues/1">crawcus#1</a>).</li>
 </ul>
@@ -1454,7 +1454,6 @@ SPDX-License-Identifier: CC-BY-4.0
 <ul>
 <li><strong>Read the spec</strong> — start with <a href="spec/crawcus-format/">Format</a>, then <a href="spec/crawcus-contracts/">Contracts</a></li>
 <li><strong>Verify a real chain</strong> — clone <a href="https://github.com/crawcus/crawcus">crawcus/crawcus</a>, <code>pnpm install</code>, run <code>packages/verifier</code> against a sample chain</li>
-<li><strong>Try the Python reference client</strong> — <code>pip install crawcus-flower</code> and emit receipts from a Flower federated-learning run</li>
 <li><strong>Report an issue</strong> — <a href="https://github.com/crawcus/crawcus/issues">GitHub Issues</a> (bugs / spec clarifications / feature requests) — see the templates for what belongs in each</li>
 <li><strong>Discuss</strong> — <a href="https://github.com/crawcus/crawcus/discussions">GitHub Discussions</a> (spec-change proposals, general questions)</li>
 <li><strong>Contribute</strong> — see <a href="https://github.com/crawcus/crawcus/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for the three contribution tracks (spec change / implementation change / documentation) and DCO sign-off requirement</li>
