@@ -12,7 +12,7 @@ SPDX-License-Identifier: CC-BY-4.0
 | Author | Paul + Claude |
 | Decides | Whether CrawcusSpec v0.1 extends to v0.2 with Contracts as a first-class spec primitive, *before* W3C/IEEE submission (Y1 H2) and *before* any HF integration code consumes v0.1 |
 | Memo style | Minto SCQS — Executive Summary → Situation → Complication → Question → Solution |
-| Cascades | `02-product/crawcus-format.md` v0.1 → v0.2; `07-engineering/core-v0.0.1-type-surface.md` (`contract/` module added to commit 4); `00-canon/compliance-by-design.md` (12th architectural decision question surfaced); audit-bundle layer (deferred package); `@tallyseal/regulations/*` ship with reusable Contracts; sector packs override-via-add only |
+| Cascades | `02-product/crawcus-format.md` v0.1 → v0.2; `07-engineering/core-v0.0.1-type-surface.md` (`contract/` module added to commit 4); `00-canon/compliance-by-design.md` (12th architectural decision question surfaced); audit-bundle layer (deferred package); `@crawcus/regulations-*` packages (not yet published) carry reusable Contracts; sector packs override-via-add only |
 
 ---
 
@@ -200,12 +200,12 @@ materialisation. The contract surface itself never goes async.
 ## Tension 2 — Contract IDs and audit-bundle clarity
 
 Should Contract IDs be globally unique (`urn:codicil:contract:gdpr.art8.minorConsent`),
-spec-package-namespaced (`@tallyseal/spec-ferpa-edu/minorConsent`),
+spec-package-namespaced (e.g. `<ferpa-edu-sector-pack>/minorConsent`; sector packs are planned, not yet published),
 or Intent-namespaced (`CreateCourse/minorConsent`)?
 
 **Resolution**: Contract IDs are spec-package-namespaced by
 convention (e.g., `gdpr.art8.minorConsent` if defined in
-`@tallyseal/regulations/gdpr`) and assigned a fully-qualified ID at
+`@crawcus/regulations-gdpr`) and assigned a fully-qualified ID at
 audit-bundle render (`<intentKey>:<contractId>:<event-version>`) for
 reference precision. Allows reusable Contract objects (regulation
 modules export them) while keeping audit-bundle output discrete.
@@ -341,8 +341,8 @@ locked recommendation.**
 |---|---|
 | W3C/IEEE submission content (Y1 H2) | Submit CrawcusSpec v0.2 with Contracts as the standards-grade differentiator |
 | `internal-package` `contract/` module | Lands in commit 4b alongside `defineCrawcusSpec` + `defineCompliance` |
-| `@tallyseal/regulations/gdpr` etc. | Ship reusable Contract factories per regulation article — `gdpr.art8.minorConsent`, `gdpr.art22.automatedDecisionExplanation`, `euAiAct.art14.humanOversight`, etc. |
-| `@tallyseal/spec-*` sector packs | Use regulation-module Contract factories + add sector-specific Contracts; `extends`-monotonic composition |
+| `@crawcus/regulations-gdpr` etc. (not yet published) | Ship reusable Contract factories per regulation article — `gdpr.art8.minorConsent`, `gdpr.art22.automatedDecisionExplanation`, `euAiAct.art14.humanOversight`, etc. |
+| Sector packs (planned, not yet published) | Use regulation-module Contract factories + add sector-specific Contracts; `extends`-monotonic composition |
 | Audit-bundle layer | Renders Contract spec + violation log per Intent; contracts become a first-class section in the bundle |
 | `@crawcus/tck` | Conformance tests include Contract semantics: monotonic composition, severity escalation, predicate hash stability |
 | HF integration H-1 | HF's first CrawcusSpec adopts at least one Contract (e.g., FERPA minor-consent) — proves the surface in production-shape code |
@@ -546,7 +546,7 @@ with `contract/` module included in 4b.
 
 ## 5.6 What this memo does NOT decide
 
-- Specific Contract content for any individual regulation (e.g., the exact predicate for GDPR Art. 22 explanation) — owned by `@tallyseal/regulations/<reg>` modules; each module decided per-publish-cycle
+- Specific Contract content for any individual regulation (e.g., the exact predicate for GDPR Art. 22 explanation) — owned by the `@crawcus/regulations-<reg>` modules (not yet published); each module decided per-publish-cycle
 - The runtime evaluator implementation details (lazy materialisation strategy, caching policy) — engineering choice at commit 4b
 - The audit-bundle layer's predicate-source normalisation rules — owned by the audit-bundle package (deferred)
 - Whether `@crawcus/tck` ships an out-of-the-box Contract conformance harness — decided at TCK scaffold time
@@ -573,7 +573,7 @@ into context); do not weaken the core surface.
 
 **Recommendation: `<source-module>.<reference>` convention** (e.g.,
 `gdpr.art8.minorConsent`). Sector-pack-published contracts namespace
-under the pack (`@tallyseal/spec-ferpa-edu/minorConsentCheck`).
+under the pack (e.g. `<ferpa-edu-sector-pack>/minorConsentCheck`; sector packs are planned, not yet published).
 Intent-local contracts use a short slug (`title-non-empty`). Audit
 bundle renders fully qualified
 (`<intentKey>:<contractId>:v<event.version>`).
@@ -675,7 +675,7 @@ pre.disclosureHasOpportunityToBeRead({
 - **Type definitions** ship in `@crawcus/spec` (the EventKind taxonomy is part of the open spec).
 - **Runtime EventKind union extension** in `@crawcus/core` (re-exports `DisclosureSignal` from `@crawcus/spec`).
 - **TCK fixture** in `@crawcus/tck` covering positive case + SIGNAL-not-gate lint rejection.
-- **Adapter helper** in `@tallyseal/react-assistant-ui`: `TallysealBanner` gains `onReadSignal` callback wiring IntersectionObserver to emit `DisclosureSignal{signalType: 'read'}` events.
+- **Adapter helper** in a React assistant-UI adapter package (planned, not yet published): its disclosure banner component gains an `onReadSignal` callback wiring IntersectionObserver to emit `DisclosureSignal{signalType: 'read'}` events.
 
 Source: HF feedback 2026-06-02 item 5; lighthouse SURFACE-FIRST verdict 2026-06-02; Q-CR9 LOCKED option (b) discriminator pattern 2026-06-02.
 

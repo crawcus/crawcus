@@ -112,7 +112,7 @@ export default defineCrawcusSpec({
 | `key` | `string` (PascalCase) | Yes | Globally unique within a customer manifest. Becomes the Intent's `kind`. |
 | `projection` | `string` | Yes | The projection-table name the reducer writes to (e.g. `Course`, `Patient`, `Loan`). Must exist in customer schema. |
 | `version` | `integer ≥ 1` | Yes | Semver-major analog. Breaking changes increment; migrations required. |
-| `classification` | `'standard' \| 'high-risk' \| 'prohibited'` | No (default `'standard'`) | Drives which regulation modules apply (`@tallyseal/regulations`). `'high-risk'` triggers AI Act Art. 14 readiness-gate enforcement. |
+| `classification` | `'standard' \| 'high-risk' \| 'prohibited'` | No (default `'standard'`) | Drives which regulation modules apply (`@crawcus/regulations-*`; not yet published). `'high-risk'` triggers AI Act Art. 14 readiness-gate enforcement. |
 | `fields` | `Record<string, FieldSpec>` | Yes | The structural contract — see *Field types* below. |
 | `readiness` | `(ctx: ReadinessCtx) => boolean` | Yes | Pure predicate. Returns `true` iff the Intent is complete enough to write. |
 | `customReducer` | `(snapshot, ctx) => Promise<ProjectionRef>` | No | Tier-2 escape hatch: invokes host service-layer function instead of direct projection write. See `02-product/integration-tiers.md`. |
@@ -221,7 +221,7 @@ historical version.
 `extends` lets a sector pack overlay a base spec:
 
 ```ts
-// @tallyseal/spec-ferpa-edu/intents/create-course.ts
+// FERPA education sector pack (planned, not yet published): intents/create-course.ts
 export default defineCrawcusSpec({
   key: 'CreateCourse',
   extends: 'internal-package/intents/create-course',
@@ -416,7 +416,7 @@ Sector packs may declare derogations as a separate, explicit field:
 
 ```ts
 defineCrawcusSpec({
-  extends: '@tallyseal/spec-hipaa-clinical/patient-intake',
+  extends: '<hipaa-clinical-sector-pack>/patient-intake', // sector pack: planned, not yet published
   derogations: [
     {
       contractId: 'hipaa.164-508.authorisationRequired',
@@ -546,7 +546,7 @@ exports typed Contract factories that take the spec-specific binding
 (which field is the age, which is the consent event ID, etc.):
 
 ```ts
-// @tallyseal/regulations/gdpr/art8.ts (exported)
+// @crawcus/regulations-gdpr: src/art8.ts (exported; package not yet published to npm)
 export function minorConsent(opts: {
   ageField: string;
   consentField: string;
@@ -598,7 +598,7 @@ property that makes all of this work.
 | Dates | ISO-8601 strings, UTC, sub-second precision in `Z`-terminated format |
 | Numbers | JSON numbers without trailing zeros (`1`, not `1.0`); integers and floats distinguishable by presence of decimal point |
 | Locale strings (`askHint`, `description`, etc.) | Plain UTF-8 strings; keys are BCP-47 locale identifiers |
-| References (`extends`, `references`) | Spec-package paths (`'@tallyseal/spec-ferpa-edu/intents/create-course'`) or canonical-URI form (`'urn:codicil:spec:gdpr-art8-base'`) |
+| References (`extends`, `references`) | Spec-package paths (e.g. `'<ferpa-edu-sector-pack>/intents/create-course'`; sector packs are planned, not yet published) or canonical-URI form (`'urn:codicil:spec:gdpr-art8-base'`) |
 
 ### Predicate canonicalisation (in-house TS-AST normaliser)
 
@@ -774,7 +774,7 @@ The `application/vnd.crawcus.*+jsonl` family uses the `vnd.` prefix, which per [
 - `00-canon/architecture-primitives.md` — primitives 1 and 2 (Intent, CrawcusSpec)
 - `02-product/compliance-manifest-schema.md` — the companion contract
 - `02-product/integration-tiers.md` — Tier 2 / customReducer pattern
-- `02-product/three-adoption-modes.md` — how `npx @tallyseal/generator migrate-form` generates a spec
+- `02-product/three-adoption-modes.md` — how a form-migration generator (planned, not yet published) generates a spec
 - the project's engineering ratchets — disciplines #3, #4, #13
 - `09-operating/decision-log.md` — LOCKED rows for i18n, W3C/IEEE submission
 - `HANDOFF-NEXT-SESSION.md` — commit-4 build plan for `packages/core/src/intent/` (replacing the prior in-HF `lib/witness/intents/` path)
