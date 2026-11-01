@@ -1,0 +1,13 @@
+{
+  "name": "checkpoint",
+  "description": "Ed25519 signed-note checkpoint over the 4-leaf root. TEST key.",
+  "keyLabel": "TEST ONLY",
+  "body": {
+    "signed": "example.com/crawcus-test\n4\nlw1CRlDpeT934HJ+AOnoBOZYPH4/A9uHeaTKTj5Kzcc=\n\n— example.com/crawcus-test UXRtX7mW2AkyTOJXkMu5T0p22BB/bPOSaSBnBAOhHhANE2t6quV7uZ6Qb+LL2FsYX4qqjyVj/Ll1HA0mD4XVneFXLwg=\n",
+    "publicKey": "4eabd5634af93147f16d113fcd1c8c62c14eebe0855689a00658df67b9dafccf",
+    "origin": "example.com/crawcus-test",
+    "size": 4,
+    "root": "lw1CRlDpeT934HJ+AOnoBOZYPH4/A9uHeaTKTj5Kzcc="
+  },
+  "expectedOk": true
+}

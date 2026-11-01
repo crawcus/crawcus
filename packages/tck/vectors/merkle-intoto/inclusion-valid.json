@@ -1,0 +1,21 @@
+{
+  "name": "inclusion-valid",
+  "description": "Leaf 2 of a 4-leaf RFC 6962 tree.",
+  "keyLabel": "TEST ONLY",
+  "body": {
+    "leaves": [
+      "dGxvZy1sZWFmLTA=",
+      "dGxvZy1sZWFmLTE=",
+      "dGxvZy1sZWFmLTI=",
+      "dGxvZy1sZWFmLTM="
+    ],
+    "index": 2,
+    "treeSize": 4,
+    "proof": [
+      "vz66xViYkQG+ujKuWkWqsbBHAPwBu6RcN2IHUutGkGE=",
+      "Ha+s5yAF5/E2GU1uqW812LZJeO6axrnmI0UKeZ5mMrU="
+    ],
+    "root": "lw1CRlDpeT934HJ+AOnoBOZYPH4/A9uHeaTKTj5Kzcc="
+  },
+  "expectedOk": true
+}

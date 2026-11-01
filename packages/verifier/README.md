@@ -143,6 +143,22 @@ decision-log
 row](../../docs/notebook/09-operating/decision-log.md) "Wave-2
 deferrals" subsection.
 
+## Proposed Merkle log and in-toto receipt
+
+`verifyBundle` still checks the hash chain. Two additional entry
+points are prototypes, not a new default:
+
+- `verifyOfflineLog` — signed tlog checkpoint, inclusion proof,
+  optional consistency proof, optional Rekor anchor. No network.
+- `sealReceipt` / `verifySealedReceipt` — an in-toto Statement v1
+  inside the same DSSE envelope. `chainMode: "hash-chain"` is the
+  compatibility predicate.
+
+See [ADR-0053](../../docs/adr/ADR-0053-merkle-transparency-log.md) and
+[ADR-0054](../../docs/adr/ADR-0054-intoto-receipt-attestation.md).
+The DSSE check on these envelopes is integrity against the key in
+`keyid`. It does not decide signer trust.
+
 ## References
 
 - [Q-VERIFIER-CLI-OSS-LOCK memo](../../docs/notebook/02-product/q-verifier-cli-oss-lock-memo.md) — parent decision

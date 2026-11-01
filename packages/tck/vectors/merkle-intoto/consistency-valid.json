@@ -1,0 +1,21 @@
+{
+  "name": "consistency-valid",
+  "description": "Consistency from size 2 to size 4.",
+  "keyLabel": "TEST ONLY",
+  "body": {
+    "leaves": [
+      "dGxvZy1sZWFmLTA=",
+      "dGxvZy1sZWFmLTE=",
+      "dGxvZy1sZWFmLTI=",
+      "dGxvZy1sZWFmLTM="
+    ],
+    "first": 2,
+    "second": 4,
+    "proof": [
+      "8ecyKHz0pA2DMma5VZ40yFkUWRZU4/50epFFhh2/N9w="
+    ],
+    "firstRoot": "Ha+s5yAF5/E2GU1uqW812LZJeO6axrnmI0UKeZ5mMrU=",
+    "secondRoot": "lw1CRlDpeT934HJ+AOnoBOZYPH4/A9uHeaTKTj5Kzcc="
+  },
+  "expectedOk": true
+}

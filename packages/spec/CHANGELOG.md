@@ -1,5 +1,17 @@
 # @crawcus/spec
 
+## Unreleased
+
+### Proposed
+
+- Merkle transparency-log primitives (RFC 6962 inclusion and consistency
+  proofs, tlog-tiles layout, tlog-checkpoint notes) and a keyed leaf
+  commitment for erase-but-verify. Hash-chain APIs are unchanged.
+  See `docs/adr/ADR-0053-merkle-transparency-log.md`.
+- in-toto Statement v1 receipt builder. See
+  `docs/adr/ADR-0054-intoto-receipt-attestation.md`.
+- Not a release. Package version stays 0.12.0.
+
 ## 0.11.0
 
 ### Minor Changes
