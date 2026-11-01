@@ -2,7 +2,7 @@
   "name": "@crawcus/core",
   "version": "0.15.0",
   "private": true,
-  "description": "Compliance-grade primitives for any backend — Contract · Receipt · Attestation · Warrant. Reference runtime for the CRAWCUS open standard.",
+  "description": "Compliance-grade primitives for any backend — Contract · Receipt · Attestation · Warrant. Reference runtime for CRAWCUS, an open spec we publish (CC-BY-4.0).",
   "keywords": [
     "compliance",
     "compliance-as-code",

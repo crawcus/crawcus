@@ -1,6 +1,6 @@
 # @crawcus/spec
 
-Reference content for the **CRAWCUS** open standard — Contract · Receipt · Attestation · Warrant — Compliance Unified Specification.
+Reference content for **CRAWCUS**, an open spec we publish (CC-BY-4.0) — Contract · Receipt · Attestation · Warrant — Compliance Unified Specification.
 
 This package contains the vendor-neutral, brand-neutral spec layer:
 

@@ -80,6 +80,7 @@ The specification ships alongside reference implementations that adopters can po
 | **Engineer building a conformant runtime** | [Wire format](spec/crawcus-format.md) → [Contract primitive](spec/crawcus-contracts.md) → clone the [TCK](https://github.com/crawcus/crawcus/tree/main/packages/tck) fixtures, run against your implementation |
 | **Author of an adjacent open-source project** (federated learning, model serving, LLM observability, MLOps) | Look at [`clients/flower/`](https://github.com/crawcus/crawcus/tree/main/clients/flower) as the pattern — a small client that emits per-node receipts. The same pattern generalises to any framework that surfaces a per-decision or per-call boundary. |
 | **Standards-body reviewer** (LF AI & Data / JDF) | [Governance](https://github.com/crawcus/crawcus/blob/main/GOVERNANCE.md) → [Wire format](spec/crawcus-format.md) → [Architecture primitives](canon/architecture-primitives.md) |
+| **SCITT implementer or WG participant** | [CRAWCUS and SCITT](scitt.md) → [SCITT payload profile (draft)](spec/crawcus-scitt-profile.md) → [ADR-0055 build plan](adr/ADR-0055-scitt-fit.md) |
 
 ## Standards CRAWCUS builds on
 
@@ -111,7 +112,7 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 **What is true today:**
 
 - The spec is published and free to implement (CC-BY-4.0).
-- Reference implementations are shipped as open source (Apache-2.0).
+- We're building the reference implementations in the open (Apache-2.0).
 - Every runtime — including the reference implementations — is measured against the same TCK fixture set.
 - Anyone can verify a chain's hash-chain integrity, and — given the issuer's published trust policy — the pinned signer, independently of any vendor. Sigstore keyless matching is still open ([crawcus#1](https://github.com/crawcus/crawcus/issues/1)).
 

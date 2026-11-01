@@ -1,0 +1,40 @@
+{
+  "name": "@crawcus/scitt",
+  "version": "0.0.1",
+  "private": true,
+  "description": "SCITT mode for CRAWCUS: carry a CRAWCUS bundle as the payload of a COSE_Sign1 Signed Statement (RFC 9943). Experimental; not yet tested against any Transparency Service.",
+  "keywords": ["crawcus", "scitt", "cose", "cose-sign1", "transparency"],
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.7.0",
+    "cbor-x": "^1.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crawcus/crawcus.git",
+    "directory": "packages/scitt"
+  },
+  "homepage": "https://crawcus.org",
+  "bugs": "https://github.com/crawcus/crawcus/issues",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
