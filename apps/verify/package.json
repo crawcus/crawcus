@@ -1,0 +1,32 @@
+{
+  "name": "@crawcus/verify-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "crawcus verify — static, client-side browser verifier for CRAWCUS receipt bundles (DSSE envelopes).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "gen:samples": "node scripts/gen-samples.mjs"
+  },
+  "dependencies": {
+    "@crawcus/spec": "workspace:*",
+    "@crawcus/verifier": "workspace:*",
+    "@noble/curves": "^1.7.0",
+    "@noble/hashes": "^1.6.1",
+    "buffer": "6.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.1",
+    "typescript": "5.9.3",
+    "vite": "6.4.4",
+    "vitest": "3.2.7"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

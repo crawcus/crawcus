@@ -4,6 +4,7 @@
 
 > **Read the spec:** [`docs/spec/crawcus-format.md`](docs/spec/crawcus-format.md) (wire format) · [`docs/spec/crawcus-contracts.md`](docs/spec/crawcus-contracts.md) (Contract primitive) · [`docs/canon/architecture-primitives.md`](docs/canon/architecture-primitives.md) (all primitives)
 > **Rendered site:** [crawcus.org](https://crawcus.org/)
+> **Verify a receipt:** [verify.crawcus.org](https://verify.crawcus.org): drop in a `.dsse.json` bundle; it is verified in your browser and nothing is uploaded ([`apps/verify`](apps/verify/README.md)).
 
 
 > **SCITT:** CRAWCUS is the statement-payload and regulation-mapping layer. IETF SCITT ([RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html)) is the transparency envelope. The profile is a draft and has not been tested against any Transparency Service: see [docs/scitt.md](docs/scitt.md) and [the profile](docs/spec/crawcus-scitt-profile.md).

@@ -16,9 +16,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "pnpm -r --filter='./packages/*' build",
-    "test": "pnpm -r --filter='./packages/*' test",
-    "typecheck": "pnpm -r --filter='./packages/*' typecheck",
+    "build": "pnpm -r --filter='./packages/*' --filter='./apps/*' build",
+    "test": "pnpm -r --filter='./packages/*' --filter='./apps/*' test",
+    "typecheck": "pnpm -r --filter='./packages/*' --filter='./apps/*' typecheck",
     "docs:serve": "mkdocs serve",
     "docs:build": "mkdocs build",
     "docs:deploy": "mkdocs gh-deploy --force"
