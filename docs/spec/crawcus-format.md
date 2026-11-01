@@ -5,8 +5,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # CRAWCUS format — the canonical contract
 
-> **CRAWCUS is the open standard format for AI Application Compliance
-> Infrastructure (AACI). A `CrawcusSpec` is one instance: a typed
+> **CRAWCUS is an open spec we publish (CC-BY-4.0) for AI Application
+> Compliance Infrastructure (AACI). A `CrawcusSpec` is one instance: a typed
 > declaration of what a Witness Intent collects, how it's collected,
 > and what completion means.**
 >
@@ -25,11 +25,42 @@ SPDX-License-Identifier: CC-BY-4.0
   commitment.
 - **Reference implementation:** `packages/core/src/intent/` in this repo
   (planned commit 4b per `07-engineering/core-v0.0.1-type-surface.md`).
-- **Standards intent:** open spec, MIT licensed, royalty-free; adopters
+- **Standards intent:** an open spec we publish (CC-BY-4.0), royalty-free; adopters
   may build alternative implementations. Wire format normatively defined
   in §"Wire-format stability" below; reference RFC 8785 (JSON
   Canonicalization Scheme) for byte-identical re-serialisation across
   TS / Go / Rust / Python implementations.
+
+## Terminology
+
+This section defines the three CRAWCUS terms that are most often
+confused with similarly named terms elsewhere. Definitions here are
+normative for every CRAWCUS document, including the
+[SCITT payload profile](crawcus-scitt-profile.md). Where a CRAWCUS
+document uses the key words MUST, SHOULD and MAY, they are used as in
+BCP 14 (RFC 2119, RFC 8174), as that document states.
+
+Receipt
+:   A CRAWCUS receipt is the signed record of one business transaction or AI decision, made by the system that performed it. It is not a SCITT receipt. A SCITT receipt (RFC 9943) is the transparency service's later proof that a signed statement was registered in its log. When a CRAWCUS receipt is registered with SCITT, the CRAWCUS receipt is the signed statement and SCITT's receipt is its proof of registration.
+
+Attestation
+:   In CRAWCUS, an attestation is a signed bundle that collects receipts, their log proofs and the applicable regulation package, so a third party can verify them offline. It is a machine-checkable statement by the signing system, not an auditor's opinion or assurance report.
+
+Warrant
+:   A warrant is a signed, expiring authorisation that says what an agent or system may do, for whom, and until when. A receipt can cite a warrant to show that the action was in scope.
+
+!!! note "Editorial rule: SCITT receipt terminology"
+    In CRAWCUS documents, a bare "receipt" always means a CRAWCUS
+    receipt. When a CRAWCUS document means SCITT's object, it writes
+    "SCITT receipt" or "registration receipt", never bare "receipt".
+    The title of RFC 9942, "COSE Receipts", may be cited as a title.
+
+!!! info "Plain-language note for non-spec readers"
+    In non-technical copy (landing pages, sales material, summaries for
+    compliance or legal readers), call an attestation an
+    **"audit bundle"** and a warrant a
+    **"signed, expiring authorisation"**. Neither term implies that an
+    auditor has reviewed or signed anything.
 
 ## What a CrawcusSpec is
 
@@ -81,7 +112,7 @@ export default defineCrawcusSpec({
 | `key` | `string` (PascalCase) | Yes | Globally unique within a customer manifest. Becomes the Intent's `kind`. |
 | `projection` | `string` | Yes | The projection-table name the reducer writes to (e.g. `Course`, `Patient`, `Loan`). Must exist in customer schema. |
 | `version` | `integer ≥ 1` | Yes | Semver-major analog. Breaking changes increment; migrations required. |
-| `classification` | `'standard' \| 'high-risk' \| 'prohibited'` | No (default `'standard'`) | Drives which regulation modules apply (`@tallyseal/regulations`). `'high-risk'` triggers AI Act Art. 14 readiness-gate enforcement. |
+| `classification` | `'standard' \| 'high-risk' \| 'prohibited'` | No (default `'standard'`) | Drives which regulation modules apply (`@crawcus/regulations-*`; not yet published). `'high-risk'` triggers AI Act Art. 14 readiness-gate enforcement. |
 | `fields` | `Record<string, FieldSpec>` | Yes | The structural contract — see *Field types* below. |
 | `readiness` | `(ctx: ReadinessCtx) => boolean` | Yes | Pure predicate. Returns `true` iff the Intent is complete enough to write. |
 | `customReducer` | `(snapshot, ctx) => Promise<ProjectionRef>` | No | Tier-2 escape hatch: invokes host service-layer function instead of direct projection write. See `02-product/integration-tiers.md`. |
@@ -190,7 +221,7 @@ historical version.
 `extends` lets a sector pack overlay a base spec:
 
 ```ts
-// @tallyseal/spec-ferpa-edu/intents/create-course.ts
+// FERPA education sector pack (planned, not yet published): intents/create-course.ts
 export default defineCrawcusSpec({
   key: 'CreateCourse',
   extends: 'internal-package/intents/create-course',
@@ -385,7 +416,7 @@ Sector packs may declare derogations as a separate, explicit field:
 
 ```ts
 defineCrawcusSpec({
-  extends: '@tallyseal/spec-hipaa-clinical/patient-intake',
+  extends: '<hipaa-clinical-sector-pack>/patient-intake', // sector pack: planned, not yet published
   derogations: [
     {
       contractId: 'hipaa.164-508.authorisationRequired',
@@ -515,7 +546,7 @@ exports typed Contract factories that take the spec-specific binding
 (which field is the age, which is the consent event ID, etc.):
 
 ```ts
-// @tallyseal/regulations/gdpr/art8.ts (exported)
+// @crawcus/regulations-gdpr: src/art8.ts (exported; package not yet published to npm)
 export function minorConsent(opts: {
   ageField: string;
   consentField: string;
@@ -567,7 +598,7 @@ property that makes all of this work.
 | Dates | ISO-8601 strings, UTC, sub-second precision in `Z`-terminated format |
 | Numbers | JSON numbers without trailing zeros (`1`, not `1.0`); integers and floats distinguishable by presence of decimal point |
 | Locale strings (`askHint`, `description`, etc.) | Plain UTF-8 strings; keys are BCP-47 locale identifiers |
-| References (`extends`, `references`) | Spec-package paths (`'@tallyseal/spec-ferpa-edu/intents/create-course'`) or canonical-URI form (`'urn:codicil:spec:gdpr-art8-base'`) |
+| References (`extends`, `references`) | Spec-package paths (e.g. `'<ferpa-edu-sector-pack>/intents/create-course'`; sector packs are planned, not yet published) or canonical-URI form (`'urn:codicil:spec:gdpr-art8-base'`) |
 
 ### Predicate canonicalisation (in-house TS-AST normaliser)
 
@@ -775,7 +806,7 @@ The `application/vnd.crawcus.*+jsonl` family uses the `vnd.` prefix, which per [
 - `00-canon/architecture-primitives.md` — primitives 1 and 2 (Intent, CrawcusSpec)
 - `02-product/compliance-manifest-schema.md` — the companion contract
 - `02-product/integration-tiers.md` — Tier 2 / customReducer pattern
-- `02-product/three-adoption-modes.md` — how `npx @tallyseal/generator migrate-form` generates a spec
+- `02-product/three-adoption-modes.md` — how a form-migration generator (planned, not yet published) generates a spec
 - the project's engineering ratchets — disciplines #3, #4, #13
 - `09-operating/decision-log.md` — LOCKED rows for i18n, W3C/IEEE submission
 - `HANDOFF-NEXT-SESSION.md` — commit-4 build plan for `packages/core/src/intent/` (replacing the prior in-HF `lib/witness/intents/` path)
