@@ -9,6 +9,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 The specification is authored openly, dual-licensed ([CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/) for spec text, [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) for code), and on a [Linux Foundation AI & Data](https://lfaidata.foundation/) submission path via the [Joint Development Foundation](https://www.jointdevelopment.org/). Any party — systems integrator, adjacent vendor, individual developer, regulator — can implement a conformant runtime or verifier.
 
+
+CRAWCUS defines the payload semantics and regulation mapping for cryptographic audit receipts. Envelope-level transparency is the domain of IETF SCITT ([RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html)). That covers registration of Signed Statements with a Transparency Service and SCITT receipts (COSE Receipts, RFC 9942). SCITT treats the payload as opaque, and CRAWCUS is designed to be carried as a SCITT payload. The profile is a draft and has not been tested against any Transparency Service: see [CRAWCUS and SCITT](scitt.md).
+
 ---
 
 ## Why this exists
@@ -34,8 +37,8 @@ Ratified 2026-09-01: CRAWCUS ships as a two-tier spec so implementers can pick t
 
 | Tier | Primitives | Sufficient for | Reference implementations |
 |---|---|---|---|
-| **CRAWCUS-Core-1.0** | Contract · Receipt · Attestation · Warrant (4) | Hash-chained audit interop, CloudEvents / JWT / SD-JWT payload embedding, federated-learning per-node receipts, most application-level audit trails | `crawcus-flower` (Python client for the Flower federated-learning framework) |
-| **CRAWCUS-Extended-1.0** | Core + Disclosure · Consent · Lineage · HumanOversight · Tool-use (9) | AACI-shape regulator compliance: GDPR Art. 22 automated-decision-making, EU AI Act Art. 14 / Art. 50 human-oversight + deepfake-disclosure, FERPA §99.31 disclosure-consent | `@crawcus/regulations-gdpr`, `@crawcus/regulations-ferpa`, `@crawcus/regulations-eu-ai-act` |
+| **CRAWCUS-Core-1.0** | Contract · Receipt · Attestation · Warrant (4) | Hash-chained audit interop, CloudEvents / JWT / SD-JWT payload embedding, federated-learning per-node receipts, most application-level audit trails | `crawcus-flower` (Python client for the Flower federated-learning framework; planned, not yet published) |
+| **CRAWCUS-Extended-1.0** | Core + Disclosure · Consent · Lineage · HumanOversight · Tool-use (9) | AACI-shape regulator compliance: GDPR Art. 22 automated-decision-making, EU AI Act Art. 14 / Art. 50 human-oversight + deepfake-disclosure, FERPA §99.31 disclosure-consent | `@crawcus/regulations-gdpr`, `@crawcus/regulations-ferpa`, `@crawcus/regulations-eu-ai-act` (planned, not yet published) |
 
 Implementers declare their conformance tier in package metadata. Full details: [Architecture primitives](canon/architecture-primitives.md).
 
@@ -50,25 +53,25 @@ Implementers declare their conformance tier in package metadata. Full details: [
 
 ## Reference implementations
 
-The specification ships alongside reference implementations that adopters can point at, extend, or replace with their own conformant runtimes. Reference implementations are one demonstration of correctness — never "the" reference. Anything passing the [`@crawcus/tck`](https://github.com/crawcus/crawcus/tree/main/packages/tck) fixture set at the appropriate conformance tier is by definition CRAWCUS-conformant.
+We're building reference implementations alongside the specification, for adopters to point at, extend, or replace with their own conformant runtimes. None of the packages below is published to npm or PyPI yet; the source is in the [crawcus/crawcus](https://github.com/crawcus/crawcus) repo. Reference implementations are one demonstration of correctness — never "the" reference. Anything passing the [`@crawcus/tck`](https://github.com/crawcus/crawcus/tree/main/packages/tck) fixture set at the appropriate conformance tier is by definition CRAWCUS-conformant.
 
 ### TypeScript packages (npm)
 
-| Package | Purpose | Depends on |
-|---|---|---|
-| `@crawcus/spec` | Types + evaluators + canonical JSON serialization. Framework-agnostic. | `@noble/curves`, `@noble/hashes`, `canonicalize` |
-| `@crawcus/core` | Reference runtime. Ports for warrant / consent / disclosure / lineage / oversight stores; PII tokenisation; reducers; audit-bundle composer. | `@crawcus/spec` |
-| `@crawcus/tck` | Test Compatibility Kit. Portable Gherkin-shaped fixtures for spec conformance. | `@crawcus/spec` |
-| `@crawcus/verifier` | UI-agnostic chain verifier. Small-chain sync core; suitable for offline CLI + browser lighthouse. | `@crawcus/spec` |
-| `@crawcus/regulations-gdpr` | Art. 6 / 8 / 9 / 22 typed Contract factories + Art. 13 / 22 disclosure templates. Quarterly-versioned (`gdpr@YYYY-QN`). | `@crawcus/core`, `@crawcus/tck` |
-| `@crawcus/regulations-ferpa` | §99.31 factories + §99.7 annual-notice template. | `@crawcus/core`, `@crawcus/tck` |
-| `@crawcus/regulations-eu-ai-act` | Art. 14 (human oversight) + Art. 50 (deepfake / synthetic-media disclosure) factories and templates. | `@crawcus/core`, `@crawcus/tck` |
+| Package | Purpose | Depends on | Status |
+|---|---|---|---|
+| `@crawcus/spec` | Types + evaluators + canonical JSON serialization. Framework-agnostic. | `@noble/curves`, `@noble/hashes`, `canonicalize` | Planned, not yet published |
+| `@crawcus/core` | Reference runtime. Ports for warrant / consent / disclosure / lineage / oversight stores; PII tokenisation; reducers; audit-bundle composer. | `@crawcus/spec` | Planned, not yet published |
+| `@crawcus/tck` | Test Compatibility Kit. Portable Gherkin-shaped fixtures for spec conformance. | `@crawcus/spec` | Planned, not yet published |
+| `@crawcus/verifier` | UI-agnostic chain verifier. Small-chain sync core; suitable for offline CLI + browser lighthouse. | `@crawcus/spec` | Planned, not yet published |
+| `@crawcus/regulations-gdpr` | Art. 6 / 8 / 9 / 22 typed Contract factories + Art. 13 / 22 disclosure templates. Quarterly-versioned (`gdpr@YYYY-QN`). | `@crawcus/core`, `@crawcus/tck` | Planned, not yet published |
+| `@crawcus/regulations-ferpa` | §99.31 factories + §99.7 annual-notice template. | `@crawcus/core`, `@crawcus/tck` | Planned, not yet published |
+| `@crawcus/regulations-eu-ai-act` | Art. 14 (human oversight) + Art. 50 (deepfake / synthetic-media disclosure) factories and templates. | `@crawcus/core`, `@crawcus/tck` | Planned, not yet published |
 
 ### Python packages (PyPI)
 
-| Package | Purpose |
-|---|---|
-| `crawcus-flower` | Reference client for the [Flower federated-learning framework](https://flower.ai). Per-node receipts, offline-verifiable via the TS verifier. |
+| Package | Purpose | Status |
+|---|---|---|
+| `crawcus-flower` | Reference client for the [Flower federated-learning framework](https://flower.ai). Per-node receipts, offline-verifiable via the TS verifier. | Planned, not yet published |
 
 ## Who this is for
 
@@ -80,7 +83,6 @@ The specification ships alongside reference implementations that adopters can po
 | **Engineer building a conformant runtime** | [Wire format](spec/crawcus-format.md) → [Contract primitive](spec/crawcus-contracts.md) → clone the [TCK](https://github.com/crawcus/crawcus/tree/main/packages/tck) fixtures, run against your implementation |
 | **Author of an adjacent open-source project** (federated learning, model serving, LLM observability, MLOps) | Look at [`clients/flower/`](https://github.com/crawcus/crawcus/tree/main/clients/flower) as the pattern — a small client that emits per-node receipts. The same pattern generalises to any framework that surfaces a per-decision or per-call boundary. |
 | **Standards-body reviewer** (LF AI & Data / JDF) | [Governance](https://github.com/crawcus/crawcus/blob/main/GOVERNANCE.md) → [Wire format](spec/crawcus-format.md) → [Architecture primitives](canon/architecture-primitives.md) |
-| **SCITT implementer or WG participant** | [CRAWCUS and SCITT](scitt.md) → [SCITT payload profile (draft)](spec/crawcus-scitt-profile.md) → [ADR-0055 build plan](adr/ADR-0055-scitt-fit.md) |
 
 ## Standards CRAWCUS builds on
 
@@ -93,6 +95,7 @@ CRAWCUS does not reinvent cryptographic primitives. It composes:
 | Timestamps | [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) (subset of ISO 8601) |
 | Optional signature envelope | [DSSE](https://github.com/secure-systems-lab/dsse) |
 | Optional supply-chain signing | [Sigstore](https://www.sigstore.dev) |
+| Optional transparency envelope | [SCITT](https://datatracker.ietf.org/wg/scitt/about/): [RFC 9943](https://www.rfc-editor.org/rfc/rfc9943.html), [RFC 9942](https://www.rfc-editor.org/rfc/rfc9942.html). Payload profile [in draft](spec/crawcus-scitt-profile.md) |
 | Erasable-immutable log pattern | GDPR crypto-shred + tombstone — [not yet specified](spec/crawcus-format.md#gdpr-erasure) |
 | Actor-attribution conventions | [OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749), mTLS, SAML — no CRAWCUS-specific extension |
 
@@ -114,13 +117,14 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 - The spec is published and free to implement (CC-BY-4.0).
 - We're building the reference implementations in the open (Apache-2.0).
 - Every runtime — including the reference implementations — is measured against the same TCK fixture set.
-- Anyone can verify a chain's hash-chain integrity, and — given the issuer's published trust policy — the pinned signer, independently of any vendor. Sigstore keyless matching is still open ([crawcus#1](https://github.com/crawcus/crawcus/issues/1)).
+- Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — [crawcus#1](https://github.com/crawcus/crawcus/issues/1)).
 
 **What is not yet true:**
 
 - Multi-vendor implementation ecosystem — the reference implementations here are the initial implementations. Third-party conformant implementations are actively encouraged.
 - LF / JDF adoption — submission planned, not yet submitted.
 - Widespread production deployment — early adopters welcome.
+- Interop with SCITT Transparency Services. The payload profile is a draft; registration against Transparency Service implementations is planned and not yet tested.
 
 ## Verifying releases (planned)
 
@@ -132,7 +136,6 @@ Once it lands, each release will include the exact `sigstore verify` command in 
 
 - **Read the spec** — start with [Format](spec/crawcus-format.md), then [Contracts](spec/crawcus-contracts.md)
 - **Verify a real chain** — clone [crawcus/crawcus](https://github.com/crawcus/crawcus), `pnpm install`, run `packages/verifier` against a sample chain
-- **Try the Python reference client** — `pip install crawcus-flower` and emit receipts from a Flower federated-learning run
 - **Report an issue** — [GitHub Issues](https://github.com/crawcus/crawcus/issues) (bugs / spec clarifications / feature requests) — see the templates for what belongs in each
 - **Discuss** — [GitHub Discussions](https://github.com/crawcus/crawcus/discussions) (spec-change proposals, general questions)
 - **Contribute** — see [CONTRIBUTING.md](https://github.com/crawcus/crawcus/blob/main/CONTRIBUTING.md) for the three contribution tracks (spec change / implementation change / documentation) and DCO sign-off requirement
