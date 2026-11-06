@@ -21,6 +21,10 @@ export type ContractViolationKind =
   // Envelope (DSSE) checks
   | 'Envelope.shape.invalid'
   | 'Envelope.signature.invalid'
+  | 'Envelope.signer.untrusted'
+  | 'Envelope.signer.revoked'
+  | 'Envelope.signer.expired'
+  | 'TrustPolicy.malformed'
   // Payload / canonical-JSON checks
   | 'Bundle.hash.mismatch'
   // Hash-chain check
@@ -41,6 +45,10 @@ export type ContractViolationKind =
 export const CONTRACT_VIOLATION_KINDS = [
   'Envelope.shape.invalid',
   'Envelope.signature.invalid',
+  'Envelope.signer.untrusted',
+  'Envelope.signer.revoked',
+  'Envelope.signer.expired',
+  'TrustPolicy.malformed',
   'Bundle.hash.mismatch',
   'Chain.hash.broken',
   'Contract.predicate.unembedded',

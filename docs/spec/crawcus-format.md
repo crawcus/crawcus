@@ -16,11 +16,11 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## Status
 
-- **Format version:** 0.2 (pre-release; subject to non-breaking refinement
-  before v1.0). Bumped from 0.1 on 2026-05-20 to add first-class
-  Contracts and Wire-format-stability sections — see
-  `02-product/crawcus-contracts.md` (design memo) and `09-operating/
-  decision-log.md` for the rationale.
+- **Format version:** 0.3 (pre-release; subject to non-breaking refinement
+  before v1.0). 0.3 adds signer trust: a conformant verifier must not
+  report `pass` from a public key carried in the envelope alone. See
+  "Signer trust (v0.3)" below and [the trust-policy schema](crawcus-trust-policy.md).
+  0.2 added first-class Contracts and the signed-bundle section.
 - **Stability:** Internal / Codicil Zero (HF) only. Not yet a public
   commitment.
 - **Reference implementation:** `packages/core/src/intent/` in this repo
@@ -685,7 +685,7 @@ The unsigned canonical-JSON bundle (above) is the **payload**. To make audit bun
   "payload": "<base64-encoded JCS-canonical JSONL bundle>",
   "signatures": [
     {
-      "keyid": "<ed25519 public-key fingerprint>",
+      "keyid": "<ed25519 public key (hex or base64) — untrusted hint; see Signer trust>",
       "sig": "<base64-encoded ed25519 signature over PAE(payloadType, decoded(payload))>"
     }
   ]
@@ -720,13 +720,45 @@ This is the Q-CR9-style discriminator pattern applied to the payload-type axis: 
 
 Adding additional suites (ECDSA-P256, Ed25519ph, post-quantum candidates such as ML-DSA) is **additive-MINOR per ratchet #16** — Wave-2+ engineering memo. The DSSE envelope supports multiple signatures per bundle (`signatures: []` is an array), so dual-signing (e.g., ed25519 + ML-DSA) is *additive*, not *deprecating*, and does not interact with ratchet #4's two-release-deprecation discipline.
 
+#### Signer trust (v0.3)
+
+A conformant verifier MUST NOT report a bundle as verified (`pass`) solely because its signature validates against a public key carried in the envelope. The `keyid` field is untrusted input. It is a lookup hint for a verifier-side trust policy supplied out of band.
+
+A conformant verifier MUST evaluate the signer against that policy, and MUST report `untrusted-signer` (or an equivalent non-pass outcome) when no policy is supplied or the signer matches no anchor.
+
+A conformant verifier MUST fail closed on a malformed or unknown-version trust policy.
+
+Revocation entries MUST take precedence over anchors. A key revoked for `key-compromise` MUST be rejected regardless of signing time.
+
+A verifier SHOULD report the trust policy fingerprint `sha256(JCS(policy))` and the matched anchor.
+
+Sigstore identity anchors are reserved in the policy schema. When they are implemented, a verifier MUST match issuer exactly and subject exactly or by an anchored regular expression, and MUST verify a transparency-log inclusion proof when `requireTlog` is true (the default). This version of the reference verifier parses those anchors and does not treat them as a reason to return `pass`.
+
+The policy file format, validity windows, the revocation list, and the reserved TUF-style rotation fields are specified in [crawcus-trust-policy.md](crawcus-trust-policy.md).
+
+Informative reason codes used by the reference verifier:
+
+| Code | Typical outcome |
+|---|---|
+| `signer.trusted.pinned-key` | `pass` (integrity checks also pass) |
+| `signer.untrusted.no-policy` | `untrusted-signer` |
+| `signer.untrusted.unknown-key` | `untrusted-signer` |
+| `signer.untrusted.expired` | `untrusted-signer` |
+| `signer.untrusted.not-yet-valid` | `untrusted-signer` |
+| `signer.untrusted.payload-type-not-allowed` | `untrusted-signer` |
+| `signer.untrusted.revoked` (`superseded` / `retired`) | `untrusted-signer` |
+| `signer.untrusted.revoked` (`key-compromise`) | `fail` |
+| `signer.untrusted.signing-time-unknown` | `untrusted-signer` |
+| `policy.malformed` | `fail` |
+| `signature.invalid` | `fail` (trust is not evaluated) |
+
 #### Cross-vendor verification
 
 A bundle signed under this envelope is verifiable by:
 
 - The reference CRAWCUS verifier (`crawcus-verify` — see Q-VERIFIER-CLI-OSS-LOCK memo)
 - Any second-vendor CRAWCUS-conformant verifier implementing this section
-- Sigstore cosign DSSE-envelope verification (CLI invocation depends on cosign version + cert-mode; in keyless mode `cosign verify-blob --bundle <envelope> <payload>` accepts a bare DSSE envelope and verifies the embedded signature against the included public key — cosign treats CRAWCUS bundles as a generic DSSE envelope; subtype-specific verification stays CRAWCUS-side)
+- Sigstore cosign DSSE-envelope verification (CLI invocation depends on cosign version + cert-mode; in keyless mode `cosign verify-blob --bundle <envelope> <payload>` checks integrity only — the embedded signature against the included public key. Signer trust requires `--certificate-identity` / `--certificate-oidc-issuer` or a pinned key. Cosign treats CRAWCUS bundles as a generic DSSE envelope; subtype-specific verification stays CRAWCUS-side)
 - `slsa-verifier verify-artifact --provenance <bundle>` for SLSA-pipeline interop (when the bundle includes SLSA-provenance subtype, per future spec extension)
 
 #### IANA media-type registration

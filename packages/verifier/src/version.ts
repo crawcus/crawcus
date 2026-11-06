@@ -18,7 +18,7 @@
  * `unknown` here keeps the verifier purely offline + reproducible.
  */
 
-export const VERIFIER_VERSION = '0.2.0' as const;
+export const VERIFIER_VERSION = '0.4.0' as const;
 export const VERIFIER_PUBLIC_KEY_FINGERPRINT =
   'wave1-unsigned-no-verifier-output-signature' as const;
 export const VERIFIER_BUILD_SHA = 'unknown' as const;

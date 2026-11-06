@@ -31,7 +31,7 @@ export type ParseResult = { readonly kind: 'ok'; readonly parsed: ParsedBundle }
  *   3. JSON.parse the decoded bytes (lazy structural validation; later
  *      checks narrow the fields they care about)
  *
- * Signature verification happens separately via `verifyDsseSignature`
+ * Signature verification happens separately via `verifyDsseSignatureUntrusted`
  * so the staged check architecture (spec §5) stays composable.
  */
 export function parseSignedBundle(bytes: Uint8Array): ParseResult {

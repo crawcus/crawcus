@@ -4,7 +4,7 @@
  */
 
 /**
- * Unit tests for `verifyDsseSignature` (re-exported as `verifyDsseEnvelope`).
+ * Unit tests for the internal integrity-only primitive `verifyDsseSignatureUntrusted`.
  *
  * Spec §6a row 2:
  *   - Valid ed25519 sig
@@ -17,18 +17,18 @@
 
 import { ed25519 } from '@noble/curves/ed25519';
 import { describe, expect, it } from 'vitest';
-import { verifyDsseSignature } from '../src/dsse.js';
+import { verifyDsseSignatureUntrusted } from '../src/dsse.js';
 import { parseSignedBundle } from '../src/parse.js';
 import { buildSignedBundle } from './fixtures/build-bundle.js';
 
-describe('verifyDsseEnvelope', () => {
+describe('verifyDsseSignatureUntrusted (integrity only)', () => {
   it('verifies a valid ed25519 signature', () => {
     const fixture = buildSignedBundle();
     const parsed = parseSignedBundle(fixture.bundleBytes);
     expect(parsed.kind).toBe('ok');
     if (parsed.kind !== 'ok') return;
 
-    const result = verifyDsseSignature(parsed.parsed.envelope, parsed.parsed.payloadBytes);
+    const result = verifyDsseSignatureUntrusted(parsed.parsed.envelope, parsed.parsed.payloadBytes);
     expect(result.verdict).toBe('pass');
   });
 
@@ -41,7 +41,7 @@ describe('verifyDsseEnvelope', () => {
     // Flip a byte in the middle of the payload.
     tamperedPayload[Math.floor(tamperedPayload.length / 2)] ^= 0x01;
 
-    const result = verifyDsseSignature(parsed.parsed.envelope, tamperedPayload);
+    const result = verifyDsseSignatureUntrusted(parsed.parsed.envelope, tamperedPayload);
     expect(result.verdict).toBe('fail');
     expect(result.violationKind).toBe('Envelope.signature.invalid');
   });
@@ -64,7 +64,7 @@ describe('verifyDsseEnvelope', () => {
     const parsed = parseSignedBundle(bundleBytes);
     if (parsed.kind !== 'ok') throw new Error('parse failed');
 
-    const result = verifyDsseSignature(parsed.parsed.envelope, parsed.parsed.payloadBytes);
+    const result = verifyDsseSignatureUntrusted(parsed.parsed.envelope, parsed.parsed.payloadBytes);
     expect(result.verdict).toBe('fail');
     expect(result.violationKind).toBe('Envelope.signature.invalid');
   });
@@ -74,7 +74,7 @@ describe('verifyDsseEnvelope', () => {
     const parsed = parseSignedBundle(fixture.bundleBytes);
     if (parsed.kind !== 'ok') throw new Error('parse failed');
 
-    const result = verifyDsseSignature(parsed.parsed.envelope, parsed.parsed.payloadBytes);
+    const result = verifyDsseSignatureUntrusted(parsed.parsed.envelope, parsed.parsed.payloadBytes);
     expect(result.verdict).toBe('fail');
     expect(result.violationKind).toBe('Envelope.signature.invalid');
     expect(result.detail).toMatch(/keyid/);
@@ -88,7 +88,7 @@ describe('verifyDsseEnvelope', () => {
     const parsed = parseSignedBundle(bytes);
     if (parsed.kind !== 'ok') throw new Error('parse failed');
 
-    const result = verifyDsseSignature(parsed.parsed.envelope, parsed.parsed.payloadBytes);
+    const result = verifyDsseSignatureUntrusted(parsed.parsed.envelope, parsed.parsed.payloadBytes);
     expect(result.verdict).toBe('fail');
     expect(result.violationKind).toBe('Envelope.signature.invalid');
     expect(result.detail).toMatch(/length/);
@@ -101,7 +101,7 @@ describe('verifyDsseEnvelope', () => {
     const fixture = buildSignedBundle({ privateKey: priv, overrideKeyId: base64Keyid });
     const parsed = parseSignedBundle(fixture.bundleBytes);
     if (parsed.kind !== 'ok') throw new Error('parse failed');
-    const result = verifyDsseSignature(parsed.parsed.envelope, parsed.parsed.payloadBytes);
+    const result = verifyDsseSignatureUntrusted(parsed.parsed.envelope, parsed.parsed.payloadBytes);
     expect(result.verdict).toBe('pass');
   });
 });

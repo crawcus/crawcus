@@ -1,5 +1,14 @@
 # @crawcus/spec
 
+## 0.13.0
+
+### Minor Changes
+
+- Additive `ContractViolationKind` values for signer trust:
+  `Envelope.signer.untrusted`, `Envelope.signer.revoked`,
+  `Envelope.signer.expired`, `TrustPolicy.malformed`. Existing kinds
+  are unchanged.
+
 ## 0.11.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@crawcus/spec",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "private": true,
   "description": "CRAWCUS open-standard reference content — wire-format types, schemas, pure evaluators (Contract algorithm, hash-chain, canonical-JSON, readiness predicate). Vendor-neutral; brand-neutral. Y1 H2 target: spin out to github.com/crawcus/spec under the @crawcus npm scope.",
   "keywords": [

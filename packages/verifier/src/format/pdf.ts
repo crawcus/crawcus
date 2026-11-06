@@ -116,6 +116,20 @@ function layoutReport(builder: PdfBuilder, result: VerifyResult): void {
   }
   builder.gap(LINE_HEIGHT);
 
+  // Signer trust — decision in large text, then policy and signer.
+  builder.text('Signer trust', SUBHEAD_SIZE, true);
+  builder.gap(LINE_HEIGHT / 2);
+  builder.text(trustHeadline(result), HEADING_SIZE, true);
+  builder.gap(LINE_HEIGHT / 2);
+  const trust = result.trust;
+  builder.text(`Reason:              ${trust.reason}`, BODY_SIZE);
+  builder.text(`Policy id:           ${nonEmpty(trust.policyId ?? '')}`, BODY_SIZE);
+  builder.text(`Policy fingerprint:  ${nonEmpty(trust.policyFingerprint ?? '')}`, BODY_SIZE);
+  const signerLabel = trust.signer?.label ?? trust.signer?.anchorId ?? '';
+  builder.text(`Signer:              ${nonEmpty(signerLabel)}`, BODY_SIZE);
+  builder.text(`Key fingerprint:     ${nonEmpty(trust.signer?.keyFingerprint ?? '')}`, BODY_SIZE);
+  builder.gap(LINE_HEIGHT);
+
   // Verifier identity block.
   builder.text('Verifier identity', SUBHEAD_SIZE, true);
   builder.gap(LINE_HEIGHT / 2);
@@ -165,6 +179,8 @@ function verdictHeadline(result: VerifyResult): string {
       return 'CRAWCUS VERIFY — FAIL';
     case 'historical-unverifiable':
       return 'CRAWCUS VERIFY — HISTORICAL-UNVERIFIABLE';
+    case 'untrusted-signer':
+      return 'CRAWCUS VERIFY — UNTRUSTED-SIGNER';
     default: {
       const _exhaustive: never = result.verdict;
       void _exhaustive;
@@ -183,10 +199,28 @@ function checkMarker(v: VerifyCheck['verdict']): string {
       return '[HIST]';
     case 'skipped':
       return '[SKIP]';
+    case 'untrusted-signer':
+      return '[UNTRUSTED]';
     default: {
       const _exhaustive: never = v;
       void _exhaustive;
       return '[?]';
+    }
+  }
+}
+
+function trustHeadline(result: VerifyResult): string {
+  switch (result.trust.decision) {
+    case 'trusted':
+      return 'TRUSTED';
+    case 'untrusted':
+      return 'UNTRUSTED';
+    case 'not-evaluated':
+      return 'NOT EVALUATED';
+    default: {
+      const _exhaustive: never = result.trust.decision;
+      void _exhaustive;
+      return 'NOT EVALUATED';
     }
   }
 }

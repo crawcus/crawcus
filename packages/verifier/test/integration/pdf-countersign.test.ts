@@ -25,6 +25,7 @@ import { preAuthenticationEncoding } from '../../src/dsse.js';
 import { renderPdf } from '../../src/format/pdf.js';
 import { verifyBundle } from '../../src/verify.js';
 import { buildSignedBundle } from '../fixtures/build-bundle.js';
+import { policyPinningKey } from '../fixtures/trust-policies.js';
 
 describe('integration — verifyBundle → renderPdf → countersignResult', () => {
   it('runs end-to-end with auditor countersigning a PASS result', () => {
@@ -37,9 +38,13 @@ describe('integration — verifyBundle → renderPdf → countersignResult', () 
     // (2) The verifier checks it.
     const result = verifyBundle({
       bundle: fixture.bundleBytes,
-      options: { verifiedAt: '2026-06-03T12:00:00.000Z' },
+      options: {
+        verifiedAt: '2026-06-03T12:00:00.000Z',
+        trustPolicy: policyPinningKey(fixture.publicKey),
+      },
     });
     expect(result.verdict).toBe('pass');
+    expect(result.trust.decision).toBe('trusted');
 
     // (3) Render the auditor-signable PDF.
     const pdf = renderPdf(result);
@@ -77,6 +82,12 @@ describe('integration — verifyBundle → renderPdf → countersignResult', () 
     };
     expect(payload.verdict).toBe('pass');
     expect(payload.bundleMetadata.eventCount).toBe(3);
+    const trustedPayload = payload as {
+      trust?: { decision?: string; policyFingerprint?: string; signer?: { keyFingerprint?: string } };
+    };
+    expect(trustedPayload.trust?.decision).toBe('trusted');
+    expect(trustedPayload.trust?.policyFingerprint).toMatch(/^[0-9a-f]{64}$/);
+    expect(trustedPayload.trust?.signer?.keyFingerprint).toMatch(/^[0-9a-f]{64}$/);
   });
 
   it('countersign envelope is independent of the audit-bundle envelope', () => {
