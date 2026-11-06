@@ -87,7 +87,7 @@ describe('integration — verifyBundle → renderPdf → countersignResult', () 
     };
     expect(trustedPayload.trust?.decision).toBe('trusted');
     expect(trustedPayload.trust?.policyFingerprint).toMatch(/^[0-9a-f]{64}$/);
-    expect(trustedPayload.trust?.signer?.keyFingerprint).toMatch(/^[0-9a-f]{64}$/);
+    expect(trustedPayload.trust?.signer?.keyFingerprint).toMatch(/^sha256:[0-9a-f]{64}$/);
   });
 
   it('countersign envelope is independent of the audit-bundle envelope', () => {

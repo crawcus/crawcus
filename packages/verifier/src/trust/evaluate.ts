@@ -19,10 +19,10 @@
  * every bundle signed by that key, including back-dated ones.
  */
 
-import { sha256 } from '@noble/hashes/sha256';
 import { bytesToHex } from '@noble/hashes/utils';
 import type { ContractViolationKind } from '@crawcus/spec';
 import { isCrawcusPayloadType } from '../dsse.js';
+import { keyIdFor } from './keyid.js';
 import type {
   Ed25519PinnedAnchor,
   SignerIdentity,
@@ -269,7 +269,7 @@ export function signerIdentity(
   const selfAsserted =
     signingTimeSource !== 'rekor-integrated-time' && signingTimeSource !== 'none';
   return {
-    keyFingerprint: bytesToHex(sha256(publicKey)),
+    keyFingerprint: keyIdFor(publicKey),
     publicKey: bytesToHex(publicKey),
     ...(signingTime !== undefined ? { signingTime } : {}),
     signingTimeSource,
