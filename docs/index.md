@@ -117,7 +117,7 @@ We are careful with claims. A receipt standard is only as trustworthy as the hon
 - The spec is published and free to implement (CC-BY-4.0).
 - We're building the reference implementations in the open (Apache-2.0).
 - Every runtime — including the reference implementations — is measured against the same TCK fixture set.
-- Anyone can verify a chain's hash-chain integrity independently of any vendor (signer-trust verification in progress — [crawcus#1](https://github.com/crawcus/crawcus/issues/1)).
+- Anyone can verify a chain's hash-chain integrity, and — given the issuer's published trust policy — the pinned signer, independently of any vendor. Sigstore keyless matching is still open ([crawcus#1](https://github.com/crawcus/crawcus/issues/1)).
 
 **What is not yet true:**
 
