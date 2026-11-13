@@ -1,0 +1,1379 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An open specification for cryptographic audit receipts covering both application transactions and AI-inference decisions under one canonical shape.">
+      
+      
+        <meta name="author" content="Paul Wander + CRAWCUS contributors">
+      
+      
+        <link rel="canonical" href="https://crawcus.org/spec/trust-anchors/">
+      
+      
+        <link rel="prev" href="../crawcus-trust-policy/">
+      
+      
+        <link rel="next" href="../crawcus-contracts/">
+      
+      
+      <link rel="icon" href="../../../branding/crawcus-seal-compact.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Trust anchors - CRAWCUS</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#trust-anchors-trust-anchorsjson" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="CRAWCUS" class="md-header__button md-logo" aria-label="CRAWCUS" data-md-component="logo">
+      
+  <img src="../../../branding/crawcus-seal-compact.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CRAWCUS
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Trust anchors
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/crawcus/crawcus" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    crawcus/crawcus
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../crawcus-format/" class="md-tabs__link">
+          
+  
+  
+  Specification
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../canon/architecture-primitives/" class="md-tabs__link">
+          
+  
+  
+  Canon
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../scitt/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  CRAWCUS and SCITT
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../adr/" class="md-tabs__link">
+          
+  
+  
+  Decisions
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CRAWCUS" class="md-nav__button md-logo" aria-label="CRAWCUS" data-md-component="logo">
+      
+  <img src="../../../branding/crawcus-seal-compact.svg" alt="logo">
+
+    </a>
+    CRAWCUS
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/crawcus/crawcus" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    crawcus/crawcus
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Specification
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Specification
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crawcus-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Format
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crawcus-trust-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Trust policy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Trust anchors
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Trust anchors
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Location
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publication-cadence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publication cadence
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document" class="md-nav__link">
+    <span class="md-ellipsis">
+      Document
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Document">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-identifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key identifiers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-keys-and-threshold" class="md-nav__link">
+    <span class="md-ellipsis">
+      Root keys and threshold
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signatures
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verifier-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verifier behaviour
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verifier behaviour">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mapping-to-a-trust-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mapping to a trust policy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference implementation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crawcus-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contracts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crawcus-scitt-profile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SCITT payload profile (draft)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Canon
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Canon
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../canon/architecture-primitives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture primitives
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../scitt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CRAWCUS and SCITT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glossary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Decisions
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Decisions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../adr/ADR-0055-scitt-fit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ADR-0055 SCITT fit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Location
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#publication-cadence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Publication cadence
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document" class="md-nav__link">
+    <span class="md-ellipsis">
+      Document
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Document">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-identifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key identifiers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-keys-and-threshold" class="md-nav__link">
+    <span class="md-ellipsis">
+      Root keys and threshold
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signatures
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verifier-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verifier behaviour
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verifier behaviour">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mapping-to-a-trust-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mapping to a trust policy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference implementation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/crawcus/crawcus/edit/main/docs/spec/trust-anchors.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<!--
+SPDX-FileCopyrightText: 2026 Paul Wander + CRAWCUS contributors
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+<h1 id="trust-anchors-trust-anchorsjson">Trust anchors (<code>trust-anchors.json</code>)<a class="headerlink" href="#trust-anchors-trust-anchorsjson" title="Permalink to this section">&para;</a></h1>
+<p><code>_type</code>: <code>crawcus-trust-anchors</code>. <code>spec_version</code>: <code>1.0.0</code>.
+Schema: <a href="https://github.com/crawcus/crawcus/blob/main/spec/schemas/trust-anchors-1.0.json"><code>spec/schemas/trust-anchors-1.0.json</code></a>.</p>
+<p>A trust-anchor document lists every public key a verifier may trust,
+with its purpose, validity window and status. It is modelled on
+<a href="https://theupdateframework.github.io/specification/latest/">TUF</a> root
+metadata: a threshold of <strong>root keys</strong> signs the document, and root keys
+sign nothing else. Verifiers map the document onto a
+<a href="../crawcus-trust-policy/">trust policy</a> (schema version 1, which stays
+threshold-free; the threshold lives only here).</p>
+<div class="admonition warning">
+<p class="admonition-title">No production document yet</p>
+<p>The copy in the repository and at the <code>.well-known</code> URL is a
+<strong>TEST placeholder</strong> generated from public seeds. Its issuer is
+<code>TEST-ONLY.crawcus.invalid</code>. Never trust it.</p>
+</div>
+<h2 id="location">Location<a class="headerlink" href="#location" title="Permalink to this section">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Copy</th>
+<th style="text-align: left;">Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Canonical</td>
+<td style="text-align: left;"><code>trust/trust-anchors.json</code> in <code>crawcus/crawcus</code> (history: <code>trust/history/&lt;version&gt;.json</code>, planned)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mirror</td>
+<td style="text-align: left;"><code>https://crawcus.org/.well-known/crawcus-trust-anchors.json</code>, byte-identical, built from <code>docs/.well-known/</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Root pin</td>
+<td style="text-align: left;"><code>trust/pinned-root.json</code> (keyids + threshold) and README "Verifying CRAWCUS"</td>
+</tr>
+</tbody>
+</table>
+<p>Remote sources are one ordered list, tried in order:</p>
+<ol>
+<li><code>https://crawcus.org/.well-known/crawcus-trust-anchors.json</code></li>
+<li><code>https://raw.githubusercontent.com/crawcus/crawcus/main/trust/trust-anchors.json</code></li>
+</ol>
+<p>Every source must verify against the trust chain rooted in the pinned
+root; no source is trusted because of where it was found. The
+reference verifier exports this list as <code>CRAWCUS_ANCHOR_SOURCES</code>.
+Other issuers supply their own ordered list and pin.</p>
+<p>CI (<code>pnpm lint</code> → <code>tools/anchors/anchors.mjs check</code>) fails when:</p>
+<ul>
+<li>the mirror differs from the canonical copy;</li>
+<li>the README fingerprints or <code>trust/pinned-root.json</code> differ from
+  <code>roles.root</code>;</li>
+<li>a non-TEST document expires less than 30 days from now;</li>
+<li><code>version</code> or <code>issued_at</code> is not strictly greater than the previous
+  version's (the newest <code>trust/history/&lt;version&gt;.json</code> below it, and
+  the copy on the git base branch). Every file in <code>trust/history/</code> must
+  be named <code>&lt;version&gt;.json</code> and parse as a valid document with that
+  version; an unparseable history file fails the check.</li>
+</ul>
+<p><code>/trust/</code> is covered by CODEOWNERS. On any change under <code>trust/</code>, the
+<code>trust-anchors</code> workflow verifies the root threshold signatures against
+<code>trust/pinned-root.json</code>.</p>
+<h3 id="publication-cadence">Publication cadence<a class="headerlink" href="#publication-cadence" title="Permalink to this section">&para;</a></h3>
+<p>A new version is published at least every <strong>6 months</strong>, even if no key
+changed, and <code>expires</code> is at most 12 months after <code>issued_at</code>. This
+keeps the CI expiry gate (30 days) from being reached in normal
+operation and bounds how long a withheld update can go unnoticed.</p>
+<h2 id="document">Document<a class="headerlink" href="#document" title="Permalink to this section">&para;</a></h2>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"signed"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crawcus-trust-anchors"</span><span class="p">,</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">"spec_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">"issuer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"crawcus.org"</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="nt">"issued_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-11-01T00:00:00Z"</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2027-05-01T00:00:00Z"</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="nt">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"root"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"keyids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sha256:…"</span><span class="p">,</span><span class="w"> </span><span class="s2">"sha256:…"</span><span class="p">,</span><span class="w"> </span><span class="s2">"sha256:…"</span><span class="p">,</span><span class="w"> </span><span class="s2">"sha256:…"</span><span class="p">],</span><span class="w"> </span><span class="nt">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="nt">"keys"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="p">{</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="nt">"keyid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sha256:3f9a…"</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="nt">"alg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ed25519"</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="nt">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MCowBQYDK2VwAyEA…"</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">        </span><span class="nt">"purpose"</span><span class="p">:</span><span class="w"> </span><span class="s2">"release"</span><span class="p">,</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">        </span><span class="nt">"deployment"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">        </span><span class="nt">"custody"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hsm"</span><span class="p">,</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">        </span><span class="nt">"kms_resource"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">        </span><span class="nt">"not_before"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-11-01T00:00:00Z"</span><span class="p">,</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="nt">"not_after"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2028-11-01T00:00:00Z"</span><span class="p">,</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="nt">"revoked_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">        </span><span class="nt">"revocation_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="nt">"superseded_by"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">  </span><span class="nt">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"keyid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sha256:…"</span><span class="p">,</span><span class="w"> </span><span class="nt">"sig"</span><span class="p">:</span><span class="w"> </span><span class="s2">"base64…"</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"keyid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sha256:…"</span><span class="p">,</span><span class="w"> </span><span class="nt">"sig"</span><span class="p">:</span><span class="w"> </span><span class="s2">"base64…"</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="key-identifiers">Key identifiers<a class="headerlink" href="#key-identifiers" title="Permalink to this section">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>keyid = "sha256:" + lowercase_hex(SHA-256(raw 32-byte ed25519 public key))
+</span></code></pre></div>
+<p>This is the only derivation in CRAWCUS. The human-facing fingerprint is
+the same string, and <code>TrustResult.signer.keyFingerprint</code> uses it too.
+<code>public_key</code> is base64 SubjectPublicKeyInfo DER. A keyid that does not
+match its <code>public_key</code> rejects the whole document.</p>
+<h3 id="field-rules">Field rules<a class="headerlink" href="#field-rules" title="Permalink to this section">&para;</a></h3>
+<ul>
+<li><code>version</code> is a positive integer that increases with every publication.</li>
+<li><code>expires</code> is after <code>issued_at</code> and at most 12 calendar months later.
+  Publishers re-sign at least every 6 months.</li>
+<li><code>purpose</code> is one of <code>root</code>, <code>release</code>, <code>test-vectors</code>,
+  <code>audit-export</code> (audit bundles of one deployment). Each
+  key has exactly one purpose. <code>deployment</code> is required for
+  <code>audit-export</code> and null otherwise.</li>
+<li><code>status</code> is <code>active</code>, <code>retired</code> or <code>revoked</code>. <code>revoked</code> requires
+  <code>revoked_at</code> and <code>revocation_reason</code> (<code>key-compromise</code>, <code>superseded</code>,
+  <code>retired</code>, the trust-policy names). Both are null otherwise.</li>
+<li>A key with an unknown <code>purpose</code> or <code>status</code> is ignored, not the file.
+  Unknown fields inside <code>signed</code> are ignored; they are still covered by
+  the signature. Unknown top-level fields reject the document.</li>
+<li><code>superseded_by</code>, when set, must name a different key in the same
+  document whose <code>status</code> is <code>active</code> or <code>revoked</code>; otherwise the whole
+  document is rejected.</li>
+<li><code>not_before</code> is inclusive and <code>not_after</code> is exclusive: a key is
+  valid for signing times in <code>[not_before, not_after)</code>.</li>
+<li>Root keys are listed in <code>keys</code> with <code>purpose: "root"</code>.</li>
+</ul>
+<h3 id="root-keys-and-threshold">Root keys and threshold<a class="headerlink" href="#root-keys-and-threshold" title="Permalink to this section">&para;</a></h3>
+<p>The number of root keys (N) and <code>roles.root.threshold</code> are configurable
+per document; production documents use a threshold of at least 2. Root
+keys sign only this document. The TEST placeholder uses N = 2 with
+threshold 2.</p>
+<h3 id="signatures">Signatures<a class="headerlink" href="#signatures" title="Permalink to this section">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>input = DSSE PAE("application/vnd.crawcus.trust-anchors+json", JCS(signed))
+</span></code></pre></div>
+<p>JCS is RFC 8785. The PAE prefix separates domains, so an anchor
+signature never verifies as a bundle signature or the reverse. The
+document is valid when at least <code>roles.root.threshold</code> signatures verify
+from <strong>distinct</strong> keyids in <code>roles.root.keyids</code> whose entries have
+<code>purpose: "root"</code> and <code>status: "active"</code>. Duplicate keyids count once.
+<code>threshold</code> must be at least 2; 1 is accepted only in an explicit
+verifier test mode.</p>
+<h2 id="verifier-behaviour">Verifier behaviour<a class="headerlink" href="#verifier-behaviour" title="Permalink to this section">&para;</a></h2>
+<p>Trust begins with an out-of-band pin of the root keyids and threshold
+(the README fingerprints, or a copy embedded in a verifier release) and
+moves forward one document at a time.</p>
+<ol>
+<li><strong>Bootstrap.</strong> The document's <code>roles.root</code> must equal the pin, and it
+   must be signed to threshold by that root.</li>
+<li><strong>Update.</strong> A candidate N replaces the trusted document T only if:
+   N is signed by a threshold of T's root; N is signed by a threshold of
+   its own root (so a root rotation needs both); <code>N.version &gt; T.version</code>
+   (an equal version must be byte-identical); the issuer is unchanged;
+   and N has not expired. Otherwise T is kept and the update is reported
+   as rejected. The verifier never fails open.</li>
+<li><strong>Expiry.</strong> If the trusted document has expired and no valid newer
+   one is available, verification fails with <code>anchors-expired</code>. This
+   holds offline too. An explicit override exists for archival use and
+   is never a default.</li>
+<li><strong>Local files</strong> (<code>--anchors &lt;path&gt;</code> style) and history steps go
+   through the same update rule; they cannot replace the root.</li>
+</ol>
+<p>Fetching uses HTTPS only, a 1 MiB cap, a 10 s timeout and no redirects.</p>
+<h3 id="mapping-to-a-trust-policy">Mapping to a trust policy<a class="headerlink" href="#mapping-to-a-trust-policy" title="Permalink to this section">&para;</a></h3>
+<p><code>trustPolicyFromAnchors(signed, { purpose, deployment? })</code> selects keys
+whose purpose matches the artifact (release → <code>release</code>, vectors →
+<code>test-vectors</code>, audit bundle → <code>audit-export</code> plus <code>deployment</code>).
+<code>root</code> is never mapped. Each selected key becomes an <code>ed25519-pinned</code>
+anchor with <code>notBefore</code>/<code>notAfter</code>; each revoked key also becomes a
+<code>revoked</code> row with its reason. The existing evaluator then applies:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Status</th>
+<th style="text-align: left;">Self-asserted signing time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>revoked</code> / <code>key-compromise</code></td>
+<td style="text-align: left;">Fail, whatever the signing time</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>revoked</code> / <code>superseded</code> or <code>retired</code></td>
+<td style="text-align: left;">Accept only if signing time &lt; <code>revoked_at</code>; result carries <code>signingTimeSelfAsserted: true</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>active</code>, <code>retired</code></td>
+<td style="text-align: left;">Signing time must fall in <code>[not_before, not_after)</code></td>
+</tr>
+</tbody>
+</table>
+<p>Until bundles carry an independent signing time, a holder of a
+superseded or retired (not compromised) key can back-date into its old
+window. Only <code>key-compromise</code> is a hard boundary.</p>
+<h2 id="reference-implementation">Reference implementation<a class="headerlink" href="#reference-implementation" title="Permalink to this section">&para;</a></h2>
+<p><code>@crawcus/verifier</code> exports <code>bootstrapTrustAnchors</code>,
+<code>updateTrustAnchors</code>, <code>loadTrustAnchors</code> (store → local candidates →
+remote → expiry, with a pluggable <code>TrustAnchorsStore</code>, in-memory by
+default, and injected <code>fetch</code>), <code>trustPolicyFromAnchors</code>, <code>keyIdFor</code>,
+and <code>signTrustAnchors</code> with a pluggable <code>AnchorSigner</code>. Signers backed
+by hardware or cloud key custody implement <code>AnchorSigner</code> outside this
+repository.</p>
+<p>Tooling: <code>tools/anchors/{keygen,sign,verify}</code> and
+<code>tools/anchors/anchors.mjs check|placeholder</code>. Local key files are for
+TEST keys only.</p>
+<p>Conformance vectors: <code>packages/tck/vectors/trust-anchors/</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Paul Wander + CRAWCUS contributors. Specification text licensed under CC-BY-4.0. Code licensed under Apache-2.0 or MIT (see per-package LICENSE).
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "content.action.edit", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>
