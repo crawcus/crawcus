@@ -1,0 +1,113 @@
+{
+  "name": "bootstrap-tampered",
+  "description": "Purpose changed after signing.",
+  "keyLabel": "TEST ONLY",
+  "now": "2026-10-15T00:00:00Z",
+  "pinnedRoot": {
+    "keyids": [
+      "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+      "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+      "sha256:234117a9695376dd84c40e787fa5a0423b531cb25aa02756d66059f9c1853e8d",
+      "sha256:443d5c542659b875eae5f7da236f1ddc3fcea4d0407cb42484009c2bebd21072"
+    ],
+    "threshold": 2
+  },
+  "trusted": null,
+  "candidate": {
+    "signed": {
+      "_type": "crawcus-trust-anchors",
+      "spec_version": "1.0.0",
+      "issuer": "test.invalid",
+      "version": 3,
+      "issued_at": "2026-10-01T00:00:00Z",
+      "expires": "2027-04-01T00:00:00Z",
+      "roles": {
+        "root": {
+          "keyids": [
+            "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+            "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+            "sha256:234117a9695376dd84c40e787fa5a0423b531cb25aa02756d66059f9c1853e8d",
+            "sha256:443d5c542659b875eae5f7da236f1ddc3fcea4d0407cb42484009c2bebd21072"
+          ],
+          "threshold": 2
+        }
+      },
+      "keys": [
+        {
+          "keyid": "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAqalwFjD0HLMbEHWfgpm80/u+ujlp9bTaA+BeTlOe9bI=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAcbZKKgMgcbmEp/FiGQh/9fZEaOWGmuD5ehjAuYmGhUc=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:234117a9695376dd84c40e787fa5a0423b531cb25aa02756d66059f9c1853e8d",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAILhMZjNulwp+1i5UgdimVARvOpIAmGGyG20rHRqGMqc=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:443d5c542659b875eae5f7da236f1ddc3fcea4d0407cb42484009c2bebd21072",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEA7v+MdWHM8JmCnH6KdstVDPgoxIp5c2grbokQnOUDOFY=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:77a79e42639ff9d357ec59d82360882e51b781aab5a85287e1705c302a105d97",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAkkQbyvVzLFaZfTcFG3wK2MIt4RBrkA/TRoGeAqux1LQ=",
+          "purpose": "test-vectors",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        }
+      ]
+    },
+    "signatures": [
+      {
+        "keyid": "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+        "sig": "+rrSer/bqE6g32gCsnhZ2dhViOAnQfm04rBPXzBzNhrAA+2nlxVHh09u/fRD822xxO0R/gHTtmEQuTi0tG9DCw=="
+      },
+      {
+        "keyid": "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+        "sig": "HSm1/5CcG3TY9KzDSettpn+LuMpIhwrRfsTgh9bu2XUK8BtnB3gW0iCrGyWRsXMHW2kprYlEShci9f8OIPSDDQ=="
+      }
+    ]
+  },
+  "expected": {
+    "kind": "fail",
+    "code": "anchors-threshold-unmet"
+  }
+}

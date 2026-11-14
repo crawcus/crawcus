@@ -19,6 +19,10 @@ runnable `runX` functions returning `TckResult` (discriminated
 pass/fail with §-cited diagnostics) — drive from any harness
 (vitest, mocha, a Go test runner).
 
+Signer-trust vectors live in `vectors/signer-trust/*.json` and as
+`SIGNER_TRUST_VECTORS`. Every key is labelled TEST ONLY. Do not pin
+those keys in a deployment.
+
 ## What the TCK will verify
 
 Per `docs/notebook/02-product/crawcus-format.md` v0.2:

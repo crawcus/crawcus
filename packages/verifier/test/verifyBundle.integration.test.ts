@@ -14,8 +14,9 @@
  */
 
 import { describe, expect, it } from 'vitest';
-import { verifyBundle } from '../src/index.js';
+import { verifyBundle, VERIFIER_VERSION } from '../src/index.js';
 import { buildSignedBundle, predHash } from './fixtures/build-bundle.js';
+import { policyPinningKey } from './fixtures/trust-policies.js';
 
 const FIXED_VERIFIED_AT = '2026-06-03T12:00:00.000Z';
 
@@ -24,7 +25,10 @@ describe('verifyBundle (integration)', () => {
     const fixture = buildSignedBundle();
     const result = verifyBundle({
       bundle: fixture.bundleBytes,
-      options: { verifiedAt: FIXED_VERIFIED_AT },
+      options: {
+        verifiedAt: FIXED_VERIFIED_AT,
+        trustPolicy: policyPinningKey(fixture.publicKey),
+      },
     });
     expect(result.verdict).toBe('pass');
     expect(result.checks.every((c) => c.verdict === 'pass')).toBe(true);
@@ -84,7 +88,10 @@ describe('verifyBundle (integration)', () => {
       ],
       predicateSources: { 'rotated.predicate': newSource },
     });
-    const result = verifyBundle({ bundle: fixture.bundleBytes });
+    const result = verifyBundle({
+      bundle: fixture.bundleBytes,
+      options: { trustPolicy: policyPinningKey(fixture.publicKey) },
+    });
     expect(result.verdict).toBe('historical-unverifiable');
   });
 
@@ -119,7 +126,12 @@ describe('verifyBundle (integration)', () => {
     const fixture = buildSignedBundle({ payloadType: 'application/vnd.other.thing+jsonl' });
     const result = verifyBundle({
       bundle: fixture.bundleBytes,
-      options: { requireCrawcusPayloadType: false },
+      options: {
+        requireCrawcusPayloadType: false,
+        trustPolicy: policyPinningKey(fixture.publicKey, {
+          payloadTypes: ['application/vnd.other.thing+jsonl'],
+        }),
+      },
     });
     expect(result.verdict).toBe('pass');
   });
@@ -128,7 +140,10 @@ describe('verifyBundle (integration)', () => {
     const fixture = buildSignedBundle({
       payloadType: 'application/vnd.crawcus.disclosure-bundle+jsonl',
     });
-    const result = verifyBundle({ bundle: fixture.bundleBytes });
+    const result = verifyBundle({
+      bundle: fixture.bundleBytes,
+      options: { trustPolicy: policyPinningKey(fixture.publicKey) },
+    });
     expect(result.verdict).toBe('pass');
     const shape = result.checks.find((c) => c.id === 'dsse.envelope.shape');
     expect(shape?.detail).toMatch(/forward-compat/);
@@ -157,7 +172,7 @@ describe('verifyBundle (integration)', () => {
   it('verifierIdentity is stamped per verifier-binary release', () => {
     const fixture = buildSignedBundle();
     const result = verifyBundle({ bundle: fixture.bundleBytes });
-    expect(result.verifierIdentity.version).toBe('0.2.0');
+    expect(result.verifierIdentity.version).toBe(VERIFIER_VERSION);
     expect(result.verifierIdentity.publicKeyFingerprint).toMatch(/^wave1-unsigned/);
   });
 });

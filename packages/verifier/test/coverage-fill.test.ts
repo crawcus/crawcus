@@ -13,7 +13,7 @@
 
 import { describe, expect, it } from 'vitest';
 import { verifyJcsHashEquivalence } from '../src/hash-chain.js';
-import { parseDsseEnvelope, verifyDsseSignature } from '../src/dsse.js';
+import { parseDsseEnvelope, verifyDsseSignatureUntrusted } from '../src/dsse.js';
 import { reevaluateContracts } from '../src/contracts.js';
 import { parseSignedBundle } from '../src/parse.js';
 import { buildSignedBundle } from './fixtures/build-bundle.js';
@@ -52,7 +52,7 @@ describe('coverage-fill — defensive branches', () => {
     expect(result.detail).toMatch(/RFC-8785/);
   });
 
-  it('verifyDsseSignature: surfaces base64-decoder throw as fail', () => {
+  it('verifyDsseSignatureUntrusted: surfaces base64-decoder throw as fail', () => {
     const fixture = buildSignedBundle();
     const parsed = parseSignedBundle(fixture.bundleBytes);
     if (parsed.kind !== 'ok') throw new Error('parse failed');
@@ -67,7 +67,7 @@ describe('coverage-fill — defensive branches', () => {
         { keyid: parsed.parsed.envelope.signatures[0]?.keyid ?? '', sig: '\x00not-real' },
       ],
     };
-    const r = verifyDsseSignature(envCopy, parsed.parsed.payloadBytes);
+    const r = verifyDsseSignatureUntrusted(envCopy, parsed.parsed.payloadBytes);
     expect(r.verdict).toBe('fail');
     expect(r.violationKind).toBe('Envelope.signature.invalid');
   });

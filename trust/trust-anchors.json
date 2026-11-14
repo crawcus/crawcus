@@ -1,0 +1,91 @@
+{
+  "signed": {
+    "_type": "crawcus-trust-anchors",
+    "spec_version": "1.0.0",
+    "issuer": "TEST-ONLY.crawcus.invalid",
+    "version": 1,
+    "issued_at": "2026-10-16T00:00:00Z",
+    "expires": "2027-04-16T00:00:00Z",
+    "roles": {
+      "root": {
+        "keyids": [
+          "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+          "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207"
+        ],
+        "threshold": 2
+      }
+    },
+    "keys": [
+      {
+        "keyid": "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+        "alg": "ed25519",
+        "public_key": "MCowBQYDK2VwAyEAqalwFjD0HLMbEHWfgpm80/u+ujlp9bTaA+BeTlOe9bI=",
+        "purpose": "root",
+        "deployment": null,
+        "custody": "TEST-placeholder-identity-1",
+        "kms_resource": null,
+        "not_before": "2026-10-01T00:00:00Z",
+        "not_after": "2029-10-01T00:00:00Z",
+        "status": "active",
+        "revoked_at": null,
+        "revocation_reason": null,
+        "superseded_by": null
+      },
+      {
+        "keyid": "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+        "alg": "ed25519",
+        "public_key": "MCowBQYDK2VwAyEAcbZKKgMgcbmEp/FiGQh/9fZEaOWGmuD5ehjAuYmGhUc=",
+        "purpose": "root",
+        "deployment": null,
+        "custody": "TEST-placeholder-identity-2",
+        "kms_resource": null,
+        "not_before": "2026-10-01T00:00:00Z",
+        "not_after": "2029-10-01T00:00:00Z",
+        "status": "active",
+        "revoked_at": null,
+        "revocation_reason": null,
+        "superseded_by": null
+      },
+      {
+        "keyid": "sha256:77a79e42639ff9d357ec59d82360882e51b781aab5a85287e1705c302a105d97",
+        "alg": "ed25519",
+        "public_key": "MCowBQYDK2VwAyEAkkQbyvVzLFaZfTcFG3wK2MIt4RBrkA/TRoGeAqux1LQ=",
+        "purpose": "release",
+        "deployment": null,
+        "custody": "TEST-placeholder",
+        "kms_resource": null,
+        "not_before": "2026-10-16T00:00:00Z",
+        "not_after": "2028-10-16T00:00:00Z",
+        "status": "active",
+        "revoked_at": null,
+        "revocation_reason": null,
+        "superseded_by": null
+      },
+      {
+        "keyid": "sha256:cde417440cb485213d08719bf6b56d377c44a08f098edee6bf667326ac12ce07",
+        "alg": "ed25519",
+        "public_key": "MCowBQYDK2VwAyEAMTp2ac1FH03M8Uyn2mubre97KFduSMwUDTl/BCTxK9E=",
+        "purpose": "test-vectors",
+        "deployment": null,
+        "custody": "TEST-placeholder",
+        "kms_resource": null,
+        "not_before": "2026-10-16T00:00:00Z",
+        "not_after": "2028-10-16T00:00:00Z",
+        "status": "active",
+        "revoked_at": null,
+        "revocation_reason": null,
+        "superseded_by": null
+      }
+    ]
+  },
+  "signatures": [
+    {
+      "keyid": "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+      "sig": "HMfTvUlBZdKsRH6QUiBTa6bJ5o5lfWYmJb8Bx3gOqWRzlmf8nuIayoxDnlnTJqebR+P/akB0JlqUt67ExO2rDg=="
+    },
+    {
+      "keyid": "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+      "sig": "IC4WynY07TfDzc2POH1gPT5gQKnqWjClpXnOYnskyS0YHnDtMyyJxLnviCVI5/Q7J98MklNXqbOQfu33mLvfBg=="
+    }
+  ]
+}

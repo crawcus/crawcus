@@ -37,3 +37,11 @@ export {
   type HashChainContractStore,
   type HashChainContractEnv,
 } from './hash-chain.fixture.js';
+
+export {
+  SIGNER_TRUST_KEY_LABEL,
+  SIGNER_TRUST_VECTORS,
+  buildSignerTrustVectors,
+  testOnlySeed,
+  type SignerTrustVector,
+} from './signer-trust.fixture.js';

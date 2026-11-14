@@ -28,6 +28,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { verifyBundle } from '../src/index.js';
+import { policyPinningKey, RFC8032_TEST_PUBLIC_KEY } from './fixtures/trust-policies.js';
 
 describe('cross-vendor DSSE round-trip', () => {
   it('verifies a static DSSE-v1 fixture (cosign-equivalent format)', () => {
@@ -35,7 +36,13 @@ describe('cross-vendor DSSE round-trip', () => {
     const fixturePath = join(here, 'fixtures', 'cosign-emitted-bundle.json');
     const bytes = new Uint8Array(readFileSync(fixturePath));
 
-    const result = verifyBundle({ bundle: bytes });
+    const result = verifyBundle({
+      bundle: bytes,
+      options: {
+        // TEST ONLY. This fixture is signed with the RFC 8032 §7.1 key.
+        trustPolicy: policyPinningKey(RFC8032_TEST_PUBLIC_KEY),
+      },
+    });
     expect(result.verdict).toBe('pass');
     expect(result.bundleMetadata.payloadType).toBe('application/vnd.crawcus.bundle+jsonl');
     // All Wave-1 checks must pass for a cross-vendor-compatible envelope.

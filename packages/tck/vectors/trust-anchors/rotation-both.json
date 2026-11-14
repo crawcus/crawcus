@@ -1,0 +1,199 @@
+{
+  "name": "rotation-both",
+  "description": "Root rotation signed by old and new roots.",
+  "keyLabel": "TEST ONLY",
+  "now": "2026-10-15T00:00:00Z",
+  "pinnedRoot": {
+    "keyids": [
+      "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+      "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+      "sha256:234117a9695376dd84c40e787fa5a0423b531cb25aa02756d66059f9c1853e8d",
+      "sha256:443d5c542659b875eae5f7da236f1ddc3fcea4d0407cb42484009c2bebd21072"
+    ],
+    "threshold": 2
+  },
+  "trusted": {
+    "signed": {
+      "_type": "crawcus-trust-anchors",
+      "spec_version": "1.0.0",
+      "issuer": "test.invalid",
+      "version": 3,
+      "issued_at": "2026-10-01T00:00:00Z",
+      "expires": "2027-04-01T00:00:00Z",
+      "roles": {
+        "root": {
+          "keyids": [
+            "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+            "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+            "sha256:234117a9695376dd84c40e787fa5a0423b531cb25aa02756d66059f9c1853e8d",
+            "sha256:443d5c542659b875eae5f7da236f1ddc3fcea4d0407cb42484009c2bebd21072"
+          ],
+          "threshold": 2
+        }
+      },
+      "keys": [
+        {
+          "keyid": "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAqalwFjD0HLMbEHWfgpm80/u+ujlp9bTaA+BeTlOe9bI=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAcbZKKgMgcbmEp/FiGQh/9fZEaOWGmuD5ehjAuYmGhUc=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:234117a9695376dd84c40e787fa5a0423b531cb25aa02756d66059f9c1853e8d",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAILhMZjNulwp+1i5UgdimVARvOpIAmGGyG20rHRqGMqc=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:443d5c542659b875eae5f7da236f1ddc3fcea4d0407cb42484009c2bebd21072",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEA7v+MdWHM8JmCnH6KdstVDPgoxIp5c2grbokQnOUDOFY=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:77a79e42639ff9d357ec59d82360882e51b781aab5a85287e1705c302a105d97",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAkkQbyvVzLFaZfTcFG3wK2MIt4RBrkA/TRoGeAqux1LQ=",
+          "purpose": "release",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        }
+      ]
+    },
+    "signatures": [
+      {
+        "keyid": "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+        "sig": "+rrSer/bqE6g32gCsnhZ2dhViOAnQfm04rBPXzBzNhrAA+2nlxVHh09u/fRD822xxO0R/gHTtmEQuTi0tG9DCw=="
+      },
+      {
+        "keyid": "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+        "sig": "HSm1/5CcG3TY9KzDSettpn+LuMpIhwrRfsTgh9bu2XUK8BtnB3gW0iCrGyWRsXMHW2kprYlEShci9f8OIPSDDQ=="
+      }
+    ]
+  },
+  "candidate": {
+    "signed": {
+      "_type": "crawcus-trust-anchors",
+      "spec_version": "1.0.0",
+      "issuer": "test.invalid",
+      "version": 4,
+      "issued_at": "2026-10-01T00:00:00Z",
+      "expires": "2027-04-01T00:00:00Z",
+      "roles": {
+        "root": {
+          "keyids": [
+            "sha256:f689ebe75db0e9d9376fc092fe6c75d6cf59f9dcb3033b0028227d324f3ac6aa",
+            "sha256:879dc394df9993eea4a60c511b47a0d3b876e44594427d7b9d7fb1cf1539e4f8",
+            "sha256:46a5b9f24598aeb57daecdc296b1203637837787a2560c33f7316b280c4657ef"
+          ],
+          "threshold": 2
+        }
+      },
+      "keys": [
+        {
+          "keyid": "sha256:f689ebe75db0e9d9376fc092fe6c75d6cf59f9dcb3033b0028227d324f3ac6aa",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEA6jDPAksSZvnHl08+pOWvhwkruNceWO+4Pfc4oSHnxWQ=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:879dc394df9993eea4a60c511b47a0d3b876e44594427d7b9d7fb1cf1539e4f8",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEACY0fkQf4bksJpeeJCK8Oulxc409A6iQI1NUgKPh/TpQ=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:46a5b9f24598aeb57daecdc296b1203637837787a2560c33f7316b280c4657ef",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEACtGiR2dqJsfCOS+Jr944qf/SfAOvnagCmTIJ87SWUOM=",
+          "purpose": "root",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        },
+        {
+          "keyid": "sha256:77a79e42639ff9d357ec59d82360882e51b781aab5a85287e1705c302a105d97",
+          "alg": "ed25519",
+          "public_key": "MCowBQYDK2VwAyEAkkQbyvVzLFaZfTcFG3wK2MIt4RBrkA/TRoGeAqux1LQ=",
+          "purpose": "release",
+          "deployment": null,
+          "not_before": "2026-01-01T00:00:00Z",
+          "not_after": "2028-01-01T00:00:00Z",
+          "status": "active",
+          "revoked_at": null,
+          "revocation_reason": null
+        }
+      ]
+    },
+    "signatures": [
+      {
+        "keyid": "sha256:3aae019715f01faef005c80224b5bb703d25f41c4fe463b137e2f2e124b15b1b",
+        "sig": "d63BW2FRWR9qHr+awA1qqd/PRBao7nzXcIpGcJMwcL32GFacq9vkzLA0PGWRd2L3y7hKX5p5APR5v2TtaUiYDw=="
+      },
+      {
+        "keyid": "sha256:96b51436070c0a8292b3d76eb7afb91a962d79d25adcb61d19f6fb633b099207",
+        "sig": "/PfMney9zIo41t9Bx2/Qp2fc9JYrtTg6L37d6qWM4j3l5IOXLxLT1IM8/9g74feGKRuL6Nwnx4ouXdgUJt6TDg=="
+      },
+      {
+        "keyid": "sha256:f689ebe75db0e9d9376fc092fe6c75d6cf59f9dcb3033b0028227d324f3ac6aa",
+        "sig": "ol0FvyfrSlKg966Hmu/EhGqvIxeIULJTB+apdHyvMbaBo86ZFkYprmZn+Cn5ZV3mQdL0RzZph3XyBqcvN1jeDg=="
+      },
+      {
+        "keyid": "sha256:879dc394df9993eea4a60c511b47a0d3b876e44594427d7b9d7fb1cf1539e4f8",
+        "sig": "F7s0SgBKFRZ8rUhkG232NREtvjINBPOXW6UN/+pKFZMcV19K2pfcD0bd0gCREwgmrHefYUQNPazXKDsiSCegBQ=="
+      }
+    ]
+  },
+  "expected": {
+    "kind": "ok"
+  }
+}

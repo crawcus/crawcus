@@ -1,0 +1,39 @@
+{
+  "name": "rotated-old-key-after-supersede",
+  "description": "Old TEST key revoked as superseded before the signing time.",
+  "keyLabel": "TEST ONLY",
+  "envelope": {
+    "payloadType": "application/vnd.crawcus.bundle+jsonl",
+    "payload": "eyJidW5kbGVWZXJzaW9uIjoiMC4xLjAiLCJjaGFpblByb29mIjp7ImJ1bmRsZVNlbGZIYXNoIjoiZjliNjg0Yjk2ZWJlMjU1ZWY1OTM0MGQ4ODlkYjE5NDcxODQ3Mzc1YjM1ZTJlMzk2NmU2NmUwNDQ3YzE5ZDY4MCIsImZyb21FdmVudElkIjoiZXZ0XzAwMDAiLCJoYXNoZXMiOlt7ImNvbnRlbnRIYXNoIjoiZGYzMzljMTRmNDBmZWE5N2U2ODBjYWQ3MjUxZWVhZTIyYmQyOTU2Y2VkNGZlMmU1YWI0Yzk0NWI3MzJmYjE1OSIsImlkIjoiZXZ0XzAwMDAiLCJwcmV2SGFzaCI6bnVsbH1dLCJpbnRlbnRJZCI6ImlfdGVzdCIsInJvb3RIYXNoIjoiZGYzMzljMTRmNDBmZWE5N2U2ODBjYWQ3MjUxZWVhZTIyYmQyOTU2Y2VkNGZlMmU1YWI0Yzk0NWI3MzJmYjE1OSIsInRvRXZlbnRJZCI6ImV2dF8wMDAwIn0sImV2ZW50cyI6W3siYWN0b3IiOnsiaWQiOiJzeXMiLCJ0eXBlIjoic3lzdGVtIn0sImNvbnRlbnRIYXNoIjoiZGYzMzljMTRmNDBmZWE5N2U2ODBjYWQ3MjUxZWVhZTIyYmQyOTU2Y2VkNGZlMmU1YWI0Yzk0NWI3MzJmYjE1OSIsImRhdGFTdWJqZWN0SWRzIjpbInNfdGVzdCJdLCJpZCI6ImV2dF8wMDAwIiwiaW50ZW50SWQiOiJpX3Rlc3QiLCJraW5kIjoiUHJvamVjdGlvbkNvbW1pdCIsImxhd2Z1bEJhc2lzIjoiY29udHJhY3QiLCJwYXlsb2FkIjp7Im5vdGUiOiJzaWduZXItdHJ1c3QgY29uZm9ybWFuY2UgdmVjdG9yIOKAlCBURVNUIE9OTFkifSwicHJldkhhc2giOm51bGwsInB1cnBvc2UiOiJzZXJ2aWNlLWRlbGl2ZXJ5IiwidGVuYW50SWQiOiJ0X3Rlc3QiLCJ0aW1lc3RhbXAiOiIyMDI2LTA5LTEwVDAwOjAwOjAwLjAwMFoiLCJ2ZXJzaW9uIjowfV0sImdlbmVyYXRlZEF0IjoiMjAyNi0wOS0xMFQwMDowMDowMC4wMDBaIiwiaW50ZW50Ijp7ImlkIjoiaV90ZXN0Iiwia2V5IjoiVGVzdEludGVudCJ9LCJzcGVjIjp7ImNsYXNzaWZpY2F0aW9uIjoidW5zcGVjaWZpZWQiLCJrZXkiOiJUZXN0SW50ZW50IiwidmVyc2lvbiI6MX0sInRlbmFudCI6eyJpZCI6InRfdGVzdCIsInJlZ2lvbiI6InVzLXdlc3QtMiJ9fQ==",
+    "signatures": [
+      {
+        "keyid": "c800f2063ef6f1b5a92362aee2c9f3a6332872bd427b0b03c2051cd8b542b24b",
+        "sig": "q6vAdNEFIrgmVji441Pl+t9kcmdrpfBREyBz6690iPLtp11DakHipScWGmGF8E0g3oOn3GRkrqU1XAdyyxo1BQ=="
+      }
+    ]
+  },
+  "policy": {
+    "crawcusTrustPolicy": 1,
+    "policyId": "test-only",
+    "description": "TEST ONLY",
+    "anchors": [
+      {
+        "type": "ed25519-pinned",
+        "id": "old",
+        "publicKey": "c800f2063ef6f1b5a92362aee2c9f3a6332872bd427b0b03c2051cd8b542b24b",
+        "label": "TEST ONLY"
+      }
+    ],
+    "revoked": [
+      {
+        "publicKey": "c800f2063ef6f1b5a92362aee2c9f3a6332872bd427b0b03c2051cd8b542b24b",
+        "revokedAt": "2026-08-31T00:00:00Z",
+        "reason": "superseded"
+      }
+    ]
+  },
+  "expected": {
+    "verdict": "untrusted-signer",
+    "reason": "signer.untrusted.revoked"
+  }
+}

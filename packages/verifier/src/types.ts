@@ -18,6 +18,7 @@
  */
 
 import type { ContractViolationKind } from '@crawcus/spec';
+import type { TrustResult } from './trust/types.js';
 
 // Re-export the canon taxonomy so consumers can import it directly
 // from `@crawcus/verifier` without learning the spec-package layout.
@@ -67,13 +68,44 @@ export interface VerifyOptions {
    * tests. Production callers omit (default: now in ISO 8601).
    */
   readonly verifiedAt?: string;
+  /**
+   * Pinned-key trust policy. Parsed strictly. Omit it and the verifier
+   * fails closed with `untrusted-signer` (`signer.untrusted.no-policy`).
+   * A malformed policy is `fail` / `policy.malformed` and never a pass.
+   */
+  readonly trustPolicy?: unknown;
+  /**
+   * TEST-ONLY hatch. NEVER set this in production or in any service
+   * that accepts third-party bundles.
+   *
+   * When true, an untrusted signer does not change the top-level
+   * verdict to `untrusted-signer` — the verdict can still be `pass`
+   * while `trust.decision` stays `untrusted`. Callers MUST read
+   * `trust.decision`, not just `verdict`.
+   *
+   * Key-compromise revocation and a malformed policy still fail.
+   * Prefer supplying a real `trustPolicy` that pins TEST keys.
+   */
+  readonly allowUntrustedSignerForTestsOnly?: boolean;
 }
 
-/** Overall verdict — `pass` iff every check passes. */
-export type VerifyVerdict = 'pass' | 'fail' | 'historical-unverifiable';
+/**
+ * Overall verdict.
+ *
+ * `pass` requires every integrity check and a trusted signer.
+ * `untrusted-signer` means the signature verified and the signer is
+ * not authorised (no policy, unknown key, expired, not yet valid,
+ * superseded, or payload type not allowed).
+ */
+export type VerifyVerdict = 'pass' | 'fail' | 'historical-unverifiable' | 'untrusted-signer';
 
 /** Per-check verdict. `skipped` is reserved for option-driven dispatch. */
-export type VerifyCheckVerdict = 'pass' | 'fail' | 'skipped' | 'historical-unverifiable';
+export type VerifyCheckVerdict =
+  | 'pass'
+  | 'fail'
+  | 'skipped'
+  | 'historical-unverifiable'
+  | 'untrusted-signer';
 
 /**
  * One row of the structured per-check report. Maps to one of the 8
@@ -109,18 +141,27 @@ export interface BundleCite {
  * Top-level result returned by `verifyBundle`.
  *
  * Verdict aggregation:
- *   - `pass`                     iff all 8 checks pass
- *   - `historical-unverifiable`  iff Check 7 fires AND all others pass
- *                                AND `--strict` is not set
- *   - `fail`                     otherwise
+ *   - `fail`                     if any check failed (includes a
+ *                                malformed policy and key-compromise
+ *                                revocation)
+ *   - `untrusted-signer`         if the signer is untrusted and
+ *                                `allowUntrustedSignerForTestsOnly` is not set
+ *   - `historical-unverifiable`  if a historical check fired and the
+ *                                signer is trusted
+ *   - `pass`                     otherwise
  */
 export interface VerifyResult {
   readonly verdict: VerifyVerdict;
   readonly checks: readonly VerifyCheck[];
   readonly bundleMetadata: BundleMetadata;
-  /** ISO 8601 timestamp when the verifier ran. */
+  /** ISO 8601 timestamp when the verifier ran. Informational. */
   readonly verifiedAt: string;
   readonly verifierIdentity: VerifierIdentity;
+  /**
+   * Signer-trust decision. Present on every result, including early
+   * failures (`decision: 'not-evaluated'`).
+   */
+  readonly trust: TrustResult;
 }
 
 /**
@@ -132,6 +173,10 @@ export interface BundleMetadata {
   readonly bundleId: string;
   readonly schemaVersion: string;
   readonly payloadType: string;
+  /**
+   * Embedded `keyid` of the signature the trust step selected.
+   * Attacker-controlled. Display only — use `trust.signer.keyFingerprint`.
+   */
   readonly signerKeyId: string;
   readonly eventCount: number;
   readonly contractCount: number;
@@ -216,11 +261,13 @@ export interface ParsedAuditBundle {
   readonly predicateSources?: unknown;
 }
 
-/** DSSE envelope verify check result. */
+/** DSSE envelope integrity result. `publicKey` is set only when the signature verifies. */
 export interface DsseVerifyResult {
   readonly verdict: 'pass' | 'fail';
   readonly violationKind?: ContractViolationKind;
   readonly detail: string;
+  /** Public key the signature verified against. Absent on failure. */
+  readonly publicKey?: Uint8Array;
 }
 
 /** Chain verify check result. */
