@@ -1,0 +1,10 @@
+{
+  "gate-1": {
+    "publicKey": "TWfs75IN1In3CNI8TnyIOUHgtwilOPGcRFQLJ670CJc=",
+    "keyid": "SHA256:NjZMAelLq9XON3pxV5tR5hZjX99NkQyw4gGJSRc2gP8"
+  },
+  "observer-1": {
+    "publicKey": "4hDsi5TCL+A+9SB7k2l4EkY7XePUheE+zE9mBazt2Fs=",
+    "keyid": "SHA256:q/d0VZCREBObUFi8PWKWXEF4lVNeYPuGn0GuOqd1ij0"
+  }
+}

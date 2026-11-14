@@ -1,0 +1,121 @@
+[
+  {
+    "id": "tck-evt-0",
+    "tenantId": "tck-tenant",
+    "intentId": "tck-golden-intent",
+    "kind": "SourceCaptured",
+    "version": 1,
+    "timestamp": "2026-01-01T00:00:00.000Z",
+    "actor": {
+      "kind": "human",
+      "id": "tck-subject"
+    },
+    "lawfulBasis": "legitimate-interest",
+    "purpose": "tck",
+    "dataSubjectIds": [
+      "tck-subject"
+    ],
+    "prevHash": null,
+    "payload": {
+      "source": "tck-golden-source",
+      "capturedAt": "2026-01-01T00:00:00.000Z"
+    },
+    "contentHash": "83a68294385e3a4f5dafa7965d80296daaf3ee533bc557b9d8c8ecab6d336a48"
+  },
+  {
+    "id": "tck-evt-1",
+    "tenantId": "tck-tenant",
+    "intentId": "tck-golden-intent",
+    "kind": "CapturedTurn",
+    "version": 2,
+    "timestamp": "2026-01-01T00:00:01.000Z",
+    "actor": {
+      "kind": "human",
+      "id": "tck-subject"
+    },
+    "lawfulBasis": "legitimate-interest",
+    "purpose": "tck",
+    "dataSubjectIds": [
+      "tck-subject"
+    ],
+    "prevHash": "83a68294385e3a4f5dafa7965d80296daaf3ee533bc557b9d8c8ecab6d336a48",
+    "payload": {
+      "role": "user",
+      "text": "golden turn 1",
+      "at": "2026-01-01T00:00:01.000Z"
+    },
+    "contentHash": "b6a5a16931f99a5f1b46a29df74d80f0542a6e16d245fcf85b61e1edf6595bfa"
+  },
+  {
+    "id": "tck-evt-2",
+    "tenantId": "tck-tenant",
+    "intentId": "tck-golden-intent",
+    "kind": "CapturedTurn",
+    "version": 3,
+    "timestamp": "2026-01-01T00:00:02.000Z",
+    "actor": {
+      "kind": "human",
+      "id": "tck-subject"
+    },
+    "lawfulBasis": "legitimate-interest",
+    "purpose": "tck",
+    "dataSubjectIds": [
+      "tck-subject"
+    ],
+    "prevHash": "b6a5a16931f99a5f1b46a29df74d80f0542a6e16d245fcf85b61e1edf6595bfa",
+    "payload": {
+      "role": "assistant",
+      "text": "golden turn 2",
+      "at": "2026-01-01T00:00:02.000Z",
+      "tampered": true
+    },
+    "contentHash": "7018a0d55178a0edec88e116ee860c67d258608cb3a64d4175a9aa969d0dd7e4"
+  },
+  {
+    "id": "tck-evt-3",
+    "tenantId": "tck-tenant",
+    "intentId": "tck-golden-intent",
+    "kind": "CapturedTurn",
+    "version": 4,
+    "timestamp": "2026-01-01T00:00:03.000Z",
+    "actor": {
+      "kind": "human",
+      "id": "tck-subject"
+    },
+    "lawfulBasis": "legitimate-interest",
+    "purpose": "tck",
+    "dataSubjectIds": [
+      "tck-subject"
+    ],
+    "prevHash": "7018a0d55178a0edec88e116ee860c67d258608cb3a64d4175a9aa969d0dd7e4",
+    "payload": {
+      "role": "user",
+      "text": "golden turn 3",
+      "at": "2026-01-01T00:00:03.000Z"
+    },
+    "contentHash": "bd46648d1b249f18d30667bdd793f525247d42888b3d69a05c6ba47d935a063f"
+  },
+  {
+    "id": "tck-evt-4",
+    "tenantId": "tck-tenant",
+    "intentId": "tck-golden-intent",
+    "kind": "ProjectionCommit",
+    "version": 5,
+    "timestamp": "2026-01-01T00:00:04.000Z",
+    "actor": {
+      "kind": "human",
+      "id": "tck-subject"
+    },
+    "lawfulBasis": "legitimate-interest",
+    "purpose": "tck",
+    "dataSubjectIds": [
+      "tck-subject"
+    ],
+    "prevHash": "bd46648d1b249f18d30667bdd793f525247d42888b3d69a05c6ba47d935a063f",
+    "payload": {
+      "projection": "tck-golden-projection",
+      "committedAt": "2026-01-01T00:00:04.000Z"
+    },
+    "contentHash": "7c1be36cc43d4234f4ac03f4b55e442ca7fa8cfbc3d90b44572eec3d46658ae3"
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": "tck-d1",
+    "tenantId": "tck-tenant",
+    "intentId": "tck-intent",
+    "kind": "DisclosureDelivered",
+    "version": 1,
+    "timestamp": "2026-06-02T12:00:00.000Z",
+    "actor": {
+      "kind": "human",
+      "id": "tck-subject"
+    },
+    "lawfulBasis": "consent",
+    "purpose": "tck",
+    "dataSubjectIds": [
+      "tck-subject"
+    ],
+    "prevHash": null,
+    "contentHash": "h_env_d1",
+    "payload": {
+      "disclosureId": "disc_tck-d1",
+      "subject": "tck-subject",
+      "requirementId": "gdpr.art13.notice",
+      "contentHash": "h_fresh",
+      "deliveryMethod": "in-app",
+      "locale": "en"
+    }
+  },
+  {
+    "id": "tck-s1",
+    "tenantId": "tck-tenant",
+    "intentId": "tck-intent",
+    "kind": "DisclosureSignal",
+    "version": 2,
+    "timestamp": "2026-06-02T12:00:02.000Z",
+    "actor": {
+      "kind": "human",
+      "id": "tck-subject"
+    },
+    "lawfulBasis": "consent",
+    "purpose": "tck",
+    "dataSubjectIds": [
+      "tck-subject"
+    ],
+    "prevHash": null,
+    "contentHash": "h_env_s1",
+    "payload": {
+      "disclosureId": "disc_tck-s1",
+      "requirementId": "gdpr.art13.notice",
+      "contentHash": "h_stale",
+      "signalType": "read",
+      "observedAt": "2026-06-02T12:00:02.000Z",
+      "viewMs": 1800
+    }
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "name": "events-swapped",
+  "about": "Events 1 and 2 change places. Event 1 (formerly 2) names a prevHash that is not event 0's.",
+  "procedure": "verifyChain",
+  "events": "events.json",
+  "expected": {
+    "valid": false,
+    "brokenAt": 1,
+    "check": "prevHash"
+  }
+}

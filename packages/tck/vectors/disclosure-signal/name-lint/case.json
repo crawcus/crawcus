@@ -1,0 +1,79 @@
+{
+  "name": "name-lint",
+  "about": "A predicate that consumes DisclosureSignal records an opportunity to perceive, never an acknowledgement. Its name must not carry a forbidden token and must carry a required one; a refusal cites the contract.",
+  "procedure": "lintDisclosureSignalPredicateName",
+  "forbiddenTokens": [
+    "acknowledged",
+    "consented",
+    "agreed",
+    "confirmed"
+  ],
+  "requiredTokens": [
+    "opportunity",
+    "signal"
+  ],
+  "matching": "case-insensitive",
+  "refusalCites": "crawcus-contracts.md §6.A",
+  "names": [
+    {
+      "name": "userScrollAcknowledgedNoticeBySignal",
+      "expected": {
+        "ok": false,
+        "code": "FORBIDDEN_TOKEN",
+        "token": "acknowledged"
+      }
+    },
+    {
+      "name": "userScrollConsentedNoticeBySignal",
+      "expected": {
+        "ok": false,
+        "code": "FORBIDDEN_TOKEN",
+        "token": "consented"
+      }
+    },
+    {
+      "name": "userScrollAgreedNoticeBySignal",
+      "expected": {
+        "ok": false,
+        "code": "FORBIDDEN_TOKEN",
+        "token": "agreed"
+      }
+    },
+    {
+      "name": "userScrollConfirmedNoticeBySignal",
+      "expected": {
+        "ok": false,
+        "code": "FORBIDDEN_TOKEN",
+        "token": "confirmed"
+      }
+    },
+    {
+      "name": "userScrollCONSENTEDNotice",
+      "expected": {
+        "ok": false,
+        "code": "FORBIDDEN_TOKEN",
+        "token": "consented"
+      }
+    },
+    {
+      "name": "disclosureWasObserved",
+      "expected": {
+        "ok": false,
+        "code": "MISSING_REQUIRED_TOKEN",
+        "token": "opportunity | signal"
+      }
+    },
+    {
+      "name": "disclosureHasOpportunityToBeRead",
+      "expected": {
+        "ok": true
+      }
+    },
+    {
+      "name": "disclosureSignalObserved",
+      "expected": {
+        "ok": true
+      }
+    }
+  ]
+}

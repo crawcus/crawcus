@@ -1,0 +1,1 @@
+{"actor":{"id":"tck-subject","kind":"human"},"dataSubjectIds":["tck-subject"],"intentId":"tck-golden-intent","kind":"SourceCaptured","lawfulBasis":"legitimate-interest","payload":{"capturedAt":"2026-01-01T00:00:00.000Z","source":"tck-golden-source"},"prevHash":null,"purpose":"tck","tenantId":"tck-tenant","timestamp":"2026-01-01T00:00:00.000Z","version":1}

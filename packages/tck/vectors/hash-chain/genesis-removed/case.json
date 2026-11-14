@@ -1,0 +1,11 @@
+{
+  "name": "genesis-removed",
+  "about": "Event 0 is removed. The first event now has a non-null prevHash, which no genesis may have.",
+  "procedure": "verifyChain",
+  "events": "events.json",
+  "expected": {
+    "valid": false,
+    "brokenAt": 0,
+    "check": "genesis"
+  }
+}

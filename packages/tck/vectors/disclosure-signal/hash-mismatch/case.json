@@ -1,0 +1,15 @@
+{
+  "name": "hash-mismatch",
+  "about": "Delivered with h_fresh; the read signal carries h_stale. Under requireHashMatch the signal is for other content.",
+  "procedure": "disclosureHasOpportunityToBeRead",
+  "events": "events.json",
+  "subject": "tck-subject",
+  "options": {
+    "requirementId": "gdpr.art13.notice",
+    "acceptedSignals": [
+      "read"
+    ],
+    "requireHashMatch": true
+  },
+  "expected": false
+}

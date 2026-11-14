@@ -1,0 +1,25 @@
+{
+  "name": "F12",
+  "source": "draft-gruszka-audit-decision-receipts-05 Appendix A.5",
+  "receipt": "decision_receipt.json",
+  "check": {
+    "procedure": "decision",
+    "decisionKey": "gate-1",
+    "decisionMakerId": "gate-1",
+    "time": "2026-10-15T09:06:00Z",
+    "expectedAudience": "observer-1",
+    "expectedNonce": "dec-0002",
+    "actionBytes": "a2.txt",
+    "case": {
+      "kind": "declined"
+    }
+  },
+  "expected": "3.2 step 6",
+  "draftResult": "fails at step 6 of 3.2, exit 2",
+  "draft": {
+    "payloadSize": 1765,
+    "payloadSha256": "fc575c9130a083168047f727da512cf88c5308fc9193d090d7bf883750c5dc39",
+    "signature": "clHORGiu7nnI4nD5EkwD8dwcnq+RzeYmFwZ0POtkT+DSd1rgTbX9wSMqz3KjlJwYCCHPaYKVFxBfnyuVSRQUDw==",
+    "signer": "gate-1"
+  }
+}

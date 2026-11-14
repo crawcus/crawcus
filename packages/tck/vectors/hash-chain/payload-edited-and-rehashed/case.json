@@ -1,0 +1,11 @@
+{
+  "name": "payload-edited-and-rehashed",
+  "about": "Event 2's payload is changed and its contentHash recomputed. Event 2 now holds, so the break shows at event 3, whose prevHash names the old hash.",
+  "procedure": "verifyChain",
+  "events": "events.json",
+  "expected": {
+    "valid": false,
+    "brokenAt": 3,
+    "check": "prevHash"
+  }
+}

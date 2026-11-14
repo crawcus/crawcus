@@ -1,0 +1,32 @@
+{
+  "name": "F8",
+  "source": "draft-gruszka-audit-decision-receipts-05 Appendix A.5",
+  "receipt": "outcome_receipt.json",
+  "check": {
+    "procedure": "outcome",
+    "decision": {
+      "receipt": "decision.json",
+      "procedure": "decision",
+      "decisionKey": "gate-1",
+      "decisionMakerId": "gate-1",
+      "time": "2026-10-15T09:11:00Z",
+      "expectedAudience": "observer-1",
+      "expectedNonce": "dec-0003",
+      "actionBytes": "a3.json"
+    },
+    "outcomeKey": "observer-1",
+    "expectedExecutorId": "forge:agent-42-bot",
+    "permittedExecutorIds": [
+      "forge:agent-42-bot"
+    ],
+    "effectBytes": "e3.json"
+  },
+  "expected": "3.4 step 7",
+  "draftResult": "fails at step 7 of 3.4, exit 0",
+  "draft": {
+    "payloadSize": 694,
+    "payloadSha256": "bbe81b4cf255b9444de8ead2773fc9a859f4c2b9f8288822209fac0653fb9888",
+    "signature": "B+PLo64p+ESIWVfdIk7FR6RuANsst7kgsep1K6+g92eULuty4HseuWJL2laTX+tkc0aM1ztineO5Q3rA9XTtAg==",
+    "signer": "observer-1"
+  }
+}

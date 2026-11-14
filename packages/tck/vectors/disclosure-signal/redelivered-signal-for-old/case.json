@@ -1,0 +1,15 @@
+{
+  "name": "redelivered-signal-for-old",
+  "about": "Delivered with h_old, then again a minute later with h_new. The read signal carries h_old; the most recent delivery decides.",
+  "procedure": "disclosureHasOpportunityToBeRead",
+  "events": "events.json",
+  "subject": "tck-subject",
+  "options": {
+    "requirementId": "gdpr.art13.notice",
+    "acceptedSignals": [
+      "read"
+    ],
+    "requireHashMatch": true
+  },
+  "expected": false
+}
