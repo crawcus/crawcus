@@ -19,6 +19,8 @@
     "build": "pnpm -r --filter='./packages/*' build",
     "test": "pnpm -r --filter='./packages/*' test",
     "typecheck": "pnpm -r --filter='./packages/*' typecheck",
+    "vectors:decision-receipt": "pnpm --filter @crawcus/verifier build && node packages/tck/scripts/run-decision-receipt-vectors.mjs",
+    "vectors:crawcus": "pnpm --filter @crawcus/spec --filter @crawcus/tck build && node packages/tck/scripts/run-crawcus-vectors.mjs",
     "docs:serve": "mkdocs serve",
     "docs:build": "mkdocs build",
     "docs:deploy": "mkdocs gh-deploy --force"

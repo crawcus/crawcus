@@ -1,0 +1,11 @@
+{
+  "name": "golden",
+  "about": "The five events of buildGoldenSequence(\"tck-golden-intent\"), as written. Every link and every hash holds.",
+  "procedure": "verifyChain",
+  "events": "events.json",
+  "expected": {
+    "valid": true,
+    "brokenAt": null,
+    "check": null
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "signal-type-not-accepted",
+  "about": "The only signal is a click; acceptedSignals is [read].",
+  "procedure": "disclosureHasOpportunityToBeRead",
+  "events": "events.json",
+  "subject": "tck-subject",
+  "options": {
+    "requirementId": "gdpr.art13.notice",
+    "acceptedSignals": [
+      "read"
+    ],
+    "requireHashMatch": true
+  },
+  "expected": false
+}

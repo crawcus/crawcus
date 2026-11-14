@@ -1,0 +1,11 @@
+{
+  "name": "payload-edited",
+  "about": "Event 2's payload is changed and its contentHash is left as it was. The recomputed hash differs.",
+  "procedure": "verifyChain",
+  "events": "events.json",
+  "expected": {
+    "valid": false,
+    "brokenAt": 2,
+    "check": "contentHash"
+  }
+}

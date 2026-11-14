@@ -1,0 +1,11 @@
+{
+  "name": "genesis-prevhash-set",
+  "about": "Event 0 is given a prevHash and its contentHash recomputed. Its own hash holds; the genesis rule does not.",
+  "procedure": "verifyChain",
+  "events": "events.json",
+  "expected": {
+    "valid": false,
+    "brokenAt": 0,
+    "check": "genesis"
+  }
+}

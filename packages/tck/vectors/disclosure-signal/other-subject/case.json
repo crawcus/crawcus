@@ -1,0 +1,15 @@
+{
+  "name": "other-subject",
+  "about": "The delivery is to another subject.",
+  "procedure": "disclosureHasOpportunityToBeRead",
+  "events": "events.json",
+  "subject": "tck-subject",
+  "options": {
+    "requirementId": "gdpr.art13.notice",
+    "acceptedSignals": [
+      "read"
+    ],
+    "requireHashMatch": true
+  },
+  "expected": false
+}

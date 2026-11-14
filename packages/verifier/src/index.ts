@@ -70,3 +70,32 @@ export type { CountersignInput, CountersignedResult } from './countersign.js';
 
 /** PDF renderer — produce an auditor-signable verification report. */
 export { renderPdf } from './format/index.js';
+
+// ===== Decision and outcome receipts (draft-gruszka-audit-decision-receipts-05) =====
+
+/** §3.2 decision receipt, §3.3 cases, §3.4 outcome receipt, §4 consumption check. */
+export {
+  verifyDecisionReceipt,
+  verifyOutcomeReceipt,
+  checkApprovalCase,
+  checkDeclinedCase,
+  checkExecutedCase,
+  checkApprovalUnconsumed,
+  IN_TOTO_PAYLOAD_TYPE,
+  IN_TOTO_STATEMENT_V1,
+  DECISION_RECEIPT_PREDICATE_TYPE,
+  OUTCOME_RECEIPT_PREDICATE_TYPE,
+} from './decision-receipt.js';
+export type {
+  CheckResult,
+  DecisionInputs,
+  DecisionResult,
+  OutcomeInputs,
+  OutcomeResult,
+  ReceiptCheck,
+  ReceiptFailure,
+  VerifiedDecision,
+  VerifiedOutcome,
+} from './decision-receipt.js';
+export { parseStrictJsonBytes } from './strict-json.js';
+export type { StrictJsonResult } from './strict-json.js';

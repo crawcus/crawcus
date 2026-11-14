@@ -1,0 +1,11 @@
+{
+  "name": "event-removed",
+  "about": "Event 2 is removed. The event now at index 2 names the removed event's hash.",
+  "procedure": "verifyChain",
+  "events": "events.json",
+  "expected": {
+    "valid": false,
+    "brokenAt": 2,
+    "check": "prevHash"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "other-requirement",
+  "about": "The read signal is for another requirementId.",
+  "procedure": "disclosureHasOpportunityToBeRead",
+  "events": "events.json",
+  "subject": "tck-subject",
+  "options": {
+    "requirementId": "gdpr.art13.notice",
+    "acceptedSignals": [
+      "read"
+    ],
+    "requireHashMatch": true
+  },
+  "expected": false
+}
